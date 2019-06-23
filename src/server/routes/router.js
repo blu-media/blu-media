@@ -19,7 +19,5 @@ const router = express.Router();
 router.get('/users', getAllUsers);
 router.post('/users', createUser);
 router.get('/upcoming-events', getUpcomingEvents);
-router.get('/organizations', getOrganizations);
-router.post('/organizations', createOrganization);
 
 module.exports = router;
