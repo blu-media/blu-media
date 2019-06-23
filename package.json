@@ -1,0 +1,27 @@
+{
+  "name": "cubal-media",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ramiAbdou/cubal-media.git"
+  },
+  "author": "Rami Abdou",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ramiAbdou/cubal-media/issues"
+  },
+  "homepage": "https://github.com/ramiAbdou/cubal-media#readme",
+  "dependencies": {
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.11",
+    "pg": "^6.4.2",
+    "sequelize": "^5.8.7",
+    "uniqid": "^5.0.3"
+  }
+}
