@@ -17,5 +17,5 @@ app.use(bodyParser.json())
 var port = process.env.PORT || 8080;
 
 server.listen(port, function () {
-  console.log('Server running at http://127.0.0.1:8080/');
+  console.log(`Server running at http://127.0.0.1:${port}/`);
 });
