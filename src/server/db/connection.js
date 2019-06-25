@@ -2,14 +2,16 @@
 const Sequelize = require('sequelize');
 
 /* DB Model Schemas */
-const UserModel = require('./models/user')
-const OrganizationModel = require('./models/organization')
-const EventModel = require('./models/event')
+const UserModel = require('./models/user');
+const OrganizationModel = require('./models/organization');
+const EventModel = require('./models/event');
+
+const { localDBUsername, localDBPassword } = require('./config');
 
 /* Establish the DB Connection */
 const devDBConnection =
-  'postgres://ramiabdou:cubalmedia@localhost:5432/cubal-media';
-const sequelize = new Sequelize(devDBConnection)
+  `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
+const sequelize = new Sequelize(devDBConnection);
 
 /* Sequelizing the DB Models */
 const User = UserModel(sequelize, Sequelize);
