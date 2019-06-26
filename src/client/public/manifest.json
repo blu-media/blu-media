@@ -3,8 +3,8 @@
   "name": "Cubal React App",
   "icons": [
     {
-      "src": "./../src/assets/cubal-logo.png",
-      "sizes": "64x64",
+      "src": "",
+      "sizes": "",
       "type": "image/x-icon"
     }
   ],

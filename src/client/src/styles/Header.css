@@ -17,16 +17,6 @@
     justify-content: center;
     margin: auto 0 auto 100px;
     overflow: hidden;
-    padding: 1px;
-    fill-opacity: .6;
-}
-#header-search-bar:focus, #header-search-bar:focus-within{
-    border: 2px solid darkgray;
-    padding: 0;
-}
-
-#header-search-bar:focus svg, #header-search-bar:focus-within svg{
-    fill-opacity: 1;
 }
 
 #header-left-float{
