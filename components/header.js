@@ -1,8 +1,8 @@
 import React from "react"
-import Logo from "./components/logo"
-import Search from "./components/search"
-import Nav from "./components/nav"
-import Login from "./components/login"
+import Logo from "./logo"
+import Search from "./search"
+import Nav from "./nav"
+import Login from "./login"
 
 function Header() {
     return (
