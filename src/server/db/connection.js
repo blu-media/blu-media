@@ -6,7 +6,6 @@ const UserModel = require('./models/user');
 const OrganizationModel = require('./models/organization');
 const EventModel = require('./models/event');
 
-const { generateFakeData } = require('./fakeDataGenerator');
 const { localDBUsername, localDBPassword } = require('./config');
 
 /* Establish the DB Connection */
@@ -19,15 +18,6 @@ const User = UserModel(sequelize, Sequelize);
 const Organization = OrganizationModel(sequelize, Sequelize);
 const Event = EventModel(sequelize, Sequelize);
 
-/* Wipe current DB's and recreate them.
-   Note: Only use when you ABSOLUTELY HAVE TO!
-*/
-sequelize.sync({ force: true })
-  .then(() => {
-    generateFakeData();
-    console.log(`Database & tables created!`);
-  });
-
 /* Connect to the DB. */
 sequelize
   .authenticate()
@@ -39,6 +29,7 @@ sequelize
   });
 
 module.exports = {
+  sequelize,
   User,
   Organization,
   Event

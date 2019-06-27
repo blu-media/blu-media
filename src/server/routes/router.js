@@ -7,18 +7,14 @@ const { Organization } = require("../db/connection");
 const { Event } = require("../db/connection");
 
 /* Utility Functions */
-const { createUser, getAllUsers } = require("./util/userUtil");
-const { getUpcomingEvents } = require("./util/eventUtil");
-const {
-  createOrganization,
-  getOrganizations
-} = require("./util/organizationUtil");
-const {
-  addUsers,
-  addOrganizations,
-  addEvents,
-  addAllData
-} = require("./util/fakerUtil");
+const { createUser, getAllUsers } =
+  require("./util/userUtil");
+const { getUpcomingEvents } =
+  require("./util/eventUtil");
+const { createOrganization, getOrganizations } =
+  require("./util/organizationUtil");
+const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
+  require("./util/dataManipulation");
 
 const router = express.Router();
 
@@ -30,6 +26,12 @@ router.post("/organizations", createOrganization);
 router.get("/addUsers", addUsers);
 router.get("/addOrganizations", addOrganizations);
 router.get("/addEvents", addEvents);
+
+/* Wipe current DB's and recreate them.
+   Note: Only use when you ABSOLUTELY HAVE TO!
+*/
+router.get("/wipeDB", wipeDatabase)
+
 // router.get("/addAllData", addAllData);
 
 // QUERY: Get an event's information by an Event ID number.

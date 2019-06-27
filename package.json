@@ -7,6 +7,14 @@
     "start": "concurrently \"npm run server\" \"npm run client\""
   },
   "devDependencies": {
-    "concurrently": "^4.1.0"
+    "body-parser": "^1.19.0",
+    "concurrently": "^4.1.0",
+    "express": "^4.17.1",
+    "faker": "^4.1.0",
+    "lodash": "^4.17.11",
+    "pg": "^6.4.2",
+    "random": "^2.1.1",
+    "sequelize": "^5.8.12",
+    "uniqid": "^5.0.3"
   }
 }
