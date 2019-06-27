@@ -11,7 +11,7 @@ module.exports = (sequelize, type) => {
     contactInfo: type.JSONB,
     groups: {
       type: type.ARRAY(type.STRING),
-      allowNull: false
+      defaultValue: []
     },
     logo: {
       type: type.STRING,
@@ -24,7 +24,7 @@ module.exports = (sequelize, type) => {
     organizationId: {
       type: type.STRING,
       primaryKey: true
-    },
+    }
   });
 
   Organization.associate = (models) => {
