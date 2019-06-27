@@ -1,6 +1,9 @@
 node_modules
 package-lock.json
 
+# Database Configuration
+/src/server/db/config.js
+
 # Dependencies
 /src/client/node_modules
 /src/client/.pnp

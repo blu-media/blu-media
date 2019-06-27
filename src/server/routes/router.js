@@ -22,4 +22,15 @@ router.get('/upcoming-events', getUpcomingEvents);
 router.get('/organizations', getOrganizations);
 router.post('/organizations', createOrganization);
 
+// QUERY: Get an event's information by an Event ID number.
+
+// QUERY: Get an event's information (including RSVP's) by an Event ID number.
+
+// QUERY: Get all the events within a given timeframe.
+
+// QUERY: Get all the events for a given organization.
+// Separate into both upcoming and past events.
+
+// QUERY: Get all of the e-Board members of a given organization.
+
 module.exports = router;

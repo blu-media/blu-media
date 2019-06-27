@@ -18,6 +18,14 @@ const User = UserModel(sequelize, Sequelize);
 const Organization = OrganizationModel(sequelize, Sequelize);
 const Event = EventModel(sequelize, Sequelize);
 
+/* Wipe current DB's and recreate them.
+   Note: Only use when you ABSOLUTELY HAVE TO!
+*/
+sequelize.sync({ force: true })
+  .then(() => {
+    console.log(`Database & tables created!`)
+  })
+
 /* Connect to the DB. */
 sequelize
   .authenticate()
