@@ -1,26 +1,36 @@
 /* NPM Installation Dependencies */
-const express = require('express');
+const express = require("express");
 
 /* DB Models */
-const { User } = require('../db/connection');
-const { Organization } = require('../db/connection');
-const { Event } = require('../db/connection');
+const { User } = require("../db/connection");
+const { Organization } = require("../db/connection");
+const { Event } = require("../db/connection");
 
 /* Utility Functions */
-const { createUser, getAllUsers } =
-  require('./util/userUtil');
-const { getUpcomingEvents } =
-  require('./util/eventUtil');
-const { createOrganization, getOrganizations } =
-  require('./util/organizationUtil');
+const { createUser, getAllUsers } = require("./util/userUtil");
+const { getUpcomingEvents } = require("./util/eventUtil");
+const {
+  createOrganization,
+  getOrganizations
+} = require("./util/organizationUtil");
+const {
+  addUsers,
+  addOrganizations,
+  addEvents,
+  addAllData
+} = require("./util/fakerUtil");
 
 const router = express.Router();
 
-router.get('/users', getAllUsers);
-router.post('/users', createUser);
-router.get('/upcoming-events', getUpcomingEvents);
-router.get('/organizations', getOrganizations);
-router.post('/organizations', createOrganization);
+router.get("/users", getAllUsers);
+router.post("/users", createUser);
+router.get("/upcoming-events", getUpcomingEvents);
+router.get("/organizations", getOrganizations);
+router.post("/organizations", createOrganization);
+router.get("/addUsers", addUsers);
+router.get("/addOrganizations", addOrganizations);
+router.get("/addEvents", addEvents);
+// router.get("/addAllData", addAllData);
 
 // QUERY: Get an event's information by an Event ID number.
 
