@@ -54,6 +54,7 @@ module.exports = (sequelize, type) => {
 
   Event.associate = (models) => {
     Event.belongsTo(models.organization);
+    Event.hasMany(models.users);
   }
 
   return Event;

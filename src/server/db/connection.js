@@ -6,6 +6,7 @@ const UserModel = require('./models/user');
 const OrganizationModel = require('./models/organization');
 const EventModel = require('./models/event');
 
+const { generateFakeData } = require('./fakeDataGenerator');
 const { localDBUsername, localDBPassword } = require('./config');
 
 /* Establish the DB Connection */
@@ -23,8 +24,9 @@ const Event = EventModel(sequelize, Sequelize);
 */
 sequelize.sync({ force: true })
   .then(() => {
-    console.log(`Database & tables created!`)
-  })
+    generateFakeData();
+    console.log(`Database & tables created!`);
+  });
 
 /* Connect to the DB. */
 sequelize
