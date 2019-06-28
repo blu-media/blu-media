@@ -13,10 +13,16 @@ const devDBConnection =
   `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
 const sequelize = new Sequelize(devDBConnection);
 
-/* Sequelizing the DB Models */
-const User = UserModel(sequelize, Sequelize);
-const Organization = OrganizationModel(sequelize, Sequelize);
-const Event = EventModel(sequelize, Sequelize);
+/* Connect all the models/tables in the database to a db object, 
+   so everything is accessible via one object. */
+const db = {};
+
+db.Sequelize = Sequelize;
+db.sequelize = sequelize;
+
+db.users = UserModel(sequelize, Sequelize);;
+db.organizations = OrganizationModel(sequelize, Sequelize);
+db.events = EventModel(sequelize, Sequelize);
 
 /* Connect to the DB. */
 sequelize
@@ -30,7 +36,5 @@ sequelize
 
 module.exports = {
   sequelize,
-  User,
-  Organization,
-  Event
+  db
 }

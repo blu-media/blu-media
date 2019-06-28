@@ -1,8 +1,8 @@
 /* DB Models */
-const { Event } = require('../../db/connection');
+const { db } = require('../../db/connection');
 
 var getUpcomingEvents = (request, response) => {
-  Event.findAll()
+  db.events.findAll()
     .then((events) => {
       response.json(events);
     });

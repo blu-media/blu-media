@@ -1,11 +1,6 @@
 /* NPM Installation Dependencies */
 const express = require("express");
 
-/* DB Models */
-const { User } = require("../db/connection");
-const { Organization } = require("../db/connection");
-const { Event } = require("../db/connection");
-
 /* Utility Functions */
 const { createUser, getAllUsers } =
   require("./util/userUtil");
@@ -23,9 +18,9 @@ router.post("/users", createUser);
 router.get("/upcoming-events", getUpcomingEvents);
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
-router.get("/addUsers", addUsers);
-router.get("/addOrganizations", addOrganizations);
-router.get("/addEvents", addEvents);
+router.get("/addUsers/:num", addUsers);
+router.get("/addOrganizations/:num", addOrganizations);
+router.get("/addEvents/:num", addEvents);
 
 /* Wipe current DB's and recreate them.
    Note: Only use when you ABSOLUTELY HAVE TO!
