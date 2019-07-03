@@ -8,6 +8,15 @@ var getUpcomingEvents = (request, response) => {
     });
 }
 
+var getEvent = (request, response) => {
+  var eventID = request.params.eventID;
+  db.events.findAll({ eventId: eventID })
+    .then((evennt) => {
+      response.json(event);
+    });
+}
+
 module.exports = {
+  getEvent,
   getUpcomingEvents
 }

@@ -21,7 +21,12 @@ var getOrganizations = (request, response) => {
     });
 }
 
+var getOrganizationEvents = (request, response) => {
+}
+
+
 module.exports = {
   createOrganization,
-  getOrganizations
+  getOrganizations,
+  getOrganizationEvents
 }
