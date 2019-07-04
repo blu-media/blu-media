@@ -1,0 +1,29 @@
+
+    /* Button styling */
+    
+    .buttons-wrapper {
+        display: flex;
+        margin-right: 80px;
+    }
+
+    .buttons-wrapper button {
+        border: 1px solid var(--cubal-blue-dark);
+        text-transform: uppercase;
+        outline: none;
+        font-size: var(--header-desktop-text-size);
+        border-radius: 8px;
+        margin: auto 8px;
+        padding: 0px 24px;
+        font-weight: 850;
+        cursor: pointer;
+        height: var(--search-bar-height);
+        display: inline-block;
+        transition: ease-in-out;
+        box-sizing: content-box;
+
+    }
+
+    .buttons-wrapper button:hover {
+        transform: scale(1.02);
+        font-weight: 900;
+    }

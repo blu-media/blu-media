@@ -1,5 +1,6 @@
 import React from 'react';
 import '../styles/Header.css'
+import '../styles/main.css'
 import logo from '../assets/cubal-logo.png';
 
 
@@ -63,7 +64,7 @@ searchBarKeyPress(event){
               <li>Organizations</li>
             </ul>
           </nav>
-          <div id = "user-account-buttons-wrapper">
+          <div class = "buttons-wrapper">
             <button id = "log-in-button" onClick = {this.handleOnClickLogIn}>Log in</button>
             <button id = "sign-up-button" onClick = {this.handleOnClickSignUp}>Sign Up</button>
             {/* <div>Log in</div> */}
