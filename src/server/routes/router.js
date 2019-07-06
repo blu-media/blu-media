@@ -6,7 +6,8 @@ const { createUser, getAllUsers } =
   require("./util/userUtil");
 const { getEvent, getUpcomingEvents } =
   require("./util/eventUtil");
-const { createOrganization, getOrganizations, getOrganizationEvents } =
+const { createOrganization, getOrganizations, getOrganizationEvents,
+  addOrganizationUser } =
   require("./util/organizationUtil");
 const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
   require("./util/dataManipulation");
@@ -18,6 +19,7 @@ router.post("/users", createUser);
 router.get("/upcoming-events", getUpcomingEvents);
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
+router.post("/organizations/addUser", addOrganizationUser);
 router.get("/addUsers/:num", addUsers);
 router.get("/addOrganizations/:num", addOrganizations);
 router.get("/addEvents/:num", addEvents);

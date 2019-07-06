@@ -9,10 +9,6 @@ module.exports = (sequelize, type) => {
       allowNull: false
     },
     contactInfo: type.JSONB,
-    groups: {
-      type: type.ARRAY(type.STRING),
-      defaultValue: []
-    },
     logo: {
       type: type.STRING,
       defaultValue: 'profile.jpg'
@@ -21,7 +17,7 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false
     },
-    organizationId: {
+    id: {
       type: type.STRING,
       primaryKey: true
     }

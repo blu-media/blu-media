@@ -17,7 +17,7 @@ module.exports = (sequelize, type) => {
       type: type.DATE,
       allowNull: false
     },
-    eventId: {
+    id: {
       type: type.STRING,
       primaryKey: true
     },
@@ -37,10 +37,6 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false
     },
-    organizations: {
-      type: type.ARRAY(type.STRING),
-      defaultValue: []
-    },
     rsvps: {
       type: type.ARRAY(type.JSONB),
       defaultValue: []
@@ -51,11 +47,6 @@ module.exports = (sequelize, type) => {
     },
     type: type.STRING
   })
-
-  Event.associate = (models) => {
-    Event.belongsTo(models.organization);
-    Event.hasMany(models.users);
-  }
 
   return Event;
 }

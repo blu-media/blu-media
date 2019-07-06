@@ -12,7 +12,13 @@ var createOrganization = (request, response) => {
 }
 
 var getOrganizations = (request, response) => {
-  db.organizations.findAll()
+  db.organizations.findAll({
+    include: [
+      {
+        model: db.users
+      }
+    ]
+  })
     .then((orgs) => {
       response.json(orgs);
     })
@@ -21,11 +27,23 @@ var getOrganizations = (request, response) => {
     });
 }
 
+var addOrganizationUser = (request, response) => {
+  db.organizations.findByPk(request.body.orgId)
+    .then((org) => {
+      db.users.findByPk(request.body.userId).then((user) => {
+        org.addUser(user).then((org) => {
+          response.send(org);
+        });
+      });
+    })
+};
+
 var getOrganizationEvents = (request, response) => {
 }
 
 
 module.exports = {
+  addOrganizationUser,
   createOrganization,
   getOrganizations,
   getOrganizationEvents

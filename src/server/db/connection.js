@@ -24,6 +24,17 @@ db.users = UserModel(sequelize, Sequelize);;
 db.organizations = OrganizationModel(sequelize, Sequelize);
 db.events = EventModel(sequelize, Sequelize);
 
+/* Associations */
+db.users.belongsToMany(db.organizations, {
+  through: 'user_and_organizations'
+});
+
+db.organizations.belongsToMany(db.users, {
+  through: 'user_and_organizations'
+});
+
+// Fill in organizations to events associations.
+
 /* Connect to the DB. */
 sequelize
   .authenticate()

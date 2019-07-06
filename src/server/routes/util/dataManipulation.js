@@ -12,19 +12,14 @@ var addUsers = (request, response) => {
       firstName: faker.name.firstName(),
       gradYear: random.int(2019, 2022),
       lastName: faker.name.lastName(),
-      organizations: [
-        faker.company.companyName(),
-        faker.company.companyName(),
-        faker.company.companyName()
-      ],
       password: faker.lorem.word(),
-      //profilePicture: faker.image.image(),
-      userId: faker.lorem.word()
+      // profilePicture: faker.image.image(),
+      id: i.toString()
     });
   }
 
-  response.send(`${request.params.num} users created!`);
-};
+  response.send(`${i} have been created successfully!`);
+}
 
 var addOrganizations = (request, response) => {
   var i;
@@ -33,18 +28,13 @@ var addOrganizations = (request, response) => {
       about: faker.lorem.paragraph(),
       acronym: faker.company.companySuffix(),
       // contactInfo:
-      groups: [
-        faker.company.companyName(),
-        faker.company.companyName(),
-        faker.company.companyName()
-      ],
-      //logo: faker.image.avatar(),
+      // logo: faker.image.avatar(),
       name: faker.company.companyName(),
-      organizationId: faker.lorem.word()
+      id: i.toString()
     });
   }
 
-  response.send(`${request.params.num} organizations created!`);
+  response.send(`${i} organizations have been created successfully!`);
 };
 
 var addEvents = (request, response) => {

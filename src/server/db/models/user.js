@@ -13,10 +13,6 @@ module.exports = (sequelize, DataType) => {
       type: DataType.STRING,
       allowNull: false
     },
-    organizations: {
-      type: DataType.ARRAY(DataType.STRING),
-      defaultValue: []
-    },
     password: {
       type: DataType.STRING,
       allowNull: false
@@ -25,7 +21,7 @@ module.exports = (sequelize, DataType) => {
       type: DataType.STRING,
       defaultValue: 'profile.jpg'
     },
-    userId: {
+    id: {
       type: DataType.STRING,
       primaryKey: true
     }

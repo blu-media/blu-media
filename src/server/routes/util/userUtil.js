@@ -2,7 +2,13 @@
 const { db } = require('../../db/connection');
 
 var getAllUsers = (request, response) => {
-  db.users.findAll()
+  db.users.findAll({
+    include: [
+      {
+        model: db.organizations
+      }
+    ]
+  })
     .then((users) => {
       response.json(users);
     });
