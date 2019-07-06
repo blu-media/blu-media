@@ -53,16 +53,11 @@ var addEvents = (request, response) => {
       blurb: faker.lorem.paragraph(),
       date: faker.date.future(),
       endTime: faker.date.future(),
-      eventId: faker.lorem.word(),
+      id: i.toString(),
       //images: [faker.image.image(), faker.image.image(), faker.image.image()],
       //flyer: faker.image.image(),
       location: faker.address.streetName(),
       name: faker.lorem.word(),
-      organizations: [
-        faker.company.companyName(),
-        faker.company.companyName(),
-        faker.company.companyName()
-      ],
       // rsvps:
       startTime: faker.date.future(),
       type: faker.lorem.word()
