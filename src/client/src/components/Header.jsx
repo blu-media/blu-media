@@ -65,11 +65,7 @@ searchBarKeyPress(event){
                 <li><Link to="/organizations"> Organizations</Link></li>
             </ul>
           </nav>
-<<<<<<< Updated upstream
           <div id = "user-account-buttons-wrapper">
-=======
-          <div className = "buttons-wrapper">
->>>>>>> Stashed changes
             <button id = "log-in-button" onClick = {this.handleOnClickLogIn}>Log in</button>
             <button id = "sign-up-button" onClick = {this.handleOnClickSignUp}>Sign Up</button>
             {/* <div>Log in</div> */}
