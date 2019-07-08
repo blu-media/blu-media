@@ -1,8 +1,8 @@
 /* DB Models */
-const { Organization } = require('../../db/connection');
+const { db } = require('../../db/connection');
 
 var createOrganization = (request, response) => {
-  Organization.create(request.body)
+  db.organizations.create(request.body)
     .then((org) => {
       response.json(org);
     })
@@ -12,7 +12,17 @@ var createOrganization = (request, response) => {
 }
 
 var getOrganizations = (request, response) => {
-  Organization.findAll()
+  db.organizations.findAll({
+    include: [
+      {
+        model: db.users,
+        as: 'members'
+      },
+      {
+        model: db.events
+      }
+    ]
+  })
     .then((orgs) => {
       response.json(orgs);
     })
@@ -21,7 +31,25 @@ var getOrganizations = (request, response) => {
     });
 }
 
+var addOrganizationMember = (request, response) => {
+  db.organizations.findByPk(request.body.orgId)
+    .then((org) => {
+      console.log(org);
+      db.users.findByPk(request.body.userId).then((user) => {
+        org.addMember(user).then((org) => {
+          response.send(org);
+        });
+      });
+    })
+};
+
+var getOrganizationEvents = (request, response) => {
+}
+
+
 module.exports = {
+  addOrganizationMember,
   createOrganization,
-  getOrganizations
+  getOrganizations,
+  getOrganizationEvents
 }

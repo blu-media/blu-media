@@ -1,25 +1,46 @@
 /* NPM Installation Dependencies */
-const express = require('express');
-
-/* DB Models */
-const { User } = require('../db/connection');
-const { Organization } = require('../db/connection');
-const { Event } = require('../db/connection');
+const express = require("express");
 
 /* Utility Functions */
 const { createUser, getAllUsers } =
-  require('./util/userUtil');
-const { getUpcomingEvents } =
-  require('./util/eventUtil');
-const { createOrganization, getOrganizations } =
-  require('./util/organizationUtil');
+  require("./util/userUtil");
+const { getEvent, getEvents, getUpcomingEvents } =
+  require("./util/eventUtil");
+const { createOrganization, getOrganizations, getOrganizationEvents,
+  addOrganizationMember } =
+  require("./util/organizationUtil");
+const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
+  require("./util/dataManipulation");
 
 const router = express.Router();
 
-router.get('/users', getAllUsers);
-router.post('/users', createUser);
-router.get('/upcoming-events', getUpcomingEvents);
-router.get('/organizations', getOrganizations);
-router.post('/organizations', createOrganization);
+router.get("/users", getAllUsers);
+router.post("/users", createUser);
+router.get("/organizations", getOrganizations);
+router.post("/organizations", createOrganization);
+router.post("/organizations/addMember", addOrganizationMember);
+// router.get("/events", getAllEvents);
+router.get("/events/:eventId", getEvent);
+
+/* Populate dummy data into the SQL Tables. */
+router.get("/users/addUsers/:num", addUsers);
+router.get("/organizations/addOrganizations/:num", addOrganizations);
+router.get("/events/addEvents/:num", addEvents);
+
+/* Wipe current DB's and recreate them.
+   Note: Only use when you ABSOLUTELY HAVE TO!
+*/
+router.get("/wipeDB", wipeDatabase);
+
+
+// QUERY: Get an event's information (including RSVP's) by an Event ID number.
+
+// QUERY: Get all the events within a given timeframe.
+
+// QUERY: Get all the events for a given organization.
+// Separate into both upcoming and past events.
+router.get("/organizations/:organizationID/events", getOrganizationEvents)
+
+// QUERY: Get all of the e-Board members of a given organization.
 
 module.exports = router;

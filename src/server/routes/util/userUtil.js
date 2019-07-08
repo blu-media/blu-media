@@ -1,15 +1,21 @@
 /* DB Models */
-const { User } = require('../../db/connection');
+const { db } = require('../../db/connection');
 
 var getAllUsers = (request, response) => {
-  User.findAll()
+  db.users.findAll({
+    include: [
+      {
+        model: db.organizations
+      }
+    ]
+  })
     .then((users) => {
       response.json(users);
     });
 }
 
 var createUser = (request, response) => {
-  User.create(request.body)
+  db.users.create(request.body)
     .then((user) => {
       response.json(user);
     })

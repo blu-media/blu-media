@@ -6,13 +6,13 @@ const bodyParser = require('body-parser');
 const app = express();
 const server = require('http').Server(app);
 
-/* Router Configuration */
-const router = require('./routes/router');
-app.use('/', router);
-
 /* Middleware Functionality */
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
+
+/* Router Configuration */
+const router = require('./routes/router');
+app.use('/', router);
 
 var port = process.env.PORT || 8080;
 
