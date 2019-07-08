@@ -4,10 +4,10 @@ const express = require("express");
 /* Utility Functions */
 const { createUser, getAllUsers } =
   require("./util/userUtil");
-const { getEvent, getUpcomingEvents } =
+const { getEvent, getEvents, getUpcomingEvents } =
   require("./util/eventUtil");
 const { createOrganization, getOrganizations, getOrganizationEvents,
-  addOrganizationUser } =
+  addOrganizationMember } =
   require("./util/organizationUtil");
 const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
   require("./util/dataManipulation");
@@ -16,21 +16,22 @@ const router = express.Router();
 
 router.get("/users", getAllUsers);
 router.post("/users", createUser);
-router.get("/upcoming-events", getUpcomingEvents);
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
-router.post("/organizations/addUser", addOrganizationUser);
-router.get("/addUsers/:num", addUsers);
-router.get("/addOrganizations/:num", addOrganizations);
-router.get("/addEvents/:num", addEvents);
+router.post("/organizations/addMember", addOrganizationMember);
+// router.get("/events", getAllEvents);
+router.get("/events/:eventId", getEvent);
+
+/* Populate dummy data into the SQL Tables. */
+router.get("/users/addUsers/:num", addUsers);
+router.get("/organizations/addOrganizations/:num", addOrganizations);
+router.get("/events/addEvents/:num", addEvents);
 
 /* Wipe current DB's and recreate them.
    Note: Only use when you ABSOLUTELY HAVE TO!
 */
 router.get("/wipeDB", wipeDatabase);
 
-// QUERY: Get an event's information by an Event ID number.
-router.get("/events/:eventID", getEvent);
 
 // QUERY: Get an event's information (including RSVP's) by an Event ID number.
 

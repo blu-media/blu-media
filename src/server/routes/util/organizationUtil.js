@@ -15,7 +15,11 @@ var getOrganizations = (request, response) => {
   db.organizations.findAll({
     include: [
       {
-        model: db.users
+        model: db.users,
+        as: 'members'
+      },
+      {
+        model: db.events
       }
     ]
   })
@@ -27,11 +31,12 @@ var getOrganizations = (request, response) => {
     });
 }
 
-var addOrganizationUser = (request, response) => {
+var addOrganizationMember = (request, response) => {
   db.organizations.findByPk(request.body.orgId)
     .then((org) => {
+      console.log(org);
       db.users.findByPk(request.body.userId).then((user) => {
-        org.addUser(user).then((org) => {
+        org.addMember(user).then((org) => {
           response.send(org);
         });
       });
@@ -43,7 +48,7 @@ var getOrganizationEvents = (request, response) => {
 
 
 module.exports = {
-  addOrganizationUser,
+  addOrganizationMember,
   createOrganization,
   getOrganizations,
   getOrganizationEvents

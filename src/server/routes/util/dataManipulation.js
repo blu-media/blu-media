@@ -42,20 +42,12 @@ var addEvents = (request, response) => {
 
   for (i = 0; i < request.params.num; i++) {
     db.events.create({
-      attendees: [
-        faker.name.findName(),
-        faker.name.findName(),
-        faker.name.findName(),
-        faker.name.findName(),
-        faker.name.findName()
-      ],
       attire: faker.commerce.color(),
       blurb: faker.lorem.paragraph(),
       date: faker.date.future(),
       endTime: faker.date.future(),
       id: i.toString(),
-      //images: [faker.image.image(), faker.image.image(), faker.image.image()],
-      //flyer: faker.image.image(),
+      flyer: faker.image.image(),
       location: faker.address.streetName(),
       name: faker.lorem.word(),
       // rsvps:

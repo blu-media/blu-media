@@ -26,11 +26,20 @@ db.events = EventModel(sequelize, Sequelize);
 
 /* Associations */
 db.users.belongsToMany(db.organizations, {
-  through: 'user_and_organizations'
+  through: 'users_and_organizations'
 });
 
 db.organizations.belongsToMany(db.users, {
-  through: 'user_and_organizations'
+  as: 'members',
+  through: 'users_and_organizations'
+});
+
+db.organizations.belongsToMany(db.events, {
+  through: 'events_and_organizations'
+});
+
+db.events.belongsToMany(db.organizations, {
+  through: 'events_and_organizations'
 });
 
 // Fill in organizations to events associations.

@@ -23,9 +23,5 @@ module.exports = (sequelize, type) => {
     }
   });
 
-  Organization.associate = (models) => {
-    Organization.hasMany(models.event);
-  }
-
   return Organization;
 }

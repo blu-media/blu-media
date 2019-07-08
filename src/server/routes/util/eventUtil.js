@@ -9,14 +9,21 @@ var getUpcomingEvents = (request, response) => {
 }
 
 var getEvent = (request, response) => {
-  var eventID = request.params.eventID;
-  db.events.findAll({ eventId: eventID })
-    .then((evennt) => {
+  db.events.findAll({ eventId: request.params.eventId })
+    .then((event) => {
       response.json(event);
+    });
+}
+
+var getAllEvents = (request, response) => {
+  db.events.findAll()
+    .then((events) => {
+      response.json(events);
     });
 }
 
 module.exports = {
   getEvent,
+  getAllEvents,
   getUpcomingEvents
 }
