@@ -1,6 +1,8 @@
 import React from 'react';
 import '../styles/Header.css'
 import logo from '../assets/cubal-logo.png';
+import { Link } from "react-router-dom";
+import {withRouter} from 'react-router'
 
 
 
@@ -58,12 +60,16 @@ searchBarKeyPress(event){
           <section id= "header-right-wrapper">
           <nav>
             <ul>
-              <li>Home</li>
-              <li>Events</li>
-              <li>Organizations</li>
+                <li><Link to="/"> Home </Link> </li>
+                <li><Link to="/events"> Events</Link></li>
+                <li><Link to="/organizations"> Organizations</Link></li>
             </ul>
           </nav>
+<<<<<<< Updated upstream
           <div id = "user-account-buttons-wrapper">
+=======
+          <div className = "buttons-wrapper">
+>>>>>>> Stashed changes
             <button id = "log-in-button" onClick = {this.handleOnClickLogIn}>Log in</button>
             <button id = "sign-up-button" onClick = {this.handleOnClickSignUp}>Sign Up</button>
             {/* <div>Log in</div> */}
@@ -75,4 +81,4 @@ searchBarKeyPress(event){
   }
 }
 
-export default Header;
+export default withRouter(Header);
