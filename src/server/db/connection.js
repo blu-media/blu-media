@@ -42,6 +42,15 @@ db.events.belongsToMany(db.organizations, {
   through: 'events_and_organizations'
 });
 
+db.events.belongsToMany(db.users, {
+  as: 'rsvps',
+  through: 'events_and_users'
+});
+
+db.users.belongsToMany(db.events, {
+  through: 'events_and_users'
+});
+
 // Fill in organizations to events associations.
 
 /* Connect to the DB. */

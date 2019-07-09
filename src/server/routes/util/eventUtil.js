@@ -16,13 +16,42 @@ var getEvent = (request, response) => {
 }
 
 var getAllEvents = (request, response) => {
-  db.events.findAll()
+  db.events.findAll({
+    include: [
+      {
+        model: db.users,
+        as: 'rsvps'
+      }
+    ]
+  })
     .then((events) => {
       response.json(events);
     });
 }
 
+var addEventRSVP = (request, response) => {
+  db.events.findByPk(request.body.eventId)
+    .then((event) => {
+      db.users.findOne({
+        where: { id: request.body.userId },
+        attributes: ['id', 'firstName', 'lastName', 'profilePicture']
+      })
+        .then((user) => {
+          console.log(user.toJSON());
+          event.addRsvp(user, {
+            through: {
+              response: 'Going'
+            }
+          })
+            .then(event => {
+              response.send(event);
+            })
+        })
+    })
+}
+
 module.exports = {
+  addEventRSVP,
   getEvent,
   getAllEvents,
   getUpcomingEvents

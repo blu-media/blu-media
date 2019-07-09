@@ -1,9 +1,5 @@
 module.exports = (sequelize, type) => {
   const Event = sequelize.define('event', {
-    attendees: {
-      type: type.ARRAY(type.STRING),
-      defaultValue: []
-    },
     attire: type.STRING,
     blurb: {
       type: type.TEXT,
@@ -37,10 +33,6 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false
     },
-    rsvps: {
-      type: type.ARRAY(type.JSONB),
-      defaultValue: []
-    },
     startTime: {
       type: type.DATE,
       allowNull: false
@@ -50,3 +42,14 @@ module.exports = (sequelize, type) => {
 
   return Event;
 }
+
+// rsvps: [
+//   {
+//     'name': 'Rami Abdou',
+//     'profilePicture': 'someUrl'
+//     'response': 'Going',
+//   }
+// ]
+
+// Users -> Events
+// Events.hasMany(Users)

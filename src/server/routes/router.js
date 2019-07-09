@@ -4,7 +4,7 @@ const express = require("express");
 /* Utility Functions */
 const { createUser, getAllUsers } =
   require("./util/userUtil");
-const { getEvent, getEvents, getUpcomingEvents } =
+const { addEventRSVP, getEvent, getAllEvents, getUpcomingEvents } =
   require("./util/eventUtil");
 const { createOrganization, getOrganizations, getOrganizationEvents,
   addOrganizationMember } =
@@ -19,8 +19,9 @@ router.post("/users", createUser);
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
 router.post("/organizations/addMember", addOrganizationMember);
-// router.get("/events", getAllEvents);
+router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
+router.post("/events/addRSVP", addEventRSVP);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);

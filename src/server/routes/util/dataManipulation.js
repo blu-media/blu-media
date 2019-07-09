@@ -50,13 +50,12 @@ var addEvents = (request, response) => {
       flyer: faker.image.image(),
       location: faker.address.streetName(),
       name: faker.lorem.word(),
-      // rsvps:
       startTime: faker.date.future(),
       type: faker.lorem.word()
     });
   }
 
-  response.send(`${request.params.num} events created!`);
+  response.send(`${request.params.num} events have been created successfully!`);
 };
 
 const wipeDatabase = (request, response) => {
