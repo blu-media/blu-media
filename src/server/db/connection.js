@@ -5,6 +5,7 @@ const Sequelize = require('sequelize');
 const UserModel = require('./models/user');
 const OrganizationModel = require('./models/organization');
 const EventModel = require('./models/event');
+const EventRSVPModel = require('./models/eventRSVP');
 
 const { localDBUsername, localDBPassword } = require('./config');
 
@@ -23,6 +24,7 @@ db.sequelize = sequelize;
 db.users = UserModel(sequelize, Sequelize);;
 db.organizations = OrganizationModel(sequelize, Sequelize);
 db.events = EventModel(sequelize, Sequelize);
+db.eventRSVPs = EventRSVPModel(sequelize, Sequelize);
 
 /* Associations */
 db.users.belongsToMany(db.organizations, {
@@ -43,12 +45,23 @@ db.events.belongsToMany(db.organizations, {
 });
 
 db.events.belongsToMany(db.users, {
+  as: 'attendees',
+  through: {
+    model: 'event_rsvp'
+  }
+});
+
+db.events.belongsToMany(db.users, {
   as: 'rsvps',
-  through: 'events_and_users'
+  through: {
+    model: 'event_rsvp'
+  }
 });
 
 db.users.belongsToMany(db.events, {
-  through: 'events_and_users'
+  through: {
+    model: 'event_rsvp'
+  }
 });
 
 // Fill in organizations to events associations.

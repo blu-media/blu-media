@@ -21,6 +21,10 @@ var getAllEvents = (request, response) => {
       {
         model: db.users,
         as: 'rsvps'
+      },
+      {
+        model: db.users,
+        as: 'attendees'
       }
     ]
   })
@@ -32,12 +36,8 @@ var getAllEvents = (request, response) => {
 var addEventRSVP = (request, response) => {
   db.events.findByPk(request.body.eventId)
     .then((event) => {
-      db.users.findOne({
-        where: { id: request.body.userId },
-        attributes: ['id', 'firstName', 'lastName', 'profilePicture']
-      })
+      db.users.findByPk(request.body.userId)
         .then((user) => {
-          console.log(user.toJSON());
           event.addRsvp(user, {
             through: {
               response: 'Going'

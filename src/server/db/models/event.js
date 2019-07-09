@@ -42,14 +42,3 @@ module.exports = (sequelize, type) => {
 
   return Event;
 }
-
-// rsvps: [
-//   {
-//     'name': 'Rami Abdou',
-//     'profilePicture': 'someUrl'
-//     'response': 'Going',
-//   }
-// ]
-
-// Users -> Events
-// Events.hasMany(Users)
