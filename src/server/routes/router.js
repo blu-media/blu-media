@@ -9,7 +9,8 @@ const {
   getAllEvents,
   addAttendee,
   deleteAttendee,
-  deleteRSVP
+  deleteRSVP,
+  getRSVP
 } = require("./util/eventUtil");
 const {
   createOrganization,
@@ -36,6 +37,7 @@ router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addRSVP);
 router.post("/events/addAttendee", addAttendee);
 /* Delete RSVP and Attendees*/
+router.post("/events/getRSVP", getRSVP);
 router.post("/events/deleteRSVP", deleteRSVP);
 router.post("/events/deleteAttendee", deleteAttendee);
 

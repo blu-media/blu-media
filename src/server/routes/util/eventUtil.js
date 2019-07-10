@@ -72,8 +72,20 @@ var deleteRSVP = (request, response) => {
   });
 };
 
+var getRSVP = (request, response) => {
+  db.eventRSVPs.findAll({
+    where: {
+      'eventId': request.body.eventId,
+      'userId': request.body.userId
+    }
+  }).then((eventRSVP) => {
+    response.send(eventRSVP);
+  })
+};
+
 module.exports = {
   addRSVP,
+  getRSVP,
   getEvent,
   getAllEvents,
   addAttendee,
