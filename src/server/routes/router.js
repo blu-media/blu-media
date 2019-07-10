@@ -2,15 +2,29 @@
 const express = require("express");
 
 /* Utility Functions */
-const { createUser, getAllUsers } =
-  require("./util/userUtil");
-const { addEventRSVP, getEvent, getAllEvents, getUpcomingEvents } =
-  require("./util/eventUtil");
-const { createOrganization, getOrganizations, getOrganizationEvents,
-  addOrganizationMember } =
-  require("./util/organizationUtil");
-const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
-  require("./util/dataManipulation");
+const { createUser, getAllUsers } = require("./util/userUtil");
+const {
+  addEventRSVP,
+  getEvent,
+  getAllEvents,
+  getUpcomingEvents,
+  addEventAttendees,
+  deleteAttenedees,
+  deleteRSVP
+} = require("./util/eventUtil");
+const {
+  createOrganization,
+  getOrganizations,
+  getOrganizationEvents,
+  addOrganizationMember
+} = require("./util/organizationUtil");
+const {
+  addUsers,
+  addOrganizations,
+  addEvents,
+  addAllData,
+  wipeDatabase
+} = require("./util/dataManipulation");
 
 const router = express.Router();
 
@@ -22,6 +36,10 @@ router.post("/organizations/addMember", addOrganizationMember);
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addEventRSVP);
+router.post("/events/addAttendees", addEventAttendees);
+/* Delete RSVP and Attendees*/
+router.post("/events/deleteRSVPS", deleteRSVP);
+router.post("/events/deleteAttenedees", deleteAttenedees);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);
@@ -33,14 +51,13 @@ router.get("/events/addEvents/:num", addEvents);
 */
 router.get("/wipeDB", wipeDatabase);
 
-
 // QUERY: Get an event's information (including RSVP's) by an Event ID number.
 
 // QUERY: Get all the events within a given timeframe.
 
 // QUERY: Get all the events for a given organization.
 // Separate into both upcoming and past events.
-router.get("/organizations/:organizationID/events", getOrganizationEvents)
+router.get("/organizations/:organizationID/events", getOrganizationEvents);
 
 // QUERY: Get all of the e-Board members of a given organization.
 
