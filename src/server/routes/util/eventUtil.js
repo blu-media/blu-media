@@ -40,10 +40,25 @@ var deleteAttendee = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
       event.removeAttendee(user).then(() => {
-        response.send(`Removed attendee with ID ${user.id} from event with ID ${event.id}`);
+        response.send(
+          `Removed attendee with ID ${user.id} from event with ID ${event.id}`
+        );
       });
     });
   });
+};
+
+var getAttendee = (request, response) => {
+  db.eventRSVPs
+    .findAll({
+      where: {
+        eventId: request.body.eventId,
+        userId: request.body.userId
+      }
+    })
+    .then(eventRSVP => {
+      response.send(eventRSVP);
+    });
 };
 
 var addRSVP = (request, response) => {
@@ -66,21 +81,23 @@ var deleteRSVP = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
       event.removeRsvp(user).then(() => {
-        response.send('RSVP has been removed from event!');
+        response.send("RSVP has been removed from event!");
       });
     });
   });
 };
 
 var getRSVP = (request, response) => {
-  db.eventRSVPs.findAll({
-    where: {
-      'eventId': request.body.eventId,
-      'userId': request.body.userId
-    }
-  }).then((eventRSVP) => {
-    response.send(eventRSVP);
-  })
+  event_attendees
+    .findAll({
+      where: {
+        eventId: request.body.eventId,
+        userId: request.body.userId
+      }
+    })
+    .then(event_attendees => {
+      response.send(event_attendees);
+    });
 };
 
 module.exports = {
@@ -90,5 +107,6 @@ module.exports = {
   getAllEvents,
   addAttendee,
   deleteRSVP,
-  deleteAttendee
+  deleteAttendee,
+  getAttendee
 };
