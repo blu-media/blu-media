@@ -71,8 +71,8 @@ var deleteAttenedees = (request, response) => {
 var deleteRSVP = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
-      event.setRsvps([]).then(event => {
-        response.send(event);
+      event.removeRsvp(user).then(() => {
+        response.send('RSVP has been removed from event!');
       });
     });
   });

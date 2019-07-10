@@ -38,7 +38,7 @@ router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addEventRSVP);
 router.post("/events/addAttendees", addEventAttendees);
 /* Delete RSVP and Attendees*/
-router.post("/events/deleteRSVPS", deleteRSVP);
+router.post("/events/deleteRSVP", deleteRSVP);
 router.post("/events/deleteAttenedees", deleteAttenedees);
 
 /* Populate dummy data into the SQL Tables. */
