@@ -7,7 +7,6 @@ const {
   addEventRSVP,
   getEvent,
   getAllEvents,
-  getUpcomingEvents,
   addEventAttendee,
   deleteAttendee,
   deleteRSVP
@@ -39,7 +38,7 @@ router.post("/events/addRSVP", addEventRSVP);
 router.post("/events/addAttendees", addEventAttendee);
 /* Delete RSVP and Attendees*/
 router.post("/events/deleteRSVP", deleteRSVP);
-router.post("/events/deleteAttenedees", deleteAttendee);
+router.post("/events/deleteAttendee", deleteAttendee);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);
