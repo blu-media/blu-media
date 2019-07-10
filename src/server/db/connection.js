@@ -6,6 +6,7 @@ const UserModel = require('./models/user');
 const OrganizationModel = require('./models/organization');
 const EventModel = require('./models/event');
 const EventRSVPModel = require('./models/eventRSVP');
+const OrganizationMemberModel = require('./models/organizationMember');
 
 const { localDBUsername, localDBPassword } = require('./config');
 
@@ -25,32 +26,48 @@ db.users = UserModel(sequelize, Sequelize);;
 db.organizations = OrganizationModel(sequelize, Sequelize);
 db.events = EventModel(sequelize, Sequelize);
 db.eventRSVPs = EventRSVPModel(sequelize, Sequelize);
+db.organizationMembers = OrganizationMemberModel(sequelize, Sequelize);
 
 /* Associations */
+
+// Users (Members) --> Organizations
 db.users.belongsToMany(db.organizations, {
-  through: 'users_and_organizations'
-});
-
-db.organizations.belongsToMany(db.users, {
-  as: 'members',
-  through: 'users_and_organizations'
-});
-
-db.organizations.belongsToMany(db.events, {
-  through: 'events_and_organizations'
-});
-
-db.events.belongsToMany(db.organizations, {
-  through: 'events_and_organizations'
-});
-
-db.events.belongsToMany(db.users, {
-  as: 'attendees',
   through: {
-    model: 'event_rsvp'
+    model: 'organization_member'
   }
 });
 
+// Organizations --> Users
+db.organizations.belongsToMany(db.users, {
+  as: 'members',
+  through: {
+    model: 'organization_member'
+  }
+});
+
+// Organizations --> Events
+db.organizations.belongsToMany(db.events, {
+  through: 'events_organizations'
+});
+
+// Events --> Organizations
+db.events.belongsToMany(db.organizations, {
+  through: 'events_organizations'
+});
+
+// Events --> Users (Attendees)
+db.events.belongsToMany(db.users, {
+  as: 'attendees',
+  through: 'event_attendees'
+});
+
+// Users --> Events
+db.users.belongsToMany(db.events, {
+  through: 'event_attendees'
+});
+
+
+// Events --> Users (RSVP's)
 db.events.belongsToMany(db.users, {
   as: 'rsvps',
   through: {
@@ -58,13 +75,12 @@ db.events.belongsToMany(db.users, {
   }
 });
 
+// Users --> Events
 db.users.belongsToMany(db.events, {
   through: {
     model: 'event_rsvp'
   }
 });
-
-// Fill in organizations to events associations.
 
 /* Connect to the DB. */
 sequelize

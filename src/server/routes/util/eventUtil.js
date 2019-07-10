@@ -39,8 +39,8 @@ var addAttendee = (request, response) => {
 var deleteAttendee = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
-      event.removeAttendees([]).then(event => {
-        response.send(event);
+      event.removeAttendee(user).then(() => {
+        response.send(`Removed attendee with ID ${user.id} from event with ID ${event.id}`);
       });
     });
   });
@@ -52,7 +52,7 @@ var addRSVP = (request, response) => {
       event
         .addRsvp(user, {
           through: {
-            response: "Going"
+            response: request.body.response
           }
         })
         .then(event => {

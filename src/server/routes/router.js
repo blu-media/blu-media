@@ -14,7 +14,6 @@ const {
 const {
   createOrganization,
   getOrganizations,
-  getOrganizationEvents,
   addOrganizationMember
 } = require("./util/organizationUtil");
 const {
@@ -35,7 +34,7 @@ router.post("/organizations/addMember", addOrganizationMember);
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addRSVP);
-router.post("/events/addAttendees", addAttendee);
+router.post("/events/addAttendee", addAttendee);
 /* Delete RSVP and Attendees*/
 router.post("/events/deleteRSVP", deleteRSVP);
 router.post("/events/deleteAttendee", deleteAttendee);
@@ -56,7 +55,7 @@ router.get("/wipeDB", wipeDatabase);
 
 // QUERY: Get all the events for a given organization.
 // Separate into both upcoming and past events.
-router.get("/organizations/:organizationID/events", getOrganizationEvents);
+// router.get("/organizations/:organizationID/events", getOrganizationEvents);
 
 // QUERY: Get all of the e-Board members of a given organization.
 

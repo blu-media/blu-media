@@ -34,22 +34,20 @@ var getOrganizations = (request, response) => {
 var addOrganizationMember = (request, response) => {
   db.organizations.findByPk(request.body.orgId)
     .then((org) => {
-      console.log(org);
       db.users.findByPk(request.body.userId).then((user) => {
-        org.addMember(user).then((org) => {
+        org.addMember(user, {
+          through: {
+            position: request.body.position
+          }
+        }).then((org) => {
           response.send(org);
         });
       });
     })
 };
 
-var getOrganizationEvents = (request, response) => {
-}
-
-
 module.exports = {
   addOrganizationMember,
   createOrganization,
-  getOrganizations,
-  getOrganizationEvents
+  getOrganizations
 }
