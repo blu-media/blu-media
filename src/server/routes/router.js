@@ -8,8 +8,8 @@ const {
   getEvent,
   getAllEvents,
   getUpcomingEvents,
-  addEventAttendees,
-  deleteAttenedees,
+  addEventAttendee,
+  deleteAttendee,
   deleteRSVP
 } = require("./util/eventUtil");
 const {
@@ -36,10 +36,10 @@ router.post("/organizations/addMember", addOrganizationMember);
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addEventRSVP);
-router.post("/events/addAttendees", addEventAttendees);
+router.post("/events/addAttendees", addEventAttendee);
 /* Delete RSVP and Attendees*/
 router.post("/events/deleteRSVP", deleteRSVP);
-router.post("/events/deleteAttenedees", deleteAttenedees);
+router.post("/events/deleteAttenedees", deleteAttendee);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);

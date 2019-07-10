@@ -32,6 +32,26 @@ var getAllEvents = (request, response) => {
     });
 };
 
+var addEventAttendee = (request, response) => {
+  db.events.findByPk(request.body.eventId).then(event => {
+    db.users.findByPk(request.body.userId).then(user => {
+      event.addAttendee(user).then(event => {
+        response.send(event);
+      });
+    });
+  });
+};
+
+var deleteAttendee = (request, response) => {
+  db.events.findByPk(request.body.eventId).then(event => {
+    db.users.findByPk(request.body.userId).then(user => {
+      event.removeAttendees([]).then(event => {
+        response.send(event);
+      });
+    });
+  });
+};
+
 var addEventRSVP = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
@@ -44,26 +64,6 @@ var addEventRSVP = (request, response) => {
         .then(event => {
           response.send(event);
         });
-    });
-  });
-};
-
-var addEventAttendees = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.addAttendee(user).then(event => {
-        response.send(event);
-      });
-    });
-  });
-};
-
-var deleteAttenedees = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.removeAttendees([]).then(event => {
-        response.send(event);
-      });
     });
   });
 };
@@ -83,7 +83,7 @@ module.exports = {
   getEvent,
   getAllEvents,
   getUpcomingEvents,
-  addEventAttendees,
+  addEventAttendee,
   deleteRSVP,
-  deleteAttenedees
+  deleteAttendee
 };
