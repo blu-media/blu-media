@@ -4,10 +4,10 @@ const express = require("express");
 /* Utility Functions */
 const { createUser, getAllUsers } = require("./util/userUtil");
 const {
-  addEventRSVP,
+  addRSVP,
   getEvent,
   getAllEvents,
-  addEventAttendee,
+  addAttendee,
   deleteAttendee,
   deleteRSVP
 } = require("./util/eventUtil");
@@ -34,8 +34,8 @@ router.post("/organizations", createOrganization);
 router.post("/organizations/addMember", addOrganizationMember);
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
-router.post("/events/addRSVP", addEventRSVP);
-router.post("/events/addAttendees", addEventAttendee);
+router.post("/events/addRSVP", addRSVP);
+router.post("/events/addAttendees", addAttendee);
 /* Delete RSVP and Attendees*/
 router.post("/events/deleteRSVP", deleteRSVP);
 router.post("/events/deleteAttendee", deleteAttendee);

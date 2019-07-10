@@ -26,7 +26,7 @@ var getAllEvents = (request, response) => {
     });
 };
 
-var addEventAttendee = (request, response) => {
+var addAttendee = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
       event.addAttendee(user).then(event => {
@@ -46,7 +46,7 @@ var deleteAttendee = (request, response) => {
   });
 };
 
-var addEventRSVP = (request, response) => {
+var addRSVP = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
       event
@@ -73,10 +73,10 @@ var deleteRSVP = (request, response) => {
 };
 
 module.exports = {
-  addEventRSVP,
+  addRSVP,
   getEvent,
   getAllEvents,
-  addEventAttendee,
+  addAttendee,
   deleteRSVP,
   deleteAttendee
 };
