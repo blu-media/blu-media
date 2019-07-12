@@ -15,6 +15,8 @@ const { localDBUsername, localDBPassword } = require("./config");
 const devDBConnection = `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
 const sequelize = new Sequelize(devDBConnection);
 
+// STAGING ENVIORNMENT --> STAGED ENVIORNMENT --> REMOTE ENVIRONMENT (GITHUB)
+
 /* Connect all the models/tables in the database to a db object, 
    so everything is accessible via one object. */
 const db = {};
@@ -28,6 +30,8 @@ db.events = EventModel(sequelize, Sequelize);
 db.eventRSVPs = EventRSVPModel(sequelize, Sequelize);
 db.eventAttendees = EventAttendeeModel(sequelize, Sequelize);
 db.organizationMembers = OrganizationMemberModel(sequelize, Sequelize);
+
+// THIS IS A TEST.
 
 /* Associations */
 
