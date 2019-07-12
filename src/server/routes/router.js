@@ -2,23 +2,31 @@
 const express = require("express");
 
 /* Utility Functions */
-const { createUser, getAllUsers } = require("./util/userUtil");
 const {
-  addRSVP,
-  getEvent,
-  getAllEvents,
+  createUser,
+  getAllUsers,
+  getUserRSVPs
+} = require("./util/userUtil");
+
+const {
   addAttendee,
+  addOrganization,
+  addRSVP,
   deleteAttendee,
   deleteRSVP,
+  getAllEvents,
+  getEvent,
   getRSVP,
   getAttendee,
   updateResponse
 } = require("./util/eventUtil");
+
 const {
   createOrganization,
   getOrganizations,
   addOrganizationMember
 } = require("./util/organizationUtil");
+
 const {
   addUsers,
   addOrganizations,
@@ -29,16 +37,20 @@ const {
 
 const router = express.Router();
 
+/* User Functionality */
 router.get("/users", getAllUsers);
+router.get("/users/getRSVPs", getUserRSVPs);
 router.post("/users", createUser);
+
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
 router.post("/organizations/addMember", addOrganizationMember);
+
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
-router.post("/events/addRSVP", addRSVP);
 router.post("/events/addAttendee", addAttendee);
-/* Delete RSVP and Attendees*/
+router.post("/events/addOrganization", addOrganization);
+router.post("/events/addRSVP", addRSVP);
 router.post("/events/getRSVP", getRSVP);
 router.post("/events/getAttendee", getAttendee);
 router.post("/events/deleteRSVP", deleteRSVP);

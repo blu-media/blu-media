@@ -18,6 +18,9 @@ var getAllEvents = (request, response) => {
         {
           model: db.users,
           as: "attendees"
+        },
+        {
+          model: db.organizations
         }
       ]
     })
@@ -116,8 +119,20 @@ var updateResponse = (request, response) => {
   });
 };
 
+var addOrganization = (request, response) => {
+  db.events.findByPk(request.body.eventId).then(event => {
+    db.organizations.findByPk(request.body.orgId).then(org => {
+      event.addOrganization(org)
+        .then(org => {
+          response.send(org);
+        });
+    });
+  });
+};
+
 module.exports = {
   addRSVP,
+  addOrganization,
   getRSVP,
   getEvent,
   getAllEvents,

@@ -6,6 +6,9 @@ var getAllUsers = (request, response) => {
     include: [
       {
         model: db.organizations
+      },
+      {
+        model: db.events
       }
     ]
   })
@@ -24,7 +27,21 @@ var createUser = (request, response) => {
     });
 }
 
+var getUserRSVPs = (request, response) => {
+  db.users.findAll({
+    include: [
+      {
+        model: db.organizations
+      }
+    ]
+  })
+    .then((users) => {
+      response.json(users);
+    });
+}
+
 module.exports = {
   createUser,
-  getAllUsers
+  getAllUsers,
+  getUserRSVPs
 }
