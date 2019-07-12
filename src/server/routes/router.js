@@ -11,7 +11,8 @@ const {
   deleteAttendee,
   deleteRSVP,
   getRSVP,
-  getAttendee
+  getAttendee,
+  updateResponse
 } = require("./util/eventUtil");
 const {
   createOrganization,
@@ -48,6 +49,8 @@ router.get("/users/addUsers/:num", addUsers);
 router.get("/organizations/addOrganizations/:num", addOrganizations);
 router.get("/events/addEvents/:num", addEvents);
 
+/*Update RSVP responses*/
+router.post("events/updateResponse", updateResponse);
 /* Wipe current DB's and recreate them.
    Note: Only use when you ABSOLUTELY HAVE TO!
 */
