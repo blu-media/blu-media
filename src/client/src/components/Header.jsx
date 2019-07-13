@@ -1,7 +1,7 @@
 import React from 'react';
 import '../styles/main.css';
 import '../styles/Header.css';
-import logo from '../assets/cubal-logo.png';
+// import logo from '../assets/cubal-logo.png';
 
 class Header extends React.Component {
   constructor(props) {
@@ -36,14 +36,24 @@ class Header extends React.Component {
 
   render() {
     return (
-      <header class="display-flex flex-space-between flex-align-center">
-        <a href="/">
-          <img src={logo} alt="" class="width-75px height-75px" />
-        </a>
+      <header className="display-flex flex-space-between flex-align-center">
+        {/* <div id="search-bar"
+            class="fnt-12 dsp-flx crsr-ptr trns-eio no-outline
+            brdr-1px-cbldark brdr-rad-8px text-uppercase">
+            <button class="fnt-nov fnt-cbldark"
+              onClick={this.handleOnClickLogIn}>
+              Log In
+            </button>
+
+            <button class="fnt-nov fnt-wht bg-cbldark"
+              onClick={this.handleOnClickSignUp}>
+              Sign Up
+            </button>
+        </div>
 
         <div>
           <img src={logo} alt="" class="width-75px height-75px" />
-        </div>
+        </div> */}
 
 
         {/* <section id="header-left-wrapper">

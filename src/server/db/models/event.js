@@ -10,7 +10,7 @@ module.exports = (sequelize, type) => {
       allowNull: false
     },
     endTime: {
-      type: type.DATE,
+      type: type.STRING,
       allowNull: false
     },
     id: {
@@ -34,7 +34,7 @@ module.exports = (sequelize, type) => {
       allowNull: false
     },
     startTime: {
-      type: type.DATE,
+      type: type.STRING,
       allowNull: false
     },
     type: type.STRING

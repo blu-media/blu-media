@@ -12,6 +12,7 @@ const {
   addAttendee,
   addOrganization,
   addRSVP,
+  createEvent,
   deleteAttendee,
   deleteRSVP,
   getAllEvents,
@@ -47,6 +48,7 @@ router.post("/organizations", createOrganization);
 router.post("/organizations/addMember", addOrganizationMember);
 
 router.get("/events", getAllEvents);
+router.post("/events/createEvent", createEvent);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addAttendee", addAttendee);
 router.post("/events/addOrganization", addOrganization);

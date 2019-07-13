@@ -1,5 +1,15 @@
+var uniqid = require('uniqid');
+
 /* DB Models */
 const { db } = require("../../db/connection");
+
+var createEvent = (request, response) => {
+  request.body.id = uniqid();
+  db.events.create(request.body)
+    .then((event) => {
+      response.send(event);
+    });
+};
 
 var getEvent = (request, response) => {
   db.events.findAll({ eventId: request.params.eventId }).then(event => {
@@ -133,6 +143,7 @@ var addOrganization = (request, response) => {
 module.exports = {
   addRSVP,
   addOrganization,
+  createEvent,
   getRSVP,
   getEvent,
   getAllEvents,
