@@ -1,6 +1,8 @@
-const { db } = require("../../db/connection");
 const faker = require("faker");
 const random = require("random");
+
+const { db } = require("../../db/connection");
+const { createQRCode } = require('./eventUtil');
 
 const { sequelize } = require("../../db/connection");
 
@@ -37,10 +39,12 @@ var addOrganizations = (request, response) => {
   response.send(`${i} organizations have been created successfully!`);
 };
 
-var addEvents = (request, response) => {
+var addEvents = async (request, response) => {
   var i;
 
   for (i = 0; i < request.params.num; i++) {
+    const qrCode = await createQRCode(i.toString());
+
     db.events.create({
       attire: faker.commerce.color(),
       blurb: faker.lorem.paragraph(),
@@ -50,6 +54,7 @@ var addEvents = (request, response) => {
       flyer: faker.image.image(),
       location: faker.address.streetName(),
       name: faker.lorem.word(),
+      qrCode: qrCode,
       startTime: faker.date.future(),
       type: faker.lorem.word()
     });

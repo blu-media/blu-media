@@ -1,3 +1,5 @@
+const qr = require('qrcode');
+
 /* DB Models */
 const { db } = require("../../db/connection");
 
@@ -130,9 +132,20 @@ var addOrganization = (request, response) => {
   });
 };
 
+var createQRCode = (eventId) => {
+  return new Promise((resolve, reject) => {
+    qr.toDataURL(`localhost:8080/events/${eventId}`, (error, url) => {
+      if (error) reject(error);
+
+      resolve(url);
+    })
+  });
+}
+
 module.exports = {
   addRSVP,
   addOrganization,
+  createQRCode,
   getRSVP,
   getEvent,
   getAllEvents,
