@@ -1,29 +1,106 @@
+@font-face {
+    font-family: Novecento;
+    src: url(../fonts/Novecentowide-DemiBold.otf);
+}
 
-    /* Button styling */
-    
-    .buttons-wrapper {
-        display: flex;
-        margin-right: 80px;
-    }
+/* FONT FAMILIES */
+.fnt-nov {
+    font-family: Novecento;
+}
 
-    .buttons-wrapper button {
-        border: 1px solid var(--cubal-blue-dark);
-        text-transform: uppercase;
-        outline: none;
-        font-size: var(--header-desktop-text-size);
-        border-radius: 8px;
-        margin: auto 8px;
-        padding: 0px 24px;
-        font-weight: 850;
-        cursor: pointer;
-        height: var(--search-bar-height);
-        display: inline-block;
-        transition: ease-in-out;
-        box-sizing: content-box;
+/* FONT SIZES */
+.fnt-10 {
+    font-size: 10px;
+}
 
-    }
+.fnt-11 {
+    font-size: 11px;
+}
 
-    .buttons-wrapper button:hover {
-        transform: scale(1.02);
-        font-weight: 900;
-    }
+.fnt-12 {
+    font-size: 12px;
+}
+
+/* FONT COLORS */
+
+.fnt-wht {
+    color: white;
+}
+
+.fnt-cbldark {
+    color: var(--cubal-blue-dark);
+}
+
+/* TEXT TRANSFORMS */
+.text-uppercase {
+    text-transform: uppercase;
+}
+
+/* BACKGROUND COLORS */
+
+.bg-cbldark {
+    background-color: var(--cubal-blue-dark);
+}
+
+/* DISPLAYS */
+
+.display-flex {
+    display: flex;
+}
+
+.flex-center {
+    justify-content: center;
+}
+
+.flex-space-between {
+    justify-content: space-between;
+}
+
+.flex-align-center {
+    align-items: center;
+}
+
+/* WIDTHS AND HEIGHTS */
+.width-75px {
+    width: 75px;
+}
+
+.height-75px {
+    height: 75px;
+}
+
+/* MARGINS */
+
+/* BORDERS */
+.brdr-1px-cbldark {
+    border: 1px solid var(--cubal-blue-dark);
+}
+
+.brdr-rad-8px {
+    border-radius: 8px;
+}
+
+/* CURSORS */
+.crsr-ptr {
+    cursor: pointer;
+}
+
+/* TRANSITIONS */
+.trns-eio {
+    transition: ease-in-out;
+}
+
+/* OUTLINES */
+.no-outline {
+    outline: none;
+}
+
+.buttons-wrapper button {
+    margin: auto 8px;
+    padding: 0px 24px;
+}
+
+.buttons-wrapper button:hover {
+    transform: scale(1.02);
+    font-weight: 900;
+}
