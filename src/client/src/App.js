@@ -8,7 +8,7 @@ import Form from './components/Form.jsx';
 function App() {
   return (
     <div className="App">
-      <Header></Header>
+      {/* <Header></Header> */}
       <Form></Form>
     </div>
   );
