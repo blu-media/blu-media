@@ -1,36 +1,35 @@
+/* NPM Installation Dependencies */
 const faker = require("faker");
 const random = require("random");
 
+// DB Object and Other Utility Functions
 const { db } = require("../../db/connection");
 const { createQRCode } = require('./eventUtil');
 
-const { sequelize } = require("../../db/connection");
-
 var addUsers = (request, response) => {
   var i;
+
   for (i = 0; i < request.params.num; i++) {
     db.users.create({
       email: faker.internet.email(),
       firstName: faker.name.firstName(),
       gradYear: random.int(2019, 2022),
+      id: i.toString(),
       lastName: faker.name.lastName(),
-      password: faker.lorem.word(),
-      // profilePicture: faker.image.image(),
-      id: i.toString()
+      password: faker.lorem.word()
     });
   }
 
-  response.send(`${i} have been created successfully!`);
+  response.send(`${i} users have been created successfully!`);
 }
 
 var addOrganizations = (request, response) => {
   var i;
+
   for (i = 0; i < request.params.num; i++) {
     db.organizations.create({
       about: faker.lorem.paragraph(),
       acronym: faker.company.companySuffix(),
-      // contactInfo:
-      // logo: faker.image.avatar(),
       name: faker.company.companyName(),
       id: i.toString()
     });
@@ -43,6 +42,7 @@ var addEvents = async (request, response) => {
   var i;
 
   for (i = 0; i < request.params.num; i++) {
+    // Create a QR code for the event.
     const qrCode = await createQRCode(i.toString());
 
     db.events.create({
@@ -64,14 +64,14 @@ var addEvents = async (request, response) => {
 };
 
 const wipeDatabase = (request, response) => {
-  sequelize.sync({ force: true }).then(() => {
+  db.sequelize.sync({ force: true }).then(() => {
     response.send("Database wiped successfully and have been recreated!");
   });
 };
 
 module.exports = {
-  addUsers,
-  addOrganizations,
   addEvents,
+  addOrganizations,
+  addUsers,
   wipeDatabase
 };

@@ -16,9 +16,9 @@ const {
   deleteRSVP,
   getAllEvents,
   getAttendees,
-  getEvent,
+  getEventById,
   getRSVP,
-  updateResponse
+  updateRSVP
 } = require("./util/eventUtil");
 
 const {
@@ -36,7 +36,8 @@ const {
 
 const router = express.Router();
 
-/*** USER FUNCTIONALITY ***/
+
+/********** USER FUNCTIONALITY **********/
 
 // Get all users.
 router.get("/users", getAllUsers);
@@ -48,7 +49,7 @@ router.get("/users/rsvps", getUserRSVPs);
 router.post("/users", createUser);
 
 
-/*** ORGANIZATION FUNCTIONALITY ***/
+/********** ORGANIZATION FUNCTIONALITY **********/
 
 // Get all organizations.
 router.get("/organizations", getOrganizations);
@@ -60,52 +61,54 @@ router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
 
 // Add an executive board member to an organization.
-router.post("/organizations/addMember", addOrganizationMember);
+router.post("/organizations/add-member", addOrganizationMember);
 
-/*** EVENT FUNCTIONALITY ***/
+
+/********** EVENT FUNCTIONALITY **********/
 
 // Get all events.
 router.get("/events", getAllEvents);
 
 // Get an event by ID.
-router.get("/events/:eventId", getEvent);
-
-// Add an attendee to an event.
-router.post("/events/addAttendee", addAttendee);
-
-// Delete an attendee from an event.
-router.delete("/events/deleteAttendee/:eventId/:userId", deleteAttendee);
+router.get("/events/:eventId", getEventById);
 
 // Add an organization as a host to an event.
-router.post("/events/addOrganization", addOrganization);
+router.post("/events/:eventId/add-organization", addOrganization);
 
 // Add an RSVP to an event.
-router.post("/events/addRSVP", addRSVP);
+router.post("/events/:eventId/add-rsvp", addRSVP);
 
 // Get an RSVP for an event.
-router.post("/events/getRSVP", getRSVP);
+router.post("/events/:eventId/rsvp", getRSVP);
+
+// Update an RSVP for an event.
+router.patch("/events/:eventId/update-rsvp", updateRSVP)
+
+// Delete an attendee from an event.
+router.delete("/events/:eventId/delete-rsvp/:userId", deleteRSVP);
 
 // Get all attendees for an event.
 router.get("/events/:eventId/attendees", getAttendees);
 
+// Add an attendee to an event.
+router.post("/events/:eventId/add-attendee", addAttendee);
+
 // Delete an attendee from an event.
-router.delete("/events/deleteRSVP/:eventId/:userId", deleteRSVP);
+router.delete("/events/:eventId/delete-attendee/:userId", deleteAttendee);
 
 
-/*** DUMMY DATA FUNCTIONALITY ***/
+/********** DUMMY DATA FUNCTIONALITY /**********/
 
 // Populate User table with arbitrary number of users.
-router.get("/users/addUsers/:num", addUsers);
+router.get("/users/add-users/:num", addUsers);
 
 // Populate Organizations table with arbitrary number of organizations.
-router.get("/organizations/addOrganizations/:num", addOrganizations);
+router.get("/organizations/add-organizations/:num", addOrganizations);
 
 // Populate Events table with arbitrary number of events.
-router.get("/events/addEvents/:num", addEvents);
-
-router.get("/dummyData")
+router.get("/events/add-events/:num", addEvents);
 
 /* Wipe current DB. */
-router.get("/wipeDB", wipeDatabase);
+router.get("/wipe-db", wipeDatabase);
 
 module.exports = router;

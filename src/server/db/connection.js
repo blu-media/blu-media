@@ -9,13 +9,13 @@ const EventRSVPModel = require("./models/eventRSVP");
 const EventAttendeeModel = require("./models/eventAttendee");
 const OrganizationMemberModel = require("./models/organizationMember");
 
+/* DB Credentials */
 const { localDBUsername, localDBPassword } = require("./config");
 
 /* Establish the DB Connection */
-const devDBConnection = `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
-const sequelize = new Sequelize(devDBConnection);
-
-// STAGING ENVIORNMENT --> STAGED ENVIORNMENT --> REMOTE ENVIRONMENT (GITHUB)
+const devDBConnectionURL =
+  `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
+const sequelize = new Sequelize(devDBConnectionURL);
 
 /* Connect all the models/tables in the database to a db object, 
    so everything is accessible via one object. */
@@ -23,7 +23,6 @@ const db = {};
 
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
-
 db.users = UserModel(sequelize, Sequelize);
 db.organizations = OrganizationModel(sequelize, Sequelize);
 db.events = EventModel(sequelize, Sequelize);
@@ -31,9 +30,8 @@ db.eventRSVPs = EventRSVPModel(sequelize, Sequelize);
 db.eventAttendees = EventAttendeeModel(sequelize, Sequelize);
 db.organizationMembers = OrganizationMemberModel(sequelize, Sequelize);
 
-// THIS IS A TEST.
 
-/* Associations */
+/********** ASSOCIATIONS *****/
 
 // Users (Members) --> Organizations
 db.users.belongsToMany(db.organizations, {
@@ -99,6 +97,5 @@ sequelize
   });
 
 module.exports = {
-  sequelize,
   db
 };
