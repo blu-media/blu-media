@@ -4,28 +4,28 @@ const qr = require('qrcode');
 const { db } = require("../../db/connection");
 
 var getEvent = (request, response) => {
-  db.events.findAll({ eventId: request.params.eventId }).then(event => {
-    response.json(event);
-  });
+  db.events.findAll({ eventId: request.params.eventId })
+    .then(event => {
+      response.json(event);
+    });
 };
 
 var getAllEvents = (request, response) => {
-  db.events
-    .findAll({
-      include: [
-        {
-          model: db.users,
-          as: "rsvps"
-        },
-        {
-          model: db.users,
-          as: "attendees"
-        },
-        {
-          model: db.organizations
-        }
-      ]
-    })
+  db.events.findAll({
+    include: [
+      {
+        model: db.users,
+        as: "rsvps"
+      },
+      {
+        model: db.users,
+        as: "attendees"
+      },
+      {
+        model: db.organizations
+      }
+    ]
+  })
     .then(events => {
       response.json(events);
     });
@@ -42,8 +42,8 @@ var addAttendee = (request, response) => {
 };
 
 var deleteAttendee = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
+  db.events.findByPk(request.params.eventId).then(event => {
+    db.users.findByPk(request.params.userId).then(user => {
       event.removeAttendee(user).then(() => {
         response.send(
           `Removed attendee with ID ${user.id} from event with ID ${event.id}`
@@ -83,8 +83,8 @@ var addRSVP = (request, response) => {
 };
 
 var deleteRSVP = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
+  db.events.findByPk(request.params.eventId).then(event => {
+    db.users.findByPk(request.params.userId).then(user => {
       event.removeRsvp(user).then(() => {
         response.send("RSVP has been removed from event!");
       });

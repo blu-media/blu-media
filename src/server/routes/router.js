@@ -39,22 +39,24 @@ const router = express.Router();
 
 /* User Functionality */
 router.get("/users", getAllUsers);
-router.get("/users/getRSVPs", getUserRSVPs);
+router.get("/users/rsvps", getUserRSVPs);
 router.post("/users", createUser);
 
+/* Organization Functionality */
 router.get("/organizations", getOrganizations);
 router.post("/organizations", createOrganization);
 router.post("/organizations/addMember", addOrganizationMember);
 
+/* Event Functionality */
 router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addAttendee", addAttendee);
+router.delete("/events/deleteAttendee/:eventId/:userId", deleteAttendee);
 router.post("/events/addOrganization", addOrganization);
 router.post("/events/addRSVP", addRSVP);
 router.post("/events/getRSVP", getRSVP);
 router.post("/events/getAttendee", getAttendee);
-router.post("/events/deleteRSVP", deleteRSVP);
-router.post("/events/deleteAttendee", deleteAttendee);
+router.delete("/events/deleteRSVP/:eventId/:userId", deleteRSVP);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);

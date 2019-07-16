@@ -1,7 +1,5 @@
 module.exports = (sequelize, type) => {
-  const EventAttendee = sequelize.define(
-    "event_attendee",
-    {},
+  const EventAttendee = sequelize.define("event_attendee", {},
     {
       tableName: "event_attendee"
     }

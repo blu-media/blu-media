@@ -1,6 +1,16 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
+var createUser = (request, response) => {
+  db.users.create(request.body)
+    .then((user) => {
+      response.json(user);
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+}
+
 var getAllUsers = (request, response) => {
   db.users.findAll({
     include: [
@@ -14,16 +24,6 @@ var getAllUsers = (request, response) => {
   })
     .then((users) => {
       response.json(users);
-    });
-}
-
-var createUser = (request, response) => {
-  db.users.create(request.body)
-    .then((user) => {
-      response.json(user);
-    })
-    .catch((error) => {
-      console.log(error)
     });
 }
 
