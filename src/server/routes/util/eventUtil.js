@@ -130,7 +130,7 @@ var getRSVP = (request, response) => {
   db.eventRSVPs.findAll({
     where: {
       eventId: request.params.eventId,
-      userId: request.body.userId
+      userId: request.params.userId
     }
   })
     .then(rsvp => {

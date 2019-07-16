@@ -79,7 +79,7 @@ router.post("/events/:eventId/add-organization", addOrganization);
 router.post("/events/:eventId/add-rsvp", addRSVP);
 
 // Get an RSVP for an event.
-router.post("/events/:eventId/rsvp", getRSVP);
+router.get("/events/:eventId/rsvp/:userId", getRSVP);
 
 // Update an RSVP for an event.
 router.patch("/events/:eventId/update-rsvp", updateRSVP)
