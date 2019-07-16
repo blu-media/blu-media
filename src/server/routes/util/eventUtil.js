@@ -53,16 +53,17 @@ var deleteAttendee = (request, response) => {
   });
 };
 
-var getAttendee = (request, response) => {
-  db.eventAttendees
-    .findAll({
-      where: {
-        eventId: request.body.eventId,
-        userId: request.body.userId
+var getAttendees = (request, response) => {
+  db.events.findByPk(request.params.eventId, {
+    include: [
+      {
+        model: db.users,
+        as: "attendees"
       }
-    })
-    .then(eventAttendees => {
-      response.send(eventAttendees);
+    ]
+  })
+    .then((event) => {
+      response.send(event.attendees);
     });
 };
 
@@ -106,19 +107,16 @@ var getRSVP = (request, response) => {
 };
 
 var updateResponse = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.getRsvp(user).then(rsvp => {
-        rsvp
-          .setRsvp({
-            response: request.body.response
-          })
-          .then(event => {
-            response.send(event);
-          });
-      });
+  db.eventRSVPs.update({
+    response: request.body.response
+  }, {
+      where: {
+        eventId: request.body.eventId,
+        userId: request.body.userId
+      }
+    }).then((RSVP) => {
+      response.send(RSVP);
     });
-  });
 };
 
 var addOrganization = (request, response) => {
@@ -152,6 +150,6 @@ module.exports = {
   addAttendee,
   deleteRSVP,
   deleteAttendee,
-  getAttendee,
+  getAttendees,
   updateResponse
 };
