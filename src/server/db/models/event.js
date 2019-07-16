@@ -33,6 +33,10 @@ module.exports = (sequelize, type) => {
       type: type.STRING,
       allowNull: false
     },
+    qrCode: {
+      type: type.TEXT,
+      allowNull: false
+    },
     startTime: {
       type: type.DATE,
       allowNull: false

@@ -2,46 +2,113 @@
 const express = require("express");
 
 /* Utility Functions */
-const { createUser, getAllUsers } =
-  require("./util/userUtil");
-const { addEventRSVP, getEvent, getAllEvents, getUpcomingEvents } =
-  require("./util/eventUtil");
-const { createOrganization, getOrganizations, getOrganizationEvents,
-  addOrganizationMember } =
-  require("./util/organizationUtil");
-const { addUsers, addOrganizations, addEvents, addAllData, wipeDatabase } =
-  require("./util/dataManipulation");
+const {
+  createUser,
+  getAllUsers,
+  getUserRSVPs
+} = require("./util/userUtil");
+
+const {
+  addAttendee,
+  addOrganization,
+  addRSVP,
+  deleteAttendee,
+  deleteRSVP,
+  getAllEvents,
+  getAttendees,
+  getEventById,
+  getRSVP,
+  updateRSVP
+} = require("./util/eventUtil");
+
+const {
+  addOrganizationMember,
+  createOrganization,
+  getOrganizations,
+} = require("./util/organizationUtil");
+
+const {
+  addEvents,
+  addOrganizations,
+  addUsers,
+  wipeDatabase
+} = require("./util/dataManipulation");
 
 const router = express.Router();
 
+
+/********** USER FUNCTIONALITY **********/
+
+// Get all users.
 router.get("/users", getAllUsers);
+
+// Get all RSVP's for a user.
+router.get("/users/rsvps", getUserRSVPs);
+
+// Create a user.
 router.post("/users", createUser);
+
+
+/********** ORGANIZATION FUNCTIONALITY **********/
+
+// Get all organizations.
 router.get("/organizations", getOrganizations);
+
+// Get all events for an organization.
+// router.get("/organizations/:orgId/events", getOrganizationEvents);
+
+// Create an organization.
 router.post("/organizations", createOrganization);
-router.post("/organizations/addMember", addOrganizationMember);
+
+// Add an executive board member to an organization.
+router.post("/organizations/add-member", addOrganizationMember);
+
+
+/********** EVENT FUNCTIONALITY **********/
+
+// Get all events.
 router.get("/events", getAllEvents);
-router.get("/events/:eventId", getEvent);
-router.post("/events/addRSVP", addEventRSVP);
 
-/* Populate dummy data into the SQL Tables. */
-router.get("/users/addUsers/:num", addUsers);
-router.get("/organizations/addOrganizations/:num", addOrganizations);
-router.get("/events/addEvents/:num", addEvents);
+// Get an event by ID.
+router.get("/events/:eventId", getEventById);
 
-/* Wipe current DB's and recreate them.
-   Note: Only use when you ABSOLUTELY HAVE TO!
-*/
-router.get("/wipeDB", wipeDatabase);
+// Add an organization as a host to an event.
+router.post("/events/:eventId/add-organization", addOrganization);
+
+// Add an RSVP to an event.
+router.post("/events/:eventId/add-rsvp", addRSVP);
+
+// Get an RSVP for an event.
+router.get("/events/:eventId/rsvp/:userId", getRSVP);
+
+// Update an RSVP for an event.
+router.patch("/events/:eventId/update-rsvp", updateRSVP)
+
+// Delete an attendee from an event.
+router.delete("/events/:eventId/delete-rsvp/:userId", deleteRSVP);
+
+// Get all attendees for an event.
+router.get("/events/:eventId/attendees", getAttendees);
+
+// Add an attendee to an event.
+router.post("/events/:eventId/add-attendee", addAttendee);
+
+// Delete an attendee from an event.
+router.delete("/events/:eventId/delete-attendee/:userId", deleteAttendee);
 
 
-// QUERY: Get an event's information (including RSVP's) by an Event ID number.
+/********** DUMMY DATA FUNCTIONALITY /**********/
 
-// QUERY: Get all the events within a given timeframe.
+// Populate User table with arbitrary number of users.
+router.get("/users/add-users/:num", addUsers);
 
-// QUERY: Get all the events for a given organization.
-// Separate into both upcoming and past events.
-router.get("/organizations/:organizationID/events", getOrganizationEvents)
+// Populate Organizations table with arbitrary number of organizations.
+router.get("/organizations/add-organizations/:num", addOrganizations);
 
-// QUERY: Get all of the e-Board members of a given organization.
+// Populate Events table with arbitrary number of events.
+router.get("/events/add-events/:num", addEvents);
+
+/* Wipe current DB. */
+router.get("/wipe-db", wipeDatabase);
 
 module.exports = router;

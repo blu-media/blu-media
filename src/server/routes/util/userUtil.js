@@ -1,7 +1,33 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
+var createUser = (request, response) => {
+  db.users.create(request.body)
+    .then((user) => {
+      response.json(user);
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+}
+
 var getAllUsers = (request, response) => {
+  db.users.findAll({
+    include: [
+      {
+        model: db.organizations
+      },
+      {
+        model: db.events
+      }
+    ]
+  })
+    .then((users) => {
+      response.json(users);
+    });
+}
+
+var getUserRSVPs = (request, response) => {
   db.users.findAll({
     include: [
       {
@@ -14,17 +40,8 @@ var getAllUsers = (request, response) => {
     });
 }
 
-var createUser = (request, response) => {
-  db.users.create(request.body)
-    .then((user) => {
-      response.json(user);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
-}
-
 module.exports = {
   createUser,
-  getAllUsers
+  getAllUsers,
+  getUserRSVPs
 }

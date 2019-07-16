@@ -9,6 +9,10 @@ module.exports = (sequelize, DataType) => {
       allowNull: false
     },
     gradYear: DataType.STRING,
+    id: {
+      type: DataType.STRING,
+      primaryKey: true
+    },
     lastName: {
       type: DataType.STRING,
       allowNull: false
@@ -20,10 +24,6 @@ module.exports = (sequelize, DataType) => {
     profilePicture: {
       type: DataType.STRING,
       defaultValue: 'profile.jpg'
-    },
-    id: {
-      type: DataType.STRING,
-      primaryKey: true
     }
   });
 
