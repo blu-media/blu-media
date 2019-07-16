@@ -1,6 +1,21 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
+var addOrganizationMember = (request, response) => {
+  db.organizations.findByPk(request.body.orgId)
+    .then((org) => {
+      db.users.findByPk(request.body.userId).then((user) => {
+        org.addMember(user, {
+          through: {
+            position: request.body.position
+          }
+        }).then((org) => {
+          response.send(org);
+        });
+      });
+    });
+};
+
 var createOrganization = (request, response) => {
   db.organizations.create(request.body)
     .then((org) => {
@@ -13,25 +28,10 @@ var createOrganization = (request, response) => {
 
 var deleteOrganization = (request, response) => {
   db.organizations.destroy({
-    where: { "id": request.params.orgId }
+    where: { id: request.params.orgId }
   }).then(() => {
     response.send("Organization has been deleted!");
-  })
-};
-
-var editOrganizationAttribute = (request, response) => {
-  db.organizations.update(
-    {
-      "name": request.body.name,
-      "logo": request.body.logo,
-      "contactInfo": request.body.contactInfo,
-      "acronym": request.body.acronym,
-      "about": request.body.about
-    }, {
-      where: { "id": request.params.orgId }
-    }).then((org) => {
-      response.send(org);
-    })
+  });
 };
 
 var getOrganizations = (request, response) => {
@@ -54,25 +54,18 @@ var getOrganizations = (request, response) => {
     });
 }
 
-var addOrganizationMember = (request, response) => {
-  db.organizations.findByPk(request.body.orgId)
-    .then((org) => {
-      db.users.findByPk(request.body.userId).then((user) => {
-        org.addMember(user, {
-          through: {
-            position: request.body.position
-          }
-        }).then((org) => {
-          response.send(org);
-        });
-      });
-    })
+var updateOrganization = (request, response) => {
+  db.organizations.update(request.body, {
+    where: { id: request.params.orgId }
+  }).then((org) => {
+    response.send(org);
+  });
 };
 
 module.exports = {
   addOrganizationMember,
   createOrganization,
-  getOrganizations,
   deleteOrganization,
-  editOrganizationAttribute
+  getOrganizations,
+  updateOrganization
 }
