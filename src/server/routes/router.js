@@ -18,7 +18,7 @@ const {
   getOrganizations,
   addOrganizationMember,
   deleteOrganization,
-  editOragnizationAttribute
+  editOrganizationAttribute
 } = require("./util/organizationUtil");
 const {
   addUsers,
@@ -39,16 +39,16 @@ router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEvent);
 router.post("/events/addRSVP", addRSVP);
 router.post("/events/addAttendee", addAttendee);
-/* Delete RSVP and Attendees*/
+/* Delete RSVP and Attendees */
 router.post("/events/getRSVP", getRSVP);
 router.post("/events/getAttendee", getAttendee);
 router.post("/events/deleteRSVP", deleteRSVP);
 router.post("/events/deleteAttendee", deleteAttendee);
 
-/* Delete an Organization*/
-router.post("/organizations/deleteOrganization", deleteOrganization);
-/* Edit an Attribute of an Organization*/ 
-router.post("/organizations/editOrganizationAttribute", editOragnizationAttribute);
+/* Delete an Organization */
+router.delete("/organizations/:orgId", deleteOrganization);
+/* Edit an Attribute of an Organization */
+router.post("/organizations/:orgId/editAttribute", editOrganizationAttribute);
 
 /* Populate dummy data into the SQL Tables. */
 router.get("/users/addUsers/:num", addUsers);

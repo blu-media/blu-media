@@ -13,21 +13,24 @@ var createOrganization = (request, response) => {
 
 var deleteOrganization = (request, response) => {
   db.organizations.destroy({
-    where: {"id": request.body.orgId}
+    where: { "id": request.params.orgId }
   }).then(() => {
     response.send("Organization has been deleted!");
   })
 };
 
-var editOragnizationAttribute = (request, response) => {
-    db.organizations.update(
-      { "name": request.body.namee,
-        "logo": request.body.logoo,
-        "contactInfo": request.body.contactInfoo,
-        "acronym": request.body.acronymm,
-        "about": request.body.aboutt} , { where: {"id": request.body.orgId}
-      }).then(() => {
-      response.send("Organization has been updated!");
+var editOrganizationAttribute = (request, response) => {
+  db.organizations.update(
+    {
+      "name": request.body.name,
+      "logo": request.body.logo,
+      "contactInfo": request.body.contactInfo,
+      "acronym": request.body.acronym,
+      "about": request.body.about
+    }, {
+      where: { "id": request.params.orgId }
+    }).then((org) => {
+      response.send(org);
     })
 };
 
@@ -71,5 +74,5 @@ module.exports = {
   createOrganization,
   getOrganizations,
   deleteOrganization,
-  editOragnizationAttribute
+  editOrganizationAttribute
 }
