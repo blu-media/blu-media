@@ -11,6 +11,26 @@ var createOrganization = (request, response) => {
     });
 }
 
+var deleteOrganization = (request, response) => {
+  db.organizations.destroy({
+    where: {"id": request.body.orgId}
+  }).then(() => {
+    response.send("Organization has been deleted!");
+  })
+};
+
+var editOragnizationAttribute = (request, response) => {
+    db.organizations.update(
+      { "name": request.body.namee,
+        "logo": request.body.logoo,
+        "contactInfo": request.body.contactInfoo,
+        "acronym": request.body.acronymm,
+        "about": request.body.aboutt} , { where: {"id": request.body.orgId}
+      }).then(() => {
+      response.send("Organization has been updated!");
+    })
+};
+
 var getOrganizations = (request, response) => {
   db.organizations.findAll({
     include: [
@@ -49,5 +69,7 @@ var addOrganizationMember = (request, response) => {
 module.exports = {
   addOrganizationMember,
   createOrganization,
-  getOrganizations
+  getOrganizations,
+  deleteOrganization,
+  editOragnizationAttribute
 }
