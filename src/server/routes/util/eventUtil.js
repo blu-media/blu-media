@@ -1,4 +1,4 @@
-const qr = require('qrcode');
+const qr = require("qrcode");
 
 /* DB Models */
 const { db } = require("../../db/connection");
@@ -104,43 +104,43 @@ var getRSVP = (request, response) => {
       response.send(eventRSVPs);
     });
 };
-
 var updateResponse = (request, response) => {
-  db.events.findByPk(request.body.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.getRsvp(user).then(rsvp => {
-        rsvp
-          .setRsvp({
-            response: request.body.response
-          })
-          .then(event => {
-            response.send(event);
-          });
-      });
+  db.eventRSVPs
+    .update(
+      {
+        response: request.body.response
+      },
+      {
+        where: {
+          eventId: request.body.eventId,
+          userId: request.body.userId
+        }
+      }
+    )
+    .then(rsvp => {
+      response.send(rsvp);
     });
-  });
 };
 
 var addOrganization = (request, response) => {
   db.events.findByPk(request.body.eventId).then(event => {
     db.organizations.findByPk(request.body.orgId).then(org => {
-      event.addOrganization(org)
-        .then(org => {
-          response.send(org);
-        });
+      event.addOrganization(org).then(org => {
+        response.send(org);
+      });
     });
   });
 };
 
-var createQRCode = (eventId) => {
+var createQRCode = eventId => {
   return new Promise((resolve, reject) => {
     qr.toDataURL(`localhost:8080/events/${eventId}`, (error, url) => {
       if (error) reject(error);
 
       resolve(url);
-    })
+    });
   });
-}
+};
 
 module.exports = {
   addRSVP,

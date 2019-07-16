@@ -2,11 +2,7 @@
 const express = require("express");
 
 /* Utility Functions */
-const {
-  createUser,
-  getAllUsers,
-  getUserRSVPs
-} = require("./util/userUtil");
+const { createUser, getAllUsers, getUserRSVPs } = require("./util/userUtil");
 
 const {
   addAttendee,
@@ -62,7 +58,7 @@ router.get("/organizations/addOrganizations/:num", addOrganizations);
 router.get("/events/addEvents/:num", addEvents);
 
 /*Update RSVP responses*/
-router.post("events/updateResponse", updateResponse);
+router.post("/events/updateResponse", updateResponse);
 /* Wipe current DB's and recreate them.
    Note: Only use when you ABSOLUTELY HAVE TO!
 */
