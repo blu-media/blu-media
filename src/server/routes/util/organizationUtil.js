@@ -1,19 +1,20 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
-const addOrganizationMember = (request, response) => {
-  db.organizations.findByPk(request.body.orgId)
-    .then((org) => {
-      db.users.findByPk(request.body.userId).then((user) => {
-        org.addMember(user, {
-          through: {
-            position: request.body.position
-          }
-        }).then((org) => {
-          response.send(org);
-        });
-      });
-    });
+/* Common Utility Functions */
+const util = require("./commonUtil");
+
+const addOrganizationMember = async (request, response) => {
+  let org = await util.getOrganizationById(request.body.eventId);
+  let user = await util.getUserById(request.body.orgId);
+
+  event.addMember(user, {
+    through: {
+      position: request.body.position
+    }
+  }).then((org) => {
+    response.json(org);
+  });
 };
 
 const createOrganization = (request, response) => {
