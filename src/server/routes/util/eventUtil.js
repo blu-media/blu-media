@@ -14,7 +14,7 @@ var addAttendee = (request, response) => {
   });
 };
 
-var addOrganization = (request, response) => {
+var addOrganizationToEvent = (request, response) => {
   db.events.findByPk(request.params.eventId).then(event => {
     db.organizations.findByPk(request.body.orgId).then(org => {
       event.addOrganization(org).then(org => {
@@ -55,6 +55,16 @@ var deleteAttendee = (request, response) => {
         response.send(
           `Removed attendee with ID ${user.id} from event with ID ${event.id}!`
         );
+      });
+    });
+  });
+};
+
+var deleteOrganizationFromEvent = (request, response) => {
+  db.events.findByPk(request.params.eventId).then(event => {
+    db.organizations.findByPk(request.params.orgId).then(org => {
+      event.removeOrganization(org).then(() => {
+        response.send("Organization has been removed from event!");
       });
     });
   });
@@ -157,10 +167,11 @@ var updateRSVP = (request, response) => {
 
 module.exports = {
   addAttendee,
-  addOrganization,
+  addOrganizationToEvent,
   addRSVP,
   createQRCode,
   deleteAttendee,
+  deleteOrganizationFromEvent,
   deleteRSVP,
   getAllEvents,
   getAttendees,
