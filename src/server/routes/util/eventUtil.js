@@ -50,7 +50,7 @@ const createQRCode = (eventId) => {
 
 const deleteAttendee = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
-  let user = await util.getOrganizationById(request.params.userId);
+  let user = await util.getUserById(request.params.userId);
 
   event.removeAttendee(user).then(() => {
     response.send("Attendee has been removed from event!");
