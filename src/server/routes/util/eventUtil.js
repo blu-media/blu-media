@@ -4,41 +4,41 @@ const qr = require("qrcode");
 /* DB Object */
 const { db } = require("../../db/connection");
 
-var addAttendee = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.addAttendee(user).then(attendee => {
-        response.send(attendee);
-      });
-    });
+/* Common Utility Functions */
+const util = require("./commonUtil");
+
+const addAttendee = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.body.userId);
+
+  event.addAttendee(user).then((attendee) => {
+    response.json(attendee);
   });
 };
 
-var addOrganization = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.organizations.findByPk(request.body.orgId).then(org => {
-      event.addOrganization(org).then(org => {
-        response.send(org);
-      });
-    });
+const addOrganizationToEvent = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let org = await util.getOrganizationById(request.body.orgId);
+
+  event.addOrganization(org).then((org) => {
+    response.json(org);
   });
 };
 
-var addRSVP = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.addRsvp(user, {
-        through: {
-          response: request.body.response
-        }
-      }).then(rsvp => {
-        response.send(rsvp);
-      });
-    });
+const addRSVP = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.body.userId);
+
+  event.addRsvp(user, {
+    through: {
+      response: request.body.response
+    }
+  }).then((rsvp) => {
+    response.json(rsvp);
   });
 };
 
-var createQRCode = (eventId) => {
+const createQRCode = (eventId) => {
   return new Promise((resolve, reject) => {
     qr.toDataURL(`localhost:8080/events/${eventId}`, (error, url) => {
       if (error) reject(error);
@@ -48,29 +48,34 @@ var createQRCode = (eventId) => {
   });
 };
 
-var deleteAttendee = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.params.userId).then(user => {
-      event.removeAttendee(user).then(() => {
-        response.send(
-          `Removed attendee with ID ${user.id} from event with ID ${event.id}!`
-        );
-      });
-    });
+const deleteAttendee = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.params.userId);
+
+  event.removeAttendee(user).then(() => {
+    response.send("Attendee has been removed from event!");
   });
 };
 
-var deleteRSVP = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.params.userId).then(user => {
-      event.removeRsvp(user).then(() => {
-        response.send("RSVP has been removed from event!");
-      });
-    });
+const deleteOrganizationFromEvent = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let org = await util.getOrganizationById(request.params.orgId);
+
+  event.removeOrganization(org).then(() => {
+    response.send("Organization has been removed from event!");
   });
 };
 
-var getAllEvents = (request, response) => {
+const deleteRSVP = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.params.userId);
+
+  event.removeRsvp(user).then(() => {
+    response.send("RSVP has been removed from event!");
+  });
+};
+
+const getAllEvents = (request, response) => {
   db.events.findAll({
     include: [
       {
@@ -85,13 +90,12 @@ var getAllEvents = (request, response) => {
         model: db.organizations
       }
     ]
-  })
-    .then(events => {
-      response.json(events);
-    });
+  }).then(events => {
+    response.json(events);
+  });
 };
 
-var getAttendees = (request, response) => {
+const getAttendees = (request, response) => {
   db.events.findByPk(request.params.eventId, {
     include: [
       {
@@ -105,7 +109,7 @@ var getAttendees = (request, response) => {
     });
 };
 
-var getEventById = (request, response) => {
+const getEventById = (request, response) => {
   db.events.findByPk(request.params.eventId, {
     include: [
       {
@@ -126,7 +130,7 @@ var getEventById = (request, response) => {
     });
 };
 
-var getRSVP = (request, response) => {
+const getRSVP = (request, response) => {
   db.eventRSVPs.findAll({
     where: {
       eventId: request.params.eventId,
@@ -138,7 +142,7 @@ var getRSVP = (request, response) => {
     });
 };
 
-var updateRSVP = (request, response) => {
+const updateRSVP = (request, response) => {
   db.eventRSVPs.update(
     {
       response: request.body.response
@@ -157,10 +161,11 @@ var updateRSVP = (request, response) => {
 
 module.exports = {
   addAttendee,
-  addOrganization,
+  addOrganizationToEvent,
   addRSVP,
   createQRCode,
   deleteAttendee,
+  deleteOrganizationFromEvent,
   deleteRSVP,
   getAllEvents,
   getAttendees,

@@ -14,7 +14,7 @@ app.use(bodyParser.json())
 const router = require('./routes/router');
 app.use('/', router);
 
-var port = process.env.PORT || 8080;
+const port = process.env.PORT || 8080;
 
 server.listen(port, function () {
   console.log(`Server running at http://127.0.0.1:${port}/`);

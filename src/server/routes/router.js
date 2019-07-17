@@ -10,9 +10,10 @@ const {
 
 const {
   addAttendee,
-  addOrganization,
+  addOrganizationToEvent,
   addRSVP,
   deleteAttendee,
+  deleteOrganizationFromEvent,
   deleteRSVP,
   getAllEvents,
   getAttendees,
@@ -25,6 +26,7 @@ const {
   addOrganizationMember,
   createOrganization,
   deleteOrganization,
+  getEventsByOrganization,
   getOrganizations,
   updateOrganization
 } = require("./util/organizationUtil");
@@ -57,7 +59,7 @@ router.post("/users", createUser);
 router.get("/organizations", getOrganizations);
 
 // Get all events for an organization.
-// router.get("/organizations/:orgId/events", getOrganizationEvents);
+router.get("/organizations/:orgId/events", getEventsByOrganization);
 
 // Create an organization.
 router.post("/organizations", createOrganization);
@@ -81,7 +83,10 @@ router.get("/events", getAllEvents);
 router.get("/events/:eventId", getEventById);
 
 // Add an organization as a host to an event.
-router.post("/events/:eventId/add-organization", addOrganization);
+router.post("/events/:eventId/add-organization", addOrganizationToEvent);
+
+// Delete an organization as a host to an event.
+router.delete("/events/:eventId/delete-organization/:orgId", deleteOrganizationFromEvent);
 
 // Add an RSVP to an event.
 router.post("/events/:eventId/add-rsvp", addRSVP);

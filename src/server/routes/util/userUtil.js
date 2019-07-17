@@ -1,7 +1,7 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
-var createUser = (request, response) => {
+const createUser = (request, response) => {
   db.users.create(request.body)
     .then((user) => {
       response.json(user);
@@ -11,7 +11,7 @@ var createUser = (request, response) => {
     });
 }
 
-var getAllUsers = (request, response) => {
+const getAllUsers = (request, response) => {
   db.users.findAll({
     include: [
       {
@@ -27,7 +27,7 @@ var getAllUsers = (request, response) => {
     });
 }
 
-var getUserRSVPs = (request, response) => {
+const getUserRSVPs = (request, response) => {
   db.users.findAll({
     include: [
       {
