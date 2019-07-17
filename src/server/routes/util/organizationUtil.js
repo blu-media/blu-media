@@ -34,6 +34,24 @@ var deleteOrganization = (request, response) => {
   });
 };
 
+var getEventsByOrganization = (request, response) => {
+  db.organizations.findByPk(request.params.orgId, {
+    include: [
+      {
+        model: db.users,
+        as: 'members'
+      },
+      {
+        model: db.events
+      }
+    ]
+  }).then((org) => {
+    response.json(org.events);
+  }).catch((error) => {
+    console.log(error)
+  });
+}
+
 var getOrganizations = (request, response) => {
   db.organizations.findAll({
     include: [
@@ -66,6 +84,7 @@ module.exports = {
   addOrganizationMember,
   createOrganization,
   deleteOrganization,
+  getEventsByOrganization,
   getOrganizations,
   updateOrganization
 }

@@ -26,6 +26,7 @@ const {
   addOrganizationMember,
   createOrganization,
   deleteOrganization,
+  getEventsByOrganization,
   getOrganizations,
   updateOrganization
 } = require("./util/organizationUtil");
@@ -58,7 +59,7 @@ router.post("/users", createUser);
 router.get("/organizations", getOrganizations);
 
 // Get all events for an organization.
-// router.get("/organizations/:orgId/events", getOrganizationEvents);
+router.get("/organizations/:orgId/events", getEventsByOrganization);
 
 // Create an organization.
 router.post("/organizations", createOrganization);
