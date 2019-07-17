@@ -1,7 +1,7 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
-var addOrganizationMember = (request, response) => {
+const addOrganizationMember = (request, response) => {
   db.organizations.findByPk(request.body.orgId)
     .then((org) => {
       db.users.findByPk(request.body.userId).then((user) => {
@@ -16,7 +16,7 @@ var addOrganizationMember = (request, response) => {
     });
 };
 
-var createOrganization = (request, response) => {
+const createOrganization = (request, response) => {
   db.organizations.create(request.body)
     .then((org) => {
       response.json(org);
@@ -26,7 +26,7 @@ var createOrganization = (request, response) => {
     });
 }
 
-var deleteOrganization = (request, response) => {
+const deleteOrganization = (request, response) => {
   db.organizations.destroy({
     where: { id: request.params.orgId }
   }).then(() => {
@@ -34,7 +34,7 @@ var deleteOrganization = (request, response) => {
   });
 };
 
-var getEventsByOrganization = (request, response) => {
+const getEventsByOrganization = (request, response) => {
   db.organizations.findByPk(request.params.orgId, {
     include: [
       {
@@ -52,7 +52,7 @@ var getEventsByOrganization = (request, response) => {
   });
 }
 
-var getOrganizations = (request, response) => {
+const getOrganizations = (request, response) => {
   db.organizations.findAll({
     include: [
       {
@@ -72,7 +72,7 @@ var getOrganizations = (request, response) => {
     });
 }
 
-var updateOrganization = (request, response) => {
+const updateOrganization = (request, response) => {
   db.organizations.update(request.body, {
     where: { id: request.params.orgId }
   }).then((org) => {

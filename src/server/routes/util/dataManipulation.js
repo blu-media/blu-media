@@ -6,7 +6,7 @@ const random = require("random");
 const { db } = require("../../db/connection");
 const { createQRCode } = require('./eventUtil');
 
-var addUsers = (request, response) => {
+const addUsers = (request, response) => {
   var i;
 
   for (i = 0; i < request.params.num; i++) {
@@ -23,7 +23,7 @@ var addUsers = (request, response) => {
   response.send(`${i} users have been created successfully!`);
 }
 
-var addOrganizations = (request, response) => {
+const addOrganizations = (request, response) => {
   var i;
 
   for (i = 0; i < request.params.num; i++) {
@@ -38,7 +38,7 @@ var addOrganizations = (request, response) => {
   response.send(`${i} organizations have been created successfully!`);
 };
 
-var addEvents = async (request, response) => {
+const addEvents = async (request, response) => {
   var i;
 
   for (i = 0; i < request.params.num; i++) {
