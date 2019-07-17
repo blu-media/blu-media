@@ -1,6 +1,21 @@
 /* DB Models */
 const { db } = require('../../db/connection');
 
+var addOrganizationMember = (request, response) => {
+  db.organizations.findByPk(request.body.orgId)
+    .then((org) => {
+      db.users.findByPk(request.body.userId).then((user) => {
+        org.addMember(user, {
+          through: {
+            position: request.body.position
+          }
+        }).then((org) => {
+          response.send(org);
+        });
+      });
+    });
+};
+
 var createOrganization = (request, response) => {
   db.organizations.create(request.body)
     .then((org) => {
@@ -10,6 +25,14 @@ var createOrganization = (request, response) => {
       console.log(error)
     });
 }
+
+var deleteOrganization = (request, response) => {
+  db.organizations.destroy({
+    where: { id: request.params.orgId }
+  }).then(() => {
+    response.send("Organization has been deleted!");
+  });
+};
 
 var getOrganizations = (request, response) => {
   db.organizations.findAll({
@@ -31,23 +54,18 @@ var getOrganizations = (request, response) => {
     });
 }
 
-var addOrganizationMember = (request, response) => {
-  db.organizations.findByPk(request.body.orgId)
-    .then((org) => {
-      db.users.findByPk(request.body.userId).then((user) => {
-        org.addMember(user, {
-          through: {
-            position: request.body.position
-          }
-        }).then((org) => {
-          response.send(org);
-        });
-      });
-    })
+var updateOrganization = (request, response) => {
+  db.organizations.update(request.body, {
+    where: { id: request.params.orgId }
+  }).then((org) => {
+    response.send(org);
+  });
 };
 
 module.exports = {
   addOrganizationMember,
   createOrganization,
-  getOrganizations
+  deleteOrganization,
+  getOrganizations,
+  updateOrganization
 }
