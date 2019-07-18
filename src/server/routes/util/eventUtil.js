@@ -154,6 +154,39 @@ const getEventById = (request, response) => {
       response.json(event);
     });
 };
+const getEventsInTimeFrame = (request, response) => {
+  db.events
+    .findAll({
+      where: {
+        [events.and]: [{ date: date >= (request.body.startDate) }, { date: date <= (request.body.endDate) }]
+      }
+    })
+    .then(rsvp => {
+      response.send(rsvp);
+    });
+};
+const getFutureEvents = (request, response) => {
+  db.events
+    .findAll({
+      where: {
+        date: date >= (request.body.date)
+      }
+    })
+    .then(rsvp => {
+      response.send(rsvp);
+    });
+};
+const getPastEvents = (request, response) => {
+  db.events
+    .findAll({
+      where: {
+        date: date <= (request.body.date)
+      }
+    })
+    .then(rsvp => {
+      response.send(rsvp);
+    });
+};
 
 const getRSVP = (request, response) => {
   db.eventRSVPs
@@ -171,10 +204,13 @@ const getRSVP = (request, response) => {
 const updateEventById = (request, response) => {
   db.events
     .update(request.body, {
-      where: { id: request.params.eventId }
-    })
+      where: { id: request.params.eventId },
+      returning: true,
+      plain: true
+    }
+    )
     .then(event => {
-      response.send(event);
+      response.send(event[1]);
     });
 };
 
@@ -188,11 +224,13 @@ const updateRSVP = (request, response) => {
         where: {
           eventId: request.params.eventId,
           userId: request.body.userId
-        }
+        },
+        returning: true,
+        plain: true
       }
     )
     .then(RSVP => {
-      response.send(RSVP);
+      response.send(RSVP[1]);
     });
 };
 
@@ -211,5 +249,8 @@ module.exports = {
   updateRSVP,
   createEvent,
   updateEventById,
-  deleteEventById
+  deleteEventById,
+  getEventsInTimeFrame,
+  getPastEvents,
+  getFutureEvents
 };

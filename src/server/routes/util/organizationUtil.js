@@ -75,9 +75,11 @@ const getOrganizations = (request, response) => {
 
 const updateOrganization = (request, response) => {
   db.organizations.update(request.body, {
-    where: { id: request.params.orgId }
+    where: { id: request.params.orgId },
+    returning: true,
+    plain: true
   }).then((org) => {
-    response.send(org);
+    response.send(org[1]);
   });
 };
 

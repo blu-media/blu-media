@@ -18,7 +18,10 @@ const {
   updateRSVP,
   createEvent,
   updateEventById,
-  deleteEventById
+  deleteEventById,
+  getEventsInTimeFrame,
+  getPastEvents,
+  getFutureEvents
 } = require("./util/eventUtil");
 
 const {
@@ -75,7 +78,7 @@ router.post("/organizations/add-member", addOrganizationMember);
 // Create an Event.
 router.route("/events")
   .get(getAllEvents)
-  .put(createEvent);
+  .put(createEvent)
 
 router.route("/events/:eventId")
   .get(getEventById)
@@ -96,6 +99,12 @@ router.route("/events/:eventId/attendees")
   .get(getAttendees)
   .put(addAttendee)
   .delete(deleteAttendee);
+// - Get all the events within a given timeframe.
+// - Get all events that happened in the past.
+// - Get all events that are upcoming
+  .get(getEventsInTimeFrame)
+  .get(getPastEvents)
+  .get(getFutureEvents)
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
 
