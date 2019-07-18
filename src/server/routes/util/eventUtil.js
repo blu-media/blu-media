@@ -1,3 +1,9 @@
+/**
+ * @fileoverview Description of file, its uses and information
+ * about its dependencies.
+ * @package
+ */
+
 /* NPM Installation Dependencies */
 const qr = require("qrcode");
 
@@ -7,6 +13,11 @@ const { db } = require("../../db/connection");
 /* Common Utility Functions */
 const util = require("./commonUtil");
 
+/**
+ * 
+ * @param {*} request 
+ * @param {*} response 
+ */
 const addAttendee = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
   let user = await util.getUserById(request.body.userId);

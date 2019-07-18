@@ -11,11 +11,15 @@
     "concurrently": "^4.1.0",
     "express": "^4.17.1",
     "faker": "^4.1.0",
-    "lodash": "^4.17.11",
+    "lodash": "^4.17.14",
     "pg": "^6.4.2",
     "qrcode": "^1.4.0",
     "random": "^2.1.1",
     "sequelize": "^5.8.12",
     "uniqid": "^5.0.3"
+  },
+  "dependencies": {
+    "swagger-jsdoc": "^3.3.0",
+    "swagger-ui-express": "^4.0.7"
   }
 }
