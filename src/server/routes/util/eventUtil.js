@@ -165,28 +165,6 @@ const getEventsInTimeFrame = (request, response) => {
       response.send(rsvp);
     });
 };
-const getFutureEvents = (request, response) => {
-  db.events
-    .findAll({
-      where: {
-        date: date >= (request.body.date)
-      }
-    })
-    .then(rsvp => {
-      response.send(rsvp);
-    });
-};
-const getPastEvents = (request, response) => {
-  db.events
-    .findAll({
-      where: {
-        date: date <= (request.body.date)
-      }
-    })
-    .then(rsvp => {
-      response.send(rsvp);
-    });
-};
 
 const getRSVP = (request, response) => {
   db.eventRSVPs
@@ -250,7 +228,5 @@ module.exports = {
   createEvent,
   updateEventById,
   deleteEventById,
-  getEventsInTimeFrame,
-  getPastEvents,
-  getFutureEvents
+  getEventsInTimeFrame
 };
