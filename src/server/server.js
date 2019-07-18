@@ -11,8 +11,15 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json())
 
 /* Router Configuration */
-const router = require('./routes/router');
-app.use('/', router);
+const mainRouter = require('./routes/routers/router');
+const userRouter = require('./routes/routers/userRouter');
+const organizationRouter = require('./routes/routers/organizationRouter');
+const eventRouter = require('./routes/routers/eventRouter');
+
+app.use('/', mainRouter);
+app.use('/events', eventRouter);
+app.use('/organizations', organizationRouter);
+app.use('/users', userRouter);
 
 const port = process.env.PORT || 8080;
 
