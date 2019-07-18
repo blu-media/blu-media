@@ -4,37 +4,37 @@ const qr = require("qrcode");
 /* DB Object */
 const { db } = require("../../db/connection");
 
-const addAttendee = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.addAttendee(user).then(attendee => {
-        response.send(attendee);
-      });
-    });
+/* Common Utility Functions */
+const util = require("./commonUtil");
+
+const addAttendee = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.body.userId);
+
+  event.addAttendee(user).then((attendee) => {
+    response.json(attendee);
   });
 };
 
-const addOrganizationToEvent = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.organizations.findByPk(request.body.orgId).then(org => {
-      event.addOrganization(org).then(org => {
-        response.send(org);
-      });
-    });
+const addOrganizationToEvent = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let org = await util.getOrganizationById(request.body.orgId);
+
+  event.addOrganization(org).then((org) => {
+    response.json(org);
   });
 };
 
-const addRSVP = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.body.userId).then(user => {
-      event.addRsvp(user, {
-        through: {
-          response: request.body.response
-        }
-      }).then(rsvp => {
-        response.send(rsvp);
-      });
-    });
+const addRSVP = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.body.userId);
+
+  event.addRsvp(user, {
+    through: {
+      response: request.body.response
+    }
+  }).then((rsvp) => {
+    response.json(rsvp);
   });
 };
 
@@ -48,35 +48,30 @@ const createQRCode = (eventId) => {
   });
 };
 
-const deleteAttendee = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.params.userId).then(user => {
-      event.removeAttendee(user).then(() => {
-        response.send(
-          `Removed attendee with ID ${user.id} from event with ID ${event.id}!`
-        );
-      });
-    });
+const deleteAttendee = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.params.userId);
+
+  event.removeAttendee(user).then(() => {
+    response.send("Attendee has been removed from event!");
   });
 };
 
-const deleteOrganizationFromEvent = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.organizations.findByPk(request.params.orgId).then(org => {
-      event.removeOrganization(org).then(() => {
-        response.send("Organization has been removed from event!");
-      });
-    });
+const deleteOrganizationFromEvent = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let org = await util.getOrganizationById(request.params.orgId);
+
+  event.removeOrganization(org).then(() => {
+    response.send("Organization has been removed from event!");
   });
 };
 
-const deleteRSVP = (request, response) => {
-  db.events.findByPk(request.params.eventId).then(event => {
-    db.users.findByPk(request.params.userId).then(user => {
-      event.removeRsvp(user).then(() => {
-        response.send("RSVP has been removed from event!");
-      });
-    });
+const deleteRSVP = async (request, response) => {
+  let event = await util.getEventById(request.params.eventId);
+  let user = await util.getUserById(request.params.userId);
+
+  event.removeRsvp(user).then(() => {
+    response.send("RSVP has been removed from event!");
   });
 };
 
@@ -95,10 +90,9 @@ const getAllEvents = (request, response) => {
         model: db.organizations
       }
     ]
-  })
-    .then(events => {
-      response.json(events);
-    });
+  }).then(events => {
+    response.json(events);
+  });
 };
 
 const getAttendees = (request, response) => {
