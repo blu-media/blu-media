@@ -19,11 +19,7 @@ const options = {
 const specs = swaggerJSdoc(options);
 
 /* Utility Functions */
-const {
-  createUser,
-  getAllUsers,
-  getUserRSVPs
-} = require("./util/userUtil");
+const { createUser, getAllUsers, getUserRSVPs } = require("./util/userUtil");
 
 const {
   addAttendee,
@@ -36,7 +32,10 @@ const {
   getAttendees,
   getEventById,
   getRSVP,
-  updateRSVP
+  updateRSVP,
+  createEvent,
+  updateEventById,
+  deleteEventById
 } = require("./util/eventUtil");
 
 const {
@@ -57,9 +56,11 @@ const {
 
 const router = express.Router();
 
+
 /********** API DOCUMENTATION **********/
 
 router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
+
 
 /********** USER FUNCTIONALITY **********/
 
@@ -100,15 +101,30 @@ router.post("/organizations/add-member", addOrganizationMember);
  * @swagger
  * /events:
  *    get:
- *      description: This should return all events.
+ *      description: Return all events.
  *      tags: 
  *      - Events
  *      produces: application/json
  *      responses:
  *       200:
- *         description: An array of events.
+ *         description: Success.
+ *    put:
+ *      description: Create an event.
+ *      tags: 
+ *      - Events
+ *      produces: application/json
+ *      parameters:
+ *        - name: event
+ *          in: body
+ *          description: Event Instance
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success.
  */
-router.get("/events", getAllEvents);
+router.route("/events")
+  .get(getAllEvents)
+  .put(createEvent);
 
 /**
  * @swagger
@@ -125,10 +141,41 @@ router.get("/events", getAllEvents);
  *          required: true
  *      responses:
  *       200:
- *         description: An event.
+ *         description: Success.
+ *    patch:
+ *      description: Updates event by ID.
+ *      tags: 
+ *      - Events
+ *      produces: application/json
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: eventBody
+ *          in: body
+ *          description: Event Attributes to Update
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success.
+ *    delete:
+ *      description: Deletes event by ID.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success.
  */
 router.route("/events/:eventId")
   .get(getEventById)
+  .patch(updateEventById)
+  .delete(deleteEventById);
 
 /**
  * @swagger
@@ -148,7 +195,7 @@ router.route("/events/:eventId")
  *          required: true
  *      responses:
  *       200:
- *         description: Join Table Confirmation
+ *         description: Success
  *    delete:
  *      description: Delete an organization from an event.
  *      tags: 
@@ -158,37 +205,148 @@ router.route("/events/:eventId")
  *          in: path
  *          description: Event ID.
  *          required: true
+ *        - name: orgId
+ *          in: body
+ *          description: Organization ID.
+ *          required: true
  *      responses:
  *       200:
- *         description: Confirmation message.
+ *         description: Success
  */
 router.route("/events/:eventId/organizations")
   .put(addOrganizationToEvent)
-  .delete(deleteOrganizationFromEvent)
+  .delete(deleteOrganizationFromEvent);
 
-// Delete an organization as a host to an event.
-router.delete("/events/:eventId/delete-organization/:orgId", deleteOrganizationFromEvent);
+/**
+ * @swagger
+ * /events/{eventId}/rsvps:
+ *    get:
+ *      description: Gets an RSVP to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: userId
+ *          in: body
+ *          description: User ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ *    put:
+ *      description: Adds an RSVP to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: response
+ *          in: body
+ *          description: User ID and RSVP Status.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ *    patch:
+ *      description: Updates an RSVP to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: response
+ *          in: body
+ *          description: User ID and RSVP Status.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ *    delete:
+ *      description: Deletes an RSVP from an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: userId
+ *          in: body
+ *          description: User ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ */
+router.route("/events/:eventId/rsvps")
+  .get(getRSVP)
+  .put(addRSVP)
+  .patch(updateRSVP)
+  .delete(deleteRSVP);
 
-// Add an RSVP to an event.
-router.post("/events/:eventId/add-rsvp", addRSVP);
-
-// Get an RSVP for an event.
-router.get("/events/:eventId/rsvp/:userId", getRSVP);
-
-// Update an RSVP for an event.
-router.patch("/events/:eventId/update-rsvp", updateRSVP)
-
-// Delete an attendee from an event.
-router.delete("/events/:eventId/delete-rsvp/:userId", deleteRSVP);
-
-// Get all attendees for an event.
-router.get("/events/:eventId/attendees", getAttendees);
-
-// Add an attendee to an event.
-router.post("/events/:eventId/add-attendee", addAttendee);
-
-// Delete an attendee from an event.
-router.delete("/events/:eventId/delete-attendee/:userId", deleteAttendee);
+/**
+ * @swagger
+ * /events/{eventId}/attendees:
+ *    get:
+ *      description: Gets an RSVP to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: userId
+ *          in: body
+ *          description: User ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ *    put:
+ *      description: Adds an RSVP to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: response
+ *          in: body
+ *          description: User ID and RSVP Status.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ *    delete:
+ *      description: Deletes an RSVP from an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: userId
+ *          in: body
+ *          description: User ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success
+ */
+router.route("/events/:eventId/attendees")
+  .get(getAttendees)
+  .put(addAttendee)
+  .delete(deleteAttendee);
 
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
