@@ -75,41 +75,27 @@ router.post("/organizations/add-member", addOrganizationMember);
 // Create an Event.
 router.route("/events")
   .get(getAllEvents)
-  .put(createEvent)
+  .put(createEvent);
 
 router.route("/events/:eventId")
   .get(getEventById)
   .patch(updateEventById)
-  .delete(deleteEventById)
+  .delete(deleteEventById);
 
 router.route("/events/:eventId/organizations")
   .put(addOrganizationToEvent)
-  .delete(deleteOrganizationFromEvent)
+  .delete(deleteOrganizationFromEvent);
 
 router.route("/events/:eventId/rsvps")
+  .get(getRSVP)
+  .put(addRSVP)
+  .patch(updateRSVP)
+  .delete(deleteRSVP);
 
 router.route("/events/:eventId/attendees")
-
-// Add an RSVP to an event.
-router.post("/events/:eventId/add-rsvp", addRSVP);
-
-// Get an RSVP for an event.
-router.get("/events/:eventId/rsvp/:userId", getRSVP);
-
-// Update an RSVP for an event.
-router.patch("/events/:eventId/update-rsvp", updateRSVP);
-
-// Delete an attendee from an event.
-router.delete("/events/:eventId/delete-rsvp/:userId", deleteRSVP);
-
-// Get all attendees for an event.
-router.get("/events/:eventId/attendees", getAttendees);
-
-// Add an attendee to an event.
-router.post("/events/:eventId/add-attendee", addAttendee);
-
-// Delete an attendee from an event.
-router.delete("/events/:eventId/delete-attendee/:userId", deleteAttendee);
+  .get(getAttendees)
+  .put(addAttendee)
+  .delete(deleteAttendee);
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
 
