@@ -132,7 +132,7 @@ router.route("/events/:eventId")
 
 /**
  * @swagger
- * /events/{eventId}/organization:
+ * /events/{eventId}/organizations:
  *    put:
  *      description: Adds an organization to an event.
  *      tags: 
@@ -162,8 +162,7 @@ router.route("/events/:eventId")
  *       200:
  *         description: Confirmation message.
  */
-// Add an organization as a host to an event.
-router.route("/events/:eventId/organization")
+router.route("/events/:eventId/organizations")
   .put(addOrganizationToEvent)
   .delete(deleteOrganizationFromEvent)
 

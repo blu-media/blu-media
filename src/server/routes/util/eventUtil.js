@@ -70,7 +70,7 @@ const deleteAttendee = async (request, response) => {
 
 const deleteOrganizationFromEvent = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
-  let org = await util.getOrganizationById(request.params.orgId);
+  let org = await util.getOrganizationById(request.body.orgId);
 
   event.removeOrganization(org).then(() => {
     response.send("Organization has been removed from event!");
