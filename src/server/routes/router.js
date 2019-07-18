@@ -13,7 +13,7 @@ const options = {
     },
   },
   // List of files to be processes. You can also set globs './routes/*.js'.
-  apis: [path.resolve(__dirname, 'router.js')],
+  apis: [path.resolve(__dirname, 'router.js'), path.resolve(__dirname, '../db/models/event.js')],
 };
 
 const specs = swaggerJSdoc(options);
@@ -101,13 +101,67 @@ router.post("/organizations/add-member", addOrganizationMember);
  * /events:
  *    get:
  *      description: This should return all events.
+ *      tags: 
+ *      - Events
+ *      produces: application/json
+ *      responses:
+ *       200:
+ *         description: An array of events.
  */
 router.get("/events", getAllEvents);
 
-// Get an event by ID.
+/**
+ * @swagger
+ * /events/{eventId}:
+ *    get:
+ *      description: Get event by ID.
+ *      tags: 
+ *      - Events
+ *      produces: application/json
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: An event.
+ */
 router.route("/events/:eventId")
   .get(getEventById)
 
+/**
+ * @swagger
+ * /events/{eventId}/organization:
+ *    put:
+ *      description: Adds an organization to an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: orgId
+ *          in: body
+ *          description: Organization ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Join Table Confirmation
+ *    delete:
+ *      description: Delete an organization from an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Confirmation message.
+ */
 // Add an organization as a host to an event.
 router.route("/events/:eventId/organization")
   .put(addOrganizationToEvent)
