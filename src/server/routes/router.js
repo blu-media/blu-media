@@ -2,11 +2,7 @@
 const express = require("express");
 
 /* Utility Functions */
-const {
-  createUser,
-  getAllUsers,
-  getUserRSVPs
-} = require("./util/userUtil");
+const { createUser, getAllUsers, getUserRSVPs } = require("./util/userUtil");
 
 const {
   addAttendee,
@@ -19,7 +15,10 @@ const {
   getAttendees,
   getEventById,
   getRSVP,
-  updateRSVP
+  updateRSVP,
+  createEvent,
+  updateEvent,
+  deleteEvent
 } = require("./util/eventUtil");
 
 const {
@@ -40,7 +39,6 @@ const {
 
 const router = express.Router();
 
-
 /********** USER FUNCTIONALITY **********/
 
 // Get all users.
@@ -51,7 +49,6 @@ router.get("/users/rsvps", getUserRSVPs);
 
 // Create a user.
 router.post("/users", createUser);
-
 
 /********** ORGANIZATION FUNCTIONALITY **********/
 
@@ -73,8 +70,16 @@ router.delete("/organizations/:orgId", deleteOrganization);
 // Add an executive board member to an organization.
 router.post("/organizations/add-member", addOrganizationMember);
 
-
 /********** EVENT FUNCTIONALITY **********/
+
+// Create an Event.
+router.post("/events/create-event", createEvent);
+
+//Update the attributes of an event.
+router.patch("/events/:eventId/update-event", updateEvent);
+
+//Delete an event.
+router.delete("/events/:eventId", deleteEvent);
 
 // Get all events.
 router.get("/events", getAllEvents);
@@ -86,7 +91,10 @@ router.get("/events/:eventId", getEventById);
 router.post("/events/:eventId/add-organization", addOrganizationToEvent);
 
 // Delete an organization as a host to an event.
-router.delete("/events/:eventId/delete-organization/:orgId", deleteOrganizationFromEvent);
+router.delete(
+  "/events/:eventId/delete-organization/:orgId",
+  deleteOrganizationFromEvent
+);
 
 // Add an RSVP to an event.
 router.post("/events/:eventId/add-rsvp", addRSVP);
@@ -95,7 +103,7 @@ router.post("/events/:eventId/add-rsvp", addRSVP);
 router.get("/events/:eventId/rsvp/:userId", getRSVP);
 
 // Update an RSVP for an event.
-router.patch("/events/:eventId/update-rsvp", updateRSVP)
+router.patch("/events/:eventId/update-rsvp", updateRSVP);
 
 // Delete an attendee from an event.
 router.delete("/events/:eventId/delete-rsvp/:userId", deleteRSVP);
@@ -108,7 +116,6 @@ router.post("/events/:eventId/add-attendee", addAttendee);
 
 // Delete an attendee from an event.
 router.delete("/events/:eventId/delete-attendee/:userId", deleteAttendee);
-
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
 

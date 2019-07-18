@@ -4,6 +4,32 @@ const qr = require("qrcode");
 /* DB Object */
 const { db } = require("../../db/connection");
 
+const createEvent = (request, response) => {
+  request.body.id = uniqid();
+  db.events.create(request.body).then(event => {
+    response.send(event);
+  });
+};
+const updateEvent = (request, response) => {
+  db.events
+    .update(request.body, {
+      where: { id: request.params.eventId }
+    })
+    .then(event => {
+      response.send(event);
+    });
+};
+
+const deleteEvent = (request, response) => {
+  db.events
+    .destroy({
+      where: { id: request.params.eventId }
+    })
+    .then(() => {
+      response.send("Event has been deleted!");
+    });
+};
+
 const addAttendee = (request, response) => {
   db.events.findByPk(request.params.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
@@ -27,18 +53,20 @@ const addOrganizationToEvent = (request, response) => {
 const addRSVP = (request, response) => {
   db.events.findByPk(request.params.eventId).then(event => {
     db.users.findByPk(request.body.userId).then(user => {
-      event.addRsvp(user, {
-        through: {
-          response: request.body.response
-        }
-      }).then(rsvp => {
-        response.send(rsvp);
-      });
+      event
+        .addRsvp(user, {
+          through: {
+            response: request.body.response
+          }
+        })
+        .then(rsvp => {
+          response.send(rsvp);
+        });
     });
   });
 };
 
-const createQRCode = (eventId) => {
+const createQRCode = eventId => {
   return new Promise((resolve, reject) => {
     qr.toDataURL(`localhost:8080/events/${eventId}`, (error, url) => {
       if (error) reject(error);
@@ -81,85 +109,90 @@ const deleteRSVP = (request, response) => {
 };
 
 const getAllEvents = (request, response) => {
-  db.events.findAll({
-    include: [
-      {
-        model: db.users,
-        as: "rsvps"
-      },
-      {
-        model: db.users,
-        as: "attendees"
-      },
-      {
-        model: db.organizations
-      }
-    ]
-  })
+  db.events
+    .findAll({
+      include: [
+        {
+          model: db.users,
+          as: "rsvps"
+        },
+        {
+          model: db.users,
+          as: "attendees"
+        },
+        {
+          model: db.organizations
+        }
+      ]
+    })
     .then(events => {
       response.json(events);
     });
 };
 
 const getAttendees = (request, response) => {
-  db.events.findByPk(request.params.eventId, {
-    include: [
-      {
-        model: db.users,
-        as: "attendees"
-      }
-    ]
-  })
-    .then((event) => {
+  db.events
+    .findByPk(request.params.eventId, {
+      include: [
+        {
+          model: db.users,
+          as: "attendees"
+        }
+      ]
+    })
+    .then(event => {
       response.send(event.attendees);
     });
 };
 
 const getEventById = (request, response) => {
-  db.events.findByPk(request.params.eventId, {
-    include: [
-      {
-        model: db.users,
-        as: "rsvps"
-      },
-      {
-        model: db.users,
-        as: "attendees"
-      },
-      {
-        model: db.organizations
-      }
-    ]
-  })
+  db.events
+    .findByPk(request.params.eventId, {
+      include: [
+        {
+          model: db.users,
+          as: "rsvps"
+        },
+        {
+          model: db.users,
+          as: "attendees"
+        },
+        {
+          model: db.organizations
+        }
+      ]
+    })
     .then(event => {
       response.json(event);
     });
 };
 
 const getRSVP = (request, response) => {
-  db.eventRSVPs.findAll({
-    where: {
-      eventId: request.params.eventId,
-      userId: request.params.userId
-    }
-  })
+  db.eventRSVPs
+    .findAll({
+      where: {
+        eventId: request.params.eventId,
+        userId: request.params.userId
+      }
+    })
     .then(rsvp => {
       response.send(rsvp);
     });
 };
 
 const updateRSVP = (request, response) => {
-  db.eventRSVPs.update(
-    {
-      response: request.body.response
-    },
-    {
-      where: {
-        eventId: request.params.eventId,
-        userId: request.body.userId
+  db.eventRSVPs
+    .update(
+      {
+        response: request.body.response
+      },
+      {
+        where: {
+          eventId: request.params.eventId,
+          userId: request.body.userId
+        }
       }
-    }
-  )
+    )
     .then(RSVP => {
       response.send(RSVP);
     });
@@ -177,5 +210,8 @@ module.exports = {
   getAttendees,
   getEventById,
   getRSVP,
-  updateRSVP
+  updateRSVP,
+  createEvent,
+  updateEvent,
+  deleteEvent
 };
