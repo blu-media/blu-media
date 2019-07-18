@@ -158,23 +158,20 @@ const getEventById = (request, response) => {
           model: db.organizations
         }
       ]
-    })
-    .then(event => {
+    }).then(event => {
       response.json(event);
     });
 };
 
 const getRSVP = (request, response) => {
-  db.eventRSVPs
-    .findAll({
-      where: {
-        eventId: request.params.eventId,
-        userId: request.body.userId
-      }
-    })
-    .then(rsvp => {
-      response.send(rsvp);
-    });
+  db.eventRSVPs.findAll({
+    where: {
+      eventId: request.params.eventId,
+      userId: request.params.userId
+    }
+  }).then(rsvp => {
+    response.send(rsvp);
+  });
 };
 
 const updateEventById = (request, response) => {

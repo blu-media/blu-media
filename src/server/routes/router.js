@@ -42,8 +42,8 @@ const {
   addOrganizationMember,
   createOrganization,
   deleteOrganization,
+  getAllOrganizations,
   getEventsByOrganization,
-  getOrganizations,
   updateOrganization
 } = require("./util/organizationUtil");
 
@@ -64,35 +64,145 @@ router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 /********** USER FUNCTIONALITY **********/
 
-// Get all users.
-router.get("/users", getAllUsers);
+/**
+ * @swagger
+ * /users:
+ *    get:
+ *      description: Return all users.
+ *      tags: 
+ *      - Users
+ *      produces: application/json
+ *      responses:
+ *       200:
+ *         description: Success.
+ *    put:
+ *      description: Create a user.
+ *      tags: 
+ *      - Users
+ *      produces: application/json
+ *      parameters:
+ *        - name: user
+ *          in: body
+ *          description: User Instance
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success.
+ */
+router.route("/users")
+  .get(getAllUsers)
+  .put(createUser)
 
-// Get all RSVP's for a user.
-router.get("/users/rsvps", getUserRSVPs);
-
-// Create a user.
-router.post("/users", createUser);
+/**
+* @swagger
+* /users/{userId}/rsvps:
+*    get:
+*      description: Return all RSVP's for a user.
+*      tags: 
+*      - Users
+*      produces: application/json
+*      responses:
+*       200:
+*         description: Success.
+*/
+router.route("/users/:userId/rsvps")
+  .get(getUserRSVPs)
 
 
 /********** ORGANIZATION FUNCTIONALITY **********/
 
-// Get all organizations.
-router.get("/organizations", getOrganizations);
+/**
+* @swagger
+* /organizations:
+*    get:
+*      description: Return all organizations.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      responses:
+*       200:
+*         description: Success.
+*    put:
+*      description: Create an organization.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      parameters:
+*        - name: Organization
+*          in: body
+*          description: Organization Instance
+*          required: true
+*      responses:
+*       200:
+*         description: Success.
+*/
+router.route("/organizations")
+  .get(getAllOrganizations)
+  .put(createOrganization);
 
-// Get all events for an organization.
-router.get("/organizations/:orgId/events", getEventsByOrganization);
+/**
+* @swagger
+* /organizations/{orgId}:
+*    patch:
+*      description: Update an organization.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      parameters:
+*        - name: Organization
+*          in: body
+*          description: Organization Attributes
+*          required: true
+*      responses:
+*       200:
+*         description: Success.
+*    delete:
+*      description: Deletes an organization.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      responses:
+*       200:
+*         description: Success.
+*/
+router.route("/organizations/:orgId")
+  .patch(updateOrganization)
+  .delete(deleteOrganization)
 
-// Create an organization.
-router.post("/organizations", createOrganization);
+/**
+* @swagger
+* /organizations/{orgId}/events:
+*    get:
+*      description: Return all events of an organization.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      responses:
+*       200:
+*         description: Success.
+*/
+router.route("/organizations/:orgId/events")
+  .get(getEventsByOrganization);
 
-// Update an organization.
-router.patch("/organizations/:orgId/update-organization", updateOrganization);
-
-// Delete an organization.
-router.delete("/organizations/:orgId", deleteOrganization);
-
-// Add an executive board member to an organization.
-router.post("/organizations/add-member", addOrganizationMember);
+/**
+* @swagger
+* /organizations/{orgId}/members:
+*    put:
+*      description: Add a user to an organization as a member.
+*      tags: 
+*      - Organizations
+*      produces: application/json
+*      parameters:
+*        - name: userId
+*          in: body
+*          description: User ID
+*          required: true
+*      responses:
+*       200:
+*         description: Success.
+*/
+router.route("/organizations/:orgId/members")
+  .put(addOrganizationMember);
 
 
 /********** EVENT FUNCTIONALITY **********/
@@ -220,22 +330,6 @@ router.route("/events/:eventId/organizations")
 /**
  * @swagger
  * /events/{eventId}/rsvps:
- *    get:
- *      description: Gets an RSVP to an event.
- *      tags: 
- *      - Events
- *      parameters:
- *        - name: eventId
- *          in: path
- *          description: Event ID.
- *          required: true
- *        - name: userId
- *          in: body
- *          description: User ID.
- *          required: true
- *      responses:
- *       200:
- *         description: Success
  *    put:
  *      description: Adds an RSVP to an event.
  *      tags: 
@@ -286,16 +380,54 @@ router.route("/events/:eventId/organizations")
  *         description: Success
  */
 router.route("/events/:eventId/rsvps")
-  .get(getRSVP)
   .put(addRSVP)
   .patch(updateRSVP)
   .delete(deleteRSVP);
 
 /**
+* @swagger
+* /events/{eventId}/rsvps:
+*    get:
+*      description: Gets an RSVP to an event.
+*      tags: 
+*      - Events
+*      parameters:
+*        - name: eventId
+*          in: path
+*          description: Event ID.
+*          required: true
+*        - name: userId
+*          in: path
+*          description: User ID.
+*          required: true
+*      responses:
+*       200:
+*         description: Success
+*/
+router.route("/events/:eventId/rsvps/:userId")
+  .get(getRSVP)
+
+/**
  * @swagger
  * /events/{eventId}/attendees:
  *    get:
- *      description: Gets an RSVP to an event.
+ *      description: Gets all attendees for an event.
+ *      tags: 
+ *      - Events
+ *      parameters:
+ *        - name: eventId
+ *          in: path
+ *          description: Event ID.
+ *          required: true
+ *        - name: userId
+ *          in: body
+ *          description: User ID.
+ *          required: true
+ *      responses:
+ *       200:
+ *         description: Success.
+ *    put:
+ *      description: Adds an attendee to an event.
  *      tags: 
  *      - Events
  *      parameters:
@@ -310,24 +442,8 @@ router.route("/events/:eventId/rsvps")
  *      responses:
  *       200:
  *         description: Success
- *    put:
- *      description: Adds an RSVP to an event.
- *      tags: 
- *      - Events
- *      parameters:
- *        - name: eventId
- *          in: path
- *          description: Event ID.
- *          required: true
- *        - name: response
- *          in: body
- *          description: User ID and RSVP Status.
- *          required: true
- *      responses:
- *       200:
- *         description: Success
  *    delete:
- *      description: Deletes an RSVP from an event.
+ *      description: Deletes an attendee from an event.
  *      tags: 
  *      - Events
  *      parameters:
