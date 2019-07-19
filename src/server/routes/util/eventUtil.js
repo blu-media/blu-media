@@ -4,6 +4,7 @@ const uniqid = require("uniqid");
 
 /* DB Object */
 const { db } = require("../../db/connection");
+const Op = require(db.Sequelize.Op)
 
 /* Common Utility Functions */
 const util = require("./commonUtil");
@@ -158,12 +159,29 @@ const getEventsInTimeFrame = (request, response) => {
   db.events
     .findAll({
       where: {
-        [events.and]: [{ date: date >= (request.body.startDate) }, { date: date <= (request.body.endDate) }]
+        date: {
+          [Op.gte]: request.query.startTime || null,
+          [Op.lte]: request.query.endTime || null
+        }
+        // startTime: {
+        //   $gte: request.query.startTime,
+        // },
+        // endTime: {
+        //   $lte: request.query.endTime
+        // }
       }
     })
-    .then(rsvp => {
-      response.send(rsvp);
+    .then(events => {
+      response.send([events]);
     });
+  // var wantedEvents = new Array();
+  // const events = db.events.findAll();
+  // for (event in events) {
+  //   if (((event.startTime) >= (request.query.startDate)) && ((event.endTime) >= (request.query.endDate))) {
+  //     wantedEvents.push(event);
+  //   }
+  // }
+  // response.send(events);
 };
 
 const getRSVP = (request, response) => {

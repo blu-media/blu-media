@@ -55,7 +55,7 @@ const addEvents = async (request, response) => {
       location: faker.address.streetName(),
       name: faker.lorem.word(),
       qrCode: qrCode,
-      startTime: faker.date.future(),
+      startTime: faker.date.past(),
       type: faker.lorem.word()
     });
   }
