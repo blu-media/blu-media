@@ -1,5 +1,5 @@
-const localDBUsername = "postgres";
-const localDBPassword = "AM112420";
+const localDBUsername = "";
+const localDBPassword = "";
 
 module.exports = {
   localDBUsername,

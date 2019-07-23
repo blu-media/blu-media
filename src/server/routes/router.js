@@ -73,7 +73,7 @@ router.delete("/organizations/:orgId", deleteOrganization);
 router.post("/organizations/add-member", addOrganizationMember);
 
 //Get all events of an organizations using orgId.
-router.route("/organizations/event")
+router.route("/organizations/:orgId/events/search")
   .get(getOrganizationEventsInTimeFrame)
 /********** EVENT FUNCTIONALITY **********/
 

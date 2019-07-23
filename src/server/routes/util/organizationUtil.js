@@ -76,19 +76,21 @@ const getOrganizations = (request, response) => {
 }
 
 const getOrganizationEventsInTimeFrame = (request, response) => {
-  db.events
-    .findAll({
-      where: {
-        date: {
-          [Op.gte]: request.query.startTime || null,
-          [Op.lte]: request.query.endTime || null
-        },
-        organizations: request.body.orgId
+  db.organizations.findByPk(request.params.orgId, {
+    include: [
+      {
+        model: db.events,
+        where: {
+          date: {
+            [Op.gte]: request.query.startTime || null,
+            [Op.lte]: request.query.endTime || null
+          }
+        }
       }
-    })
-    .then(events => {
-      response.send([events]);
-    });
+    ]
+  }).then(events => {
+    response.send(events);
+  });
 };
 
 const updateOrganization = (request, response) => {
