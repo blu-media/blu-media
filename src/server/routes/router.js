@@ -28,7 +28,8 @@ const {
   deleteOrganization,
   getEventsByOrganization,
   getOrganizations,
-  updateOrganization
+  updateOrganization,
+  getOrganizationEventsInTimeFrame
 } = require("./util/organizationUtil");
 
 const {
@@ -71,6 +72,9 @@ router.delete("/organizations/:orgId", deleteOrganization);
 // Add an executive board member to an organization.
 router.post("/organizations/add-member", addOrganizationMember);
 
+//Get all events of an organizations using orgId.
+router.route("/organizations/event")
+  .get(getOrganizationEventsInTimeFrame)
 /********** EVENT FUNCTIONALITY **********/
 
 router.route("/events")

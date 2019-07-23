@@ -4,7 +4,7 @@ const uniqid = require("uniqid");
 
 /* DB Object */
 const { db } = require("../../db/connection");
-const Op = require(db.Sequelize.Op)
+const Op = db.Sequelize.Op;
 
 /* Common Utility Functions */
 const util = require("./commonUtil");
