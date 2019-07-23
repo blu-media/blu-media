@@ -81,7 +81,7 @@ const wipeAndAdd = async (request, response) => {
   await addUsers(num);
   await addOrganizations(num);
   await addEvents(num);
-  await response.send("Database wiped, recreated, and repopulated successfully!");
+  response.send("Database wiped, recreated, and repopulated successfully!");
 }
 
 module.exports = {
