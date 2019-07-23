@@ -36,7 +36,8 @@ const {
   addEvents,
   addOrganizations,
   addUsers,
-  wipeDatabase
+  wipeDatabase,
+  wipeAndAdd
 } = require("./util/dataManipulation");
 
 const router = express.Router();
@@ -104,22 +105,21 @@ router.route("/events/:eventId/attendees")
   .put(addAttendee)
   .delete(deleteAttendee);
 
-// - Get all the events within a given timeframe.
-// - Get all events that happened in the past.
-// - Get all events that are upcoming
-
 /********** DUMMY DATA FUNCTIONALITY /**********/
 
-// Populate User table with arbitrary number of users.
-router.get("/users/add-users/:num", addUsers);
+// // Populate User table with arbitrary number of users.
+// router.get("/users/add-users/:num", addUsers);
 
-// Populate Organizations table with arbitrary number of organizations.
-router.get("/organizations/add-organizations/:num", addOrganizations);
+// // Populate Organizations table with arbitrary number of organizations.
+// router.get("/organizations/add-organizations/:num", addOrganizations);
 
-// Populate Events table with arbitrary number of events.
-router.get("/events/add-events/:num", addEvents);
+// // Populate Events table with arbitrary number of events.
+// router.get("/events/add-events/:num", addEvents);
 
 /* Wipe current DB. */
 router.get("/wipe-db", wipeDatabase);
+
+/*Wipe current DB and add new data to DB. */
+router.get("/wipe-and-add/:num", wipeAndAdd)
 
 module.exports = router;

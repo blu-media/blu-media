@@ -162,25 +162,11 @@ const getEventsInTimeFrame = (request, response) => {
         [Op.gte]: request.query.startTime || null,
         [Op.lte]: request.query.endTime || null
       }
-      // startTime: {
-      //   $gte: request.query.startTime,
-      // },
-      // endTime: {
-      //   $lte: request.query.endTime
-      // }
     }
   })
     .then(events => {
       response.send([events]);
     });
-  // var wantedEvents = new Array();
-  // const events = db.events.findAll();
-  // for (event in events) {
-  //   if (((event.startTime) >= (request.query.startDate)) && ((event.endTime) >= (request.query.endDate))) {
-  //     wantedEvents.push(event);
-  //   }
-  // }
-  // response.send(events);
 };
 
 const getRSVP = (request, response) => {
