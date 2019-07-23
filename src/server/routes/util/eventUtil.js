@@ -156,21 +156,20 @@ const getEventById = (request, response) => {
     });
 };
 const getEventsInTimeFrame = (request, response) => {
-  db.events
-    .findAll({
-      where: {
-        date: {
-          [Op.gte]: request.query.startTime || null,
-          [Op.lte]: request.query.endTime || null
-        }
-        // startTime: {
-        //   $gte: request.query.startTime,
-        // },
-        // endTime: {
-        //   $lte: request.query.endTime
-        // }
+  db.events.findAll({
+    where: {
+      date: {
+        [Op.gte]: request.query.startTime || null,
+        [Op.lte]: request.query.endTime || null
       }
-    })
+      // startTime: {
+      //   $gte: request.query.startTime,
+      // },
+      // endTime: {
+      //   $lte: request.query.endTime
+      // }
+    }
+  })
     .then(events => {
       response.send([events]);
     });
