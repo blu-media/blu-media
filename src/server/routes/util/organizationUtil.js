@@ -7,10 +7,10 @@ const Op = db.Sequelize.Op;
 const util = require("./commonUtil");
 
 const addOrganizationMember = async (request, response) => {
-  let org = await util.getOrganizationById(request.body.eventId);
-  let user = await util.getUserById(request.body.orgId);
+  let org = await util.getOrganizationById(request.params.orgId);
+  let user = await util.getUserById(request.body.userId);
 
-  event.addMember(user, {
+  org.addMember(user, {
     through: {
       position: request.body.position
     }
@@ -55,7 +55,7 @@ const getEventsByOrganization = (request, response) => {
   });
 }
 
-const getOrganizations = (request, response) => {
+const getAllOrganizations = (request, response) => {
   db.organizations.findAll({
     include: [
       {
@@ -66,10 +66,9 @@ const getOrganizations = (request, response) => {
         model: db.events
       }
     ]
+  }).then((orgs) => {
+    response.json(orgs);
   })
-    .then((orgs) => {
-      response.json(orgs);
-    })
     .catch((error) => {
       console.log(error)
     });
@@ -107,8 +106,8 @@ module.exports = {
   addOrganizationMember,
   createOrganization,
   deleteOrganization,
+  getAllOrganizations,
   getEventsByOrganization,
-  getOrganizations,
   updateOrganization,
   getOrganizationEventsInTimeFrame
 }

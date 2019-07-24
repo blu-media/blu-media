@@ -70,13 +70,11 @@ const deleteAttendee = async (request, response) => {
 };
 
 const deleteEventById = (request, response) => {
-  db.events
-    .destroy({
-      where: { id: request.params.eventId }
-    })
-    .then(() => {
-      response.send("Event has been deleted!");
-    });
+  db.events.destroy({
+    where: { id: request.params.eventId }
+  }).then(() => {
+    response.send("Event has been deleted!");
+  });
 };
 
 const deleteOrganizationFromEvent = async (request, response) => {
@@ -150,8 +148,7 @@ const getEventById = (request, response) => {
           model: db.organizations
         }
       ]
-    })
-    .then(event => {
+    }).then(event => {
       response.json(event);
     });
 };
@@ -163,23 +160,20 @@ const getEventsInTimeFrame = (request, response) => {
         [Op.lte]: request.query.endTime || null
       }
     }
-  })
-    .then(events => {
-      response.send([events]);
-    });
+  }).then(events => {
+    response.send(events);
+  });
 };
 
 const getRSVP = (request, response) => {
-  db.eventRSVPs
-    .findAll({
-      where: {
-        eventId: request.params.eventId,
-        userId: request.body.userId
-      }
-    })
-    .then(rsvp => {
-      response.send(rsvp);
-    });
+  db.eventRSVPs.findAll({
+    where: {
+      eventId: request.params.eventId,
+      userId: request.body.userId
+    }
+  }).then(rsvp => {
+    response.send(rsvp);
+  });
 };
 
 const updateEventById = (request, response) => {
@@ -196,22 +190,19 @@ const updateEventById = (request, response) => {
 };
 
 const updateRSVP = (request, response) => {
-  db.eventRSVPs
-    .update(
-      {
-        response: request.body.response
+  db.eventRSVPs.update(
+    {
+      response: request.body.response
+    },
+    {
+      where: {
+        eventId: request.params.eventId,
+        userId: request.body.userId
       },
-      {
-        where: {
-          eventId: request.params.eventId,
-          userId: request.body.userId
-        },
-        returning: true,
-        plain: true
-      }
-    )
-    .then(RSVP => {
-      response.send(RSVP[1]);
+      returning: true,
+      plain: true
+    }).then(rsvp => {
+      response.send(rsvp);
     });
 };
 

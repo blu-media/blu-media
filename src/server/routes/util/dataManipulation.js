@@ -85,9 +85,5 @@ const wipeAndAdd = async (request, response) => {
 }
 
 module.exports = {
-  addEvents,
-  addOrganizations,
-  addUsers,
-  wipeDatabase,
   wipeAndAdd
 };

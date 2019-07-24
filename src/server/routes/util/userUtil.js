@@ -34,10 +34,9 @@ const getUserRSVPs = (request, response) => {
         model: db.organizations
       }
     ]
-  })
-    .then((users) => {
-      response.json(users);
-    });
+  }).then((users) => {
+    response.json(users);
+  });
 }
 
 module.exports = {
