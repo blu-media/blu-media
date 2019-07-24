@@ -1,5 +1,7 @@
 /* DB Models */
 const { db } = require('../../db/connection');
+const Op = db.Sequelize.Op;
+
 
 /* Common Utility Functions */
 const util = require("./commonUtil");
@@ -72,11 +74,31 @@ const getAllOrganizations = (request, response) => {
     });
 }
 
+const getOrganizationEventsInTimeFrame = (request, response) => {
+  db.organizations.findByPk(request.params.orgId, {
+    include: [
+      {
+        model: db.events,
+        where: {
+          date: {
+            [Op.gte]: request.query.startTime || null,
+            [Op.lte]: request.query.endTime || null
+          }
+        }
+      }
+    ]
+  }).then(events => {
+    response.send(events);
+  });
+};
+
 const updateOrganization = (request, response) => {
   db.organizations.update(request.body, {
-    where: { id: request.params.orgId }
+    where: { id: request.params.orgId },
+    returning: true,
+    plain: true
   }).then((org) => {
-    response.send(org);
+    response.send(org[1]);
   });
 };
 
@@ -86,5 +108,6 @@ module.exports = {
   deleteOrganization,
   getAllOrganizations,
   getEventsByOrganization,
-  updateOrganization
+  updateOrganization,
+  getOrganizationEventsInTimeFrame
 }

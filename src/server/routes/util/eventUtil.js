@@ -1,24 +1,14 @@
-/**
- * @fileoverview Description of file, its uses and information
- * about its dependencies.
- * @package
- */
-
 /* NPM Installation Dependencies */
 const qr = require("qrcode");
 const uniqid = require("uniqid");
 
 /* DB Object */
 const { db } = require("../../db/connection");
+const Op = db.Sequelize.Op;
 
 /* Common Utility Functions */
 const util = require("./commonUtil");
 
-/**
- * 
- * @param {*} request 
- * @param {*} response 
- */
 const addAttendee = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
   let user = await util.getUserById(request.body.userId);
@@ -162,12 +152,24 @@ const getEventById = (request, response) => {
       response.json(event);
     });
 };
+const getEventsInTimeFrame = (request, response) => {
+  db.events.findAll({
+    where: {
+      date: {
+        [Op.gte]: request.query.startTime || null,
+        [Op.lte]: request.query.endTime || null
+      }
+    }
+  }).then(events => {
+    response.send(events);
+  });
+};
 
 const getRSVP = (request, response) => {
   db.eventRSVPs.findAll({
     where: {
       eventId: request.params.eventId,
-      userId: request.params.userId
+      userId: request.body.userId
     }
   }).then(rsvp => {
     response.send(rsvp);
@@ -180,27 +182,27 @@ const updateEventById = (request, response) => {
       where: { id: request.params.eventId },
       returning: true,
       plain: true
-    })
+    }
+    )
     .then(event => {
       response.send(event[1]);
     });
 };
 
 const updateRSVP = (request, response) => {
-  db.eventRSVPs
-    .update(
-      {
-        response: request.body.response
+  db.eventRSVPs.update(
+    {
+      response: request.body.response
+    },
+    {
+      where: {
+        eventId: request.params.eventId,
+        userId: request.body.userId
       },
-      {
-        where: {
-          eventId: request.params.eventId,
-          userId: request.body.userId
-        }
-      }
-    )
-    .then(RSVP => {
-      response.send(RSVP);
+      returning: true,
+      plain: true
+    }).then(rsvp => {
+      response.send(rsvp);
     });
 };
 
@@ -219,5 +221,6 @@ module.exports = {
   updateRSVP,
   createEvent,
   updateEventById,
-  deleteEventById
+  deleteEventById,
+  getEventsInTimeFrame
 };

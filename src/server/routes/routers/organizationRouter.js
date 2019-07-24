@@ -8,6 +8,7 @@ const {
   deleteOrganization,
   getAllOrganizations,
   getEventsByOrganization,
+  getOrganizationEventsInTimeFrame,
   updateOrganization
 } = require("../util/organizationUtil");
 
@@ -86,6 +87,9 @@ router.route("/:orgId")
 router.route("/:orgId/events")
   .get(getEventsByOrganization);
 
+router.route("/:orgId/events/search")
+  .get(getOrganizationEventsInTimeFrame)
+
 /**
 * @swagger
 * /organizations/{orgId}/members:
@@ -105,6 +109,5 @@ router.route("/:orgId/events")
 */
 router.route("/:orgId/members")
   .put(addOrganizationMember);
-
 
 module.exports = router;

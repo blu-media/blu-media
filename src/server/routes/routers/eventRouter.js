@@ -12,6 +12,7 @@ const {
   getAllEvents,
   getAttendees,
   getEventById,
+  getEventsInTimeFrame,
   getRSVP,
   updateRSVP,
   createEvent,
@@ -49,6 +50,9 @@ const router = express.Router();
 router.route("/")
   .get(getAllEvents)
   .put(createEvent);
+
+router.route("/search")
+  .get(getEventsInTimeFrame)
 
 /**
  * @swagger
@@ -277,6 +281,5 @@ router.route("/:eventId/attendees")
   .get(getAttendees)
   .put(addAttendee)
   .delete(deleteAttendee);
-
 
 module.exports = router;

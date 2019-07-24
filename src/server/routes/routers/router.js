@@ -25,10 +25,7 @@ const specs = swaggerJSdoc(options);
 
 /* Utility Functions */
 const {
-  addEvents,
-  addOrganizations,
-  addUsers,
-  wipeDatabase
+  wipeAndAdd
 } = require("../util/dataManipulation");
 
 const router = express.Router();
@@ -40,16 +37,7 @@ router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
 
-// Populate User table with arbitrary number of users.
-router.get("/users/add-users/:num", addUsers);
-
-// Populate Organizations table with arbitrary number of organizations.
-router.get("/organizations/add-organizations/:num", addOrganizations);
-
-// Populate Events table with arbitrary number of events.
-router.get("/events/add-events/:num", addEvents);
-
 /* Wipe current DB. */
-router.get("/wipe-db", wipeDatabase);
+router.get("/wipe-and-add/:num", wipeAndAdd);
 
 module.exports = router;
