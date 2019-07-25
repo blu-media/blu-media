@@ -1,6 +1,7 @@
 import React from 'react';
-import logo from '../assets/cubal-logo.png'
-import '../styles/NavBar.css'
+import logo from '../assets/cubal-logo.png';
+import '../styles/NavBar.css';
+import { Link } from 'react-router-dom'; //To set path and route to compent
 import { Navbar, Nav, Form, FormControl, Button } from 'react-bootstrap';
 
 
@@ -24,9 +25,15 @@ class NavBar extends React.Component {
                     </div>
                     <section id="header-right-wrapper">
                         <Nav className="mr-auto">
-                            <Nav.Link href="#home">Home</Nav.Link>
-                            <Nav.Link href="#events">Events</Nav.Link>
-                            <Nav.Link href="#organizations">Organizations</Nav.Link>
+                            <Link to='/' >
+                                <Nav.Link href="#home">Home</Nav.Link>
+                            </Link>
+                            <Link to='/events'>
+                                <Nav.Link href="#events">Events</Nav.Link>
+                            </Link>
+                            <Link to='/organizations'>
+                                <Nav.Link href="#organizations">Organizations</Nav.Link>
+                            </Link>
                             {/* <div class="buttons-wrapper">
                                 <button id="log-in-button">Log in</button>
                                 <button id="sign-up-button">Sign Up</button>
