@@ -1,29 +1,152 @@
+@font-face {
+    font-family: Novecento;
+    src: url(../fonts/Novecentowide-DemiBold.otf);
+}
 
-    /* Button styling */
-    
-    .buttons-wrapper {
-        display: flex;
-        margin-right: 80px;
-    }
+/* COLORS AND BACKGROUNDS */
 
-    .buttons-wrapper button {
-        border: 1px solid var(--cubal-blue-dark);
-        text-transform: uppercase;
-        outline: none;
-        font-size: var(--header-desktop-text-size);
-        border-radius: 8px;
-        margin: auto 8px;
-        padding: 0px 24px;
-        font-weight: 850;
-        cursor: pointer;
-        height: var(--search-bar-height);
-        display: inline-block;
-        transition: ease-in-out;
-        box-sizing: content-box;
+.colorLightGrey {
+    color: rgb(156, 156, 156);
+}
 
-    }
+.colorBlack {
+    color: #000000;
+}
 
-    .buttons-wrapper button:hover {
-        transform: scale(1.02);
-        font-weight: 900;
-    }
+.colorDarkGrey {
+    color: #828282;
+}
+
+.bgGrey1 {
+    background-color: #eeeeee;
+}
+
+/* TEXT AND FONTS */
+
+.fontFamilyNovecento {
+    font-family: Novecento;
+}
+
+.fontSize12px {
+    font-size: 12px;
+}
+
+.fontSize14px {
+    font-size: 14px;
+}
+
+.textAlignCenter {
+    text-align: center;
+}
+
+/* DISPLAYS */
+
+.displayInline {
+    display: inline;
+}
+
+.displayFlex {
+    display: flex;
+}
+
+.flexCenter {
+    display: flex;
+    justify-content: center;
+}
+
+.flexAlignCenter {
+    align-items: center;
+}
+
+.flexSpaceBetween {
+    display: flex !important;
+    justify-content: space-between;
+}
+
+.flexColumn {
+    flex-direction: column;
+}
+
+/* PADDING AND MARGINS */
+
+.noMargin {
+    margin: 0;
+}
+
+.verticalMargin3px {
+    margin-top: 3px;
+    margin-bottom: 3px;
+}
+
+.verticalMargin15px {
+    margin: 15px 0px;
+}
+
+.marginTop25px {
+    margin-top: 25px;
+}
+
+.horizontalMargin15px {
+    margin: 0 15px;
+}
+
+.verticalPadding5px {
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+.verticalPadding15px {
+    padding-top: 15px;
+    padding-bottom: 15px;
+}
+
+.horizontalPadding15px {
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+/* HEIGHTS AND WIDTHS */
+
+.minWidth {
+    width: min-content;
+}
+
+.widthMaxContent {
+    width: max-content;
+}
+
+.minHeight {
+    height: min-content;
+}
+
+/* BORDERS */
+
+.borderGrey1px {
+    border: 1px solid #808080;
+}
+
+.borderTopGrey1px {
+    border-top: 1px solid #808080;
+}
+
+.borderBottomGrey1px {
+    border-bottom: 1px solid #808080;
+}
+
+.borderRadius5px {
+    border-radius: 5px;
+}
+
+.borderRadius10px {
+    border-radius: 10px;
+}
+
+.border {
+    border: 2px black solid;
+}
+
+/* MISCELLANEOUS */
+
+.circle {
+    border-radius: 50%;
+}
