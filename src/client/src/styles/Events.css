@@ -11,8 +11,7 @@
 .timeline {
   position: absolute;
   left: 75px;
-  min-height: 200px;
-  width: 2px;
+  width: 1px;
   border: 1px #828282 solid;
 }
 
@@ -37,4 +36,12 @@
   min-width: 225px;
   max-width: 225px;
   min-height: 100px;
+}
+
+.rowBody {
+  border-bottom: 1px solid #e7e7e7;
+}
+
+.rowBody:last-child {
+  border-bottom: 1px solid #828282;
 }
