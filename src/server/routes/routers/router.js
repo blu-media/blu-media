@@ -10,7 +10,7 @@ passport.use(new GoogleStrategy(
   {
     clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
     clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-    callbackURL: 'https://boiling-badlands-67608.herokuapp.com/events',
+    callbackURL: 'https://boiling-badlands-67608.herokuapp.com/auth/google/callback',
     scope: ['email'],
   },
   // This is a "verify" function required by all Passport strategies
