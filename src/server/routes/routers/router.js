@@ -4,21 +4,15 @@ const path = require("path");
 const swaggerJSdoc = require('swagger-jsdoc');
 const swaggerUI = require('swagger-ui-express');
 const passport = require('passport');
-const GoogleStrategy = require('passport-google-oauth20').Strategy;
+var GoogleTokenStrategy = require('passport-google-token').Strategy;
+var gcal = require('google-calendar');
+var cors = require('cors');
+const uniqid = require("uniqid");
+require('dotenv').config({ path: path.join(__dirname + '/../../../../.env') });
 
-passport.use(new GoogleStrategy(
-  {
-    clientID: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_OAUTH_TEST_APP_CLIENT_SECRET,
-    callbackURL: 'https://boiling-badlands-67608.herokuapp.com/auth/google/callback',
-    scope: ['email'],
-  },
-  // This is a "verify" function required by all Passport strategies
-  (accessToken, refreshToken, profile, cb) => {
-    console.log('Our user authenticated with Google, and Google sent us back this profile info identifying the authenticated user:', profile);
-    return cb(null, profile);
-  },
-));
+const { db } = require('../../db/connection');
+const { generateToken, sendToken } = require("../util/commonUtil");
+const { createUser } = require("../util/userUtil");
 
 /* Configure Swagger Documentation */
 const options = {
@@ -46,17 +40,114 @@ const {
 
 const router = express.Router();
 
+var corsOption = {
+  origin: true,
+  methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  credentials: true,
+  exposedHeaders: ['x-auth-token']
+};
+
+router.use(cors(corsOption));
+
 /********** API DOCUMENTATION **********/
 
 router.use('/api-docs', swaggerUI.serve, swaggerUI.setup(specs));
 
-router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/', session: false }),
-  (req, res) => {
-    console.log('wooo we authenticated, here is our user object:', req.user);
-    res.json(req.user);
-  }
-);
+
+/********** GOOGLE AUTHENTICATION **********/
+
+passport.use(new GoogleTokenStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET
+}, (accessToken, refreshToken, profile, done) => {
+  profile = profile._json
+
+  db.users.findOne({ where: { email: profile.email } })
+    .then((user) => {
+      if (user) return;
+      else {
+        db.users.create({
+          email: profile.email,
+          firstName: profile.given_name,
+          id: uniqid(),
+          lastName: profile.family_name,
+          profilePicture: profile.picture
+        });
+      }
+    });
+
+  let googleCalendar = new gcal.GoogleCalendar(accessToken);
+  // googleCalendar.events.list('primary', {
+  //   maxResults: 10,
+  //   singleEvents: true,
+  //   timeMin: (new Date()).toISOString(),
+  //   orderBy: 'startTime',
+  // }, (error, results) => {
+  //   if (error) {
+  //     console.log(error);
+  //   } else {
+  //     console.log(results);
+  //   }
+  // });
+
+  // googleCalendar.events.insert('primary', {
+  //   'summary': 'Sex w/ Abenazer',
+  //   'location': 'Ujamaa Main Lounge',
+  //   'start': {
+  //     'dateTime': '2019-07-29T22:00:00-07:00',
+  //     'timeZone': 'America/Los_Angeles',
+  //   },
+  //   'end': {
+  //     'dateTime': '2019-07-29T23:00:00-07:00',
+  //     'timeZone': 'America/Los_Angeles',
+  //   },
+  //   'sendUpdates': true
+  // }, (error, result) => {
+  //   if (!error) {
+  //     console.log(`Event created: ${result.htmlLink}`);
+  //   } else {
+  //     console.log(error);
+  //   }
+
+  // });
+}));
+
+// function listEvents(auth) {
+//   const calendar = google.calendar({ version: 'v3', auth });
+//   calendar.events.list({
+//     calendarId: 'primary',
+//     timeMin: (new Date()).toISOString(),
+//     maxResults: 10,
+//     singleEvents: true,
+//     orderBy: 'startTime',
+//   }, (err, res) => {
+//     if (err) return console.log('The API returned an error: ' + err);
+//     const events = res.data.items;
+//     if (events.length) {
+//       console.log('Upcoming 10 events:');
+//       events.map((event, i) => {
+//         const start = event.start.dateTime || event.start.date;
+//         console.log(`${start} - ${event.summary}`);
+//       });
+//     } else {
+//       console.log('No upcoming events found.');
+//     }
+//   });
+// }
+
+router.route('/api/v1/auth/google')
+  .post(passport.authenticate('google-token'),
+    (req, res, next) => {
+      console.log(process.env);
+      if (!req.user) {
+        return res.send(401, 'User Not Authenticated');
+      }
+      req.auth = {
+        id: req.user.id
+      };
+
+      next();
+    }, generateToken, sendToken);
 
 /********** DUMMY DATA FUNCTIONALITY /**********/
 
