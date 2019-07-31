@@ -13,12 +13,20 @@
     color: #000000;
 }
 
+.colorWhite {
+    color: #ffffff;
+}
+
 .colorDarkGrey {
     color: #828282;
 }
 
 .bgGrey1 {
     background-color: #eeeeee;
+}
+
+.bgGreen {
+    background-color: green;
 }
 
 /* TEXT AND FONTS */

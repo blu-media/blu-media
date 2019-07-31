@@ -2,12 +2,11 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
 
 import '../styles/main.css';
 import '../styles/Events.css';
-// import aiLogo from '../assets/ai-logo.png';
 
 class Events extends React.Component {
     constructor(props) {
@@ -21,10 +20,10 @@ class Events extends React.Component {
         this.currentYear = React.createRef();
         this.timeline = React.createRef();
 
-        this.handleClick = this.handleClick.bind(this);
+        this.displayEventsOnDay = this.displayEventsOnDay.bind(this);
       }
     
-    handleClick(event) {
+    displayEventsOnDay(event) {
         let month = this.currentMonth.current.innerText;
         let year = this.currentYear.current.innerText;
         let day = event.target.innerText;
@@ -36,9 +35,17 @@ class Events extends React.Component {
         let endTime = moment(startTimeUTC).add(1, 'day').subtract(1, 'second');
         let endTimeUTC = endTime.utc().format();
 
+        console.log(startTimeUTC);
+        console.log(endTimeUTC);
+
+        const searchQuery = `http://127.0.0.1:8080/events/search?` + 
+            `startTime=${startTimeUTC}&endTime=${endTimeUTC}`
+
         axios
-            .get(`http://127.0.0.1:8080/events/search?startTime=${startTimeUTC}&endTime=${endTimeUTC}`)
+            .get(searchQuery)
             .then((res) => {
+                console.log("RESULTS");
+                console.log(res);
                 this.setState({ events: res.data});
                 this.updateTimelineHeight();
             });
@@ -47,7 +54,8 @@ class Events extends React.Component {
     updateTimelineHeight() {
         console.log(window.outerHeight);
         let lastCalendarRow = document.getElementById('lastCalendarRow');
-        let timelineHeight = window.outerHeight - (lastCalendarRow.offsetTop + lastCalendarRow.offsetHeight)
+        let timelineHeight = window.outerHeight -
+            (lastCalendarRow.offsetTop + lastCalendarRow.offsetHeight)
         
         if (this.state.events.length > 0 && timelineHeight !== this.state.timelineHeight) {
             this.setState({ timelineHeight: timelineHeight });
@@ -58,17 +66,7 @@ class Events extends React.Component {
     render() {
         var eventsList = this.state.events.map((event) => {
             return (
-                <div>
-                <div>
-                {/* <Router>
-                    <div>
-                        <Switch>
-                        <Route path="/events/individual-event" component={IndividualEvent} />
-                        </Switch>
-                    </div>
-                </Router> */}
-                </div>
-                <div key={event.id} className="displayFlex fontSize12px
+                <Link to="/events" params={{eventId: event.id}} key={event.id} className="displayFlex fontSize12px
                     negativeTimelineMarginLeft verticalMargin15px">
                     <div className="displayFlex flexAlignCenter">
                         <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
@@ -78,19 +76,13 @@ class Events extends React.Component {
                     <div className="timelineMarginRight bgGrey1 colorDarkGrey
                     eventTimelineSize borderRadius10px flexCenter flexAlignCenter
                     horizontalPadding15px">
-                        {/* <img
-                            src={aiLogo}
-                            width="30"
-                            height="30"
-                            alt="Organization Logo"
-                        /> */}
                         <div className="displayFlex flexColumn flexAlignCenter">
                             <div className="widthMaxContent">{event.name}</div>
                             <div className="widthMaxContent">{event.location}</div>
                             <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
                         </div>
                     </div>
-                </div>
+                </Link>
             )
         });
 
@@ -99,7 +91,8 @@ class Events extends React.Component {
         if (this.state.events.length > 0) {
             events = eventsList;
         } else {
-            events = <div className="widthMaxContent fontSize12px marginAuto marginTop25px">There are no events posted for today.</div>
+            events = <div className="widthMaxContent fontSize12px marginAuto
+                marginTop25px">There are no events posted for today.</div>
         }
 
         return (
@@ -135,8 +128,8 @@ class Events extends React.Component {
 
                     <Row className="horizontalPadding15px rowHeight rowBody
                     displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter" onClick={this.handleClick}>1</Col>
-                        <Col className="textAlignCenter" onClick={this.handleClick}>2</Col>
+                        <Col className="textAlignCenter" onClick={this.displayEventsOnDay}>1</Col>
+                        <Col className="textAlignCenter" onClick={this.displayEventsOnDay}>2</Col>
                         <Col className="textAlignCenter">3</Col>
                         <Col className="textAlignCenter">4</Col>
                         <Col className="textAlignCenter">5</Col>

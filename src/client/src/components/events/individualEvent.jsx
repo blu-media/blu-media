@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios';
 import moment from 'moment';
 // import cubalLogo from '.../assets/cubal-logo.png';
-import { Card, Button } from 'react-bootstrap'
+import { Card, Button } from 'react-bootstrap';
+
+import '../../styles/main.css';
 
 class IndividualEvent extends React.Component {
     render() {
@@ -17,10 +19,10 @@ class IndividualEvent extends React.Component {
                     <Card.Header>Event Name</Card.Header>
                     <Card.Body>
                         <Card.Title>Org Name</Card.Title>
-                        <Card.Img variant="null" src="img" />
+                        {/* <Card.Img variant="null" src="img" /> */}
                         <br />
-                        <Button variant="primary">Going</Button>
-                        <Button variant="primary">Interested</Button>
+                        <Button>Going</Button>
+                        <Button>Interested</Button>
                         <Card.Text>
                             <div>
                                 Date: Wed, Sept 4, 2019 Time: 14:00 - 18:00
@@ -35,7 +37,6 @@ class IndividualEvent extends React.Component {
                     </Card.Body>
                     <Card.Footer className="text-muted">Who's Going?</Card.Footer>
                 </Card>
-
             </div>
         )
     }
