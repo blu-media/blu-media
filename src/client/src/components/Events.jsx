@@ -2,6 +2,8 @@ import React from 'react';
 import { Container, Row, Col } from 'react-bootstrap';
 import axios from 'axios';
 import moment from 'moment';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 
 import '../styles/main.css';
 import '../styles/Events.css';
@@ -56,6 +58,16 @@ class Events extends React.Component {
     render() {
         var eventsList = this.state.events.map((event) => {
             return (
+                <div>
+                <div>
+                {/* <Router>
+                    <div>
+                        <Switch>
+                        <Route path="/events/individual-event" component={IndividualEvent} />
+                        </Switch>
+                    </div>
+                </Router> */}
+                </div>
                 <div key={event.id} className="displayFlex fontSize12px
                     negativeTimelineMarginLeft verticalMargin15px">
                     <div className="displayFlex flexAlignCenter">
