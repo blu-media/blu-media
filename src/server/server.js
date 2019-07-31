@@ -15,11 +15,13 @@ const mainRouter = require('./routes/routers/router');
 const userRouter = require('./routes/routers/userRouter');
 const organizationRouter = require('./routes/routers/organizationRouter');
 const eventRouter = require('./routes/routers/eventRouter');
+const authRouter = require('./routes/routers/authRouter');
 
 app.use('/', mainRouter);
 app.use('/events', eventRouter);
 app.use('/organizations', organizationRouter);
 app.use('/users', userRouter);
+app.use('/auth', authRouter)
 
 const port = process.env.PORT || 8080;
 

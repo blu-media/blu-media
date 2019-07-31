@@ -4,31 +4,32 @@ import '../styles/main.css';
 
 class Home extends React.Component {
     successGoogle = (response) => {
-        const tokenBlob = new Blob([JSON.stringify({ access_token: response.accessToken }, null, 2)],
-            { type: 'application/json' });
+        const profileAndToken = JSON.stringify({
+            accessToken: response.accessToken,
+            profile: response.profileObj
+        });
+
         const options = {
             method: 'POST',
-            body: tokenBlob,
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: profileAndToken,
             mode: 'cors',
             cache: 'default'
         };
-        fetch('http://localhost:8080/api/v1/auth/google', options).then(r => {
-            const token = r.headers.get('x-auth-token');
-            r.json().then(user => {
-                if (token) {
-                    console.log(user);
-                }
-            });
-        })
+
+        fetch('http://localhost:8080/auth/sign-in', options)
+            .then(r => {
+                console.log(r);
+            })
     };
 
     render() {
-        let clientId = process.env;
-        console.log(clientId);
-
         return (
             <div>
                 <GoogleLogin
+                    clientId=''
                     buttonText="LOGIN WITH GOOGLE"
                     onSuccess={this.successGoogle}
                     scope='https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar'

@@ -5,7 +5,7 @@ import moment from 'moment';
 
 import '../styles/main.css';
 import '../styles/Events.css';
-import aiLogo from '../assets/ai-logo.png';
+// import aiLogo from '../assets/ai-logo.png';
 
 class Events extends React.Component {
     constructor(props) {
@@ -58,27 +58,27 @@ class Events extends React.Component {
             return (
                 <div key={event.id} className="displayFlex fontSize12px
                     negativeTimelineMarginLeft verticalMargin15px">
-                        <div className="displayFlex flexAlignCenter">
-                            <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
-                            <div className="timelineCircle circle"></div>
-                        </div>
-                        
-                        <div className="timelineMarginRight bgGrey1 colorDarkGrey
-                        eventTimelineSize borderRadius10px flexSpaceBetween flexAlignCenter
-                        horizontalPadding15px">
-                            <img
-                                src={aiLogo}
-                                width="30"
-                                height="30"
-                                alt="Organization Logo"
-                            />
-                            <div className="displayFlex flexColumn flexAlignCenter">
-                                <div className="widthMaxContent">{event.name}</div>
-                                <div className="widthMaxContent">{event.location}</div>
-                                <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
-                            </div>
+                    <div className="displayFlex flexAlignCenter">
+                        <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
+                        <div className="timelineCircle circle"></div>
+                    </div>
+                    
+                    <div className="timelineMarginRight bgGrey1 colorDarkGrey
+                    eventTimelineSize borderRadius10px flexCenter flexAlignCenter
+                    horizontalPadding15px">
+                        {/* <img
+                            src={aiLogo}
+                            width="30"
+                            height="30"
+                            alt="Organization Logo"
+                        /> */}
+                        <div className="displayFlex flexColumn flexAlignCenter">
+                            <div className="widthMaxContent">{event.name}</div>
+                            <div className="widthMaxContent">{event.location}</div>
+                            <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
                         </div>
                     </div>
+                </div>
             )
         });
 
