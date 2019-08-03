@@ -94,6 +94,14 @@
     margin: 15px 0px;
 }
 
+.marginBottom10px {
+    margin-bottom: 10px;
+}
+
+.marginBottom25px {
+    margin-bottom: 25px;
+}
+
 .marginTop25px {
     margin-top: 25px;
 }
@@ -101,6 +109,11 @@
 .horizontalMargin2px {
     margin-right: 2px;
     margin-left: 2px;
+}
+
+.horizontalMargin10px {
+    margin-right: 10px;
+    margin-left: 10px;
 }
 
 .horizontalMargin15px {
@@ -133,6 +146,14 @@
     width: min-content;
 }
 
+.width50P {
+    width: 50%;
+}
+
+.width75P {
+    width: 75%;
+}
+
 .widthMaxContent {
     width: max-content;
 }
@@ -163,7 +184,7 @@
     border-radius: 10px;
 }
 
-.border {
+.borderTest {
     border: 2px black solid;
 }
 

@@ -1,12 +1,12 @@
 import React from 'react';
+import axios from 'axios'
 import { Container, Row, Col } from 'react-bootstrap';
-import axios from 'axios';
 import moment from 'moment';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
 
-
-import '../styles/main.css';
-import '../styles/Events.css';
+import withAuth from '../Auth/withAuth';
+import '../../styles/main.css';
+import './Events.css';
 
 class Events extends React.Component {
     constructor(props) {
@@ -35,66 +35,60 @@ class Events extends React.Component {
         let endTime = moment(startTimeUTC).add(1, 'day').subtract(1, 'second');
         let endTimeUTC = endTime.utc().format();
 
-        console.log(startTimeUTC);
-        console.log(endTimeUTC);
-
         const searchQuery = `http://127.0.0.1:8080/events/search?` + 
             `startTime=${startTimeUTC}&endTime=${endTimeUTC}`
 
         axios
             .get(searchQuery)
             .then((res) => {
-                console.log("RESULTS");
-                console.log(res);
                 this.setState({ events: res.data});
                 this.updateTimelineHeight();
             });
     }
 
     updateTimelineHeight() {
-        console.log(window.outerHeight);
         let lastCalendarRow = document.getElementById('lastCalendarRow');
         let timelineHeight = window.outerHeight -
             (lastCalendarRow.offsetTop + lastCalendarRow.offsetHeight)
         
         if (this.state.events.length > 0 && timelineHeight !== this.state.timelineHeight) {
             this.setState({ timelineHeight: timelineHeight });
-
         }
     }
 
     render() {
-        var eventsList = this.state.events.map((event) => {
-            return (
-                <Link to="/events" params={{eventId: event.id}} key={event.id} className="displayFlex fontSize12px
-                    negativeTimelineMarginLeft verticalMargin15px">
-                    <div className="displayFlex flexAlignCenter">
-                        <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
-                        <div className="timelineCircle circle"></div>
-                    </div>
-                    
-                    <div className="timelineMarginRight bgGrey1 colorDarkGrey
-                    eventTimelineSize borderRadius10px flexCenter flexAlignCenter
-                    horizontalPadding15px">
-                        <div className="displayFlex flexColumn flexAlignCenter">
-                            <div className="widthMaxContent">{event.name}</div>
-                            <div className="widthMaxContent">{event.location}</div>
-                            <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
-                        </div>
-                    </div>
-                </Link>
-            )
-        });
-
         var events;
 
         if (this.state.events.length > 0) {
-            events = eventsList;
+            events = this.state.events.map((event) => {
+                let linkURL = `/events/${event.id}`;
+                return (
+                    <Link to={linkURL} params={{eventId: event.id}} key={event.id} className="displayFlex fontSize12px
+                        negativeTimelineMarginLeft verticalMargin15px">
+                        <div className="displayFlex flexAlignCenter">
+                            <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
+                            <div className="timelineCircle circle"></div>
+                        </div>
+                        
+                        <div className="timelineMarginRight bgGrey1 colorDarkGrey
+                        eventTimelineSize borderRadius10px flexCenter flexAlignCenter
+                        horizontalPadding15px">
+                            <div className="displayFlex flexColumn flexAlignCenter">
+                                <div className="widthMaxContent">{event.name}</div>
+                                <div className="widthMaxContent">{event.location}</div>
+                                <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
+                            </div>
+                        </div>
+                    </Link>
+                )
+            });
         } else {
             events = <div className="widthMaxContent fontSize12px marginAuto
                 marginTop25px">There are no events posted for today.</div>
         }
 
+        console.log(this.state);
+        
         return (
             <div className="fontFamilyNovecento colorLightGrey">
                 <div className="textAlignCenter verticalMargin15px"
@@ -125,6 +119,7 @@ class Events extends React.Component {
                         <Col className="textAlignCenter">F</Col>
                         <Col className="textAlignCenter">S</Col>
                     </Row>
+
 
                     <Row className="horizontalPadding15px rowHeight rowBody
                     displayFlex flexAlignCenter">
@@ -191,4 +186,4 @@ class Events extends React.Component {
     };
 };
 
-export default Events;
+export default withAuth(Events);
