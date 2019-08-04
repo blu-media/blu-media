@@ -16,7 +16,6 @@ class IndividualEvent extends React.Component {
                 <Card className="text-center">
                     <Card.Header>Event Name</Card.Header>
                     <Card.Body>
-                        <Card.Title>Org Name</Card.Title>
                         <Card.Img variant="null" src="img" />
                         <br />
                         <Button variant="primary">Going</Button>
