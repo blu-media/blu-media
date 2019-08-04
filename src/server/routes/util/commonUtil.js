@@ -61,6 +61,8 @@ const getUserById = (userId) => {
   });
 };
 
+
+
 module.exports = {
   getEventById,
   getOrganizationById,

@@ -13,12 +13,28 @@
     color: #000000;
 }
 
+.colorWhite {
+    color: #ffffff;
+}
+
 .colorDarkGrey {
     color: #828282;
 }
 
 .bgGrey1 {
     background-color: #eeeeee;
+}
+
+.bgGreen {
+    background-color: green;
+}
+
+.bgGreyTransparent {
+    background-color: rgba(128, 128, 128, 0.5)
+}
+
+.bgWhite {
+    background-color: white;
 }
 
 /* TEXT AND FONTS */
@@ -39,7 +55,11 @@
     text-align: center;
 }
 
-/* DISPLAYS */
+.noDecoration {
+    text-decoration: none;
+}
+
+/* DISPLAYS AND POSITIONS */
 
 .displayInline {
     display: inline;
@@ -67,6 +87,15 @@
     flex-direction: column;
 }
 
+.positionAbsolute {
+    position: absolute;
+}
+
+.topLeft {
+    top: 0;
+    left: 0;
+}
+
 /* PADDING AND MARGINS */
 
 .noMargin {
@@ -75,6 +104,11 @@
 
 .marginAuto {
     margin: auto;
+}
+
+.noVerticalMargin {
+    margin-top: 0px;
+    margin-bottom: 0px;
 }
 
 .verticalMargin3px {
@@ -86,6 +120,14 @@
     margin: 15px 0px;
 }
 
+.marginBottom10px {
+    margin-bottom: 10px;
+}
+
+.marginBottom25px {
+    margin-bottom: 25px;
+}
+
 .marginTop25px {
     margin-top: 25px;
 }
@@ -95,9 +137,23 @@
     margin-left: 2px;
 }
 
+.horizontalMargin10px {
+    margin-right: 10px;
+    margin-left: 10px;
+}
+
 .horizontalMargin15px {
     margin-right: 15px;
     margin-left: 15px;
+}
+
+.padding15px {
+    padding: 15px;
+}
+
+.noVerticalPadding {
+    padding-top: 0px;
+    padding-bottom: 0px;
 }
 
 .verticalPadding5px {
@@ -121,12 +177,33 @@
     width: min-content;
 }
 
+.width25P {
+    width: 25%;
+}
+
+.width50P {
+    width: 50%;
+}
+
+.width75P {
+    width: 75%;
+}
+
 .widthMaxContent {
     width: max-content;
 }
 
 .minHeight {
     height: min-content;
+}
+
+.fullHeight {
+    height: 100%;
+}
+
+.fullWidthAndHeight {
+    width: 100%;
+    height: 100%;
 }
 
 /* BORDERS */
@@ -151,7 +228,7 @@
     border-radius: 10px;
 }
 
-.border {
+.borderTest {
     border: 2px black solid;
 }
 
@@ -159,4 +236,11 @@
 
 .circle {
     border-radius: 50%;
+}
+
+.profilePicture {
+    width: 60px;
+    height: 60px;
+    border-radius: 50%;
+    box-shadow: 0 0 5px black;
 }

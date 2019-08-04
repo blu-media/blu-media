@@ -1,6 +1,7 @@
 /* NPM Installation Dependencies */
 const qr = require("qrcode");
 const uniqid = require("uniqid");
+var gCal = require('google-calendar');
 
 /* DB Object */
 const { db } = require("../../db/connection");
@@ -18,6 +19,33 @@ const addAttendee = async (request, response) => {
   });
 };
 
+const addEventToUserCalendar = (event, user, accessToken) => {
+  let googleCalendar = new gCal.GoogleCalendar(accessToken);
+  console.log(googleCalendar);
+
+  console.log(event);
+
+  googleCalendar.events.insert('primary', {
+    'summary': event.name,
+    'location': event.location,
+    'start': {
+      'dateTime': event.startTime,
+      'timeZone': 'America/Los_Angeles',
+    },
+    'end': {
+      'dateTime': event.endTime,
+      'timeZone': 'America/Los_Angeles',
+    },
+    'sendUpdates': true
+  }, (error, result) => {
+    if (!error) {
+      console.log(`Event created: ${result.htmlLink}`);
+    } else {
+      console.log(error);
+    }
+  });
+};
+
 const addOrganizationToEvent = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
   let org = await util.getOrganizationById(request.body.orgId);
@@ -30,6 +58,8 @@ const addOrganizationToEvent = async (request, response) => {
 const addRSVP = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
   let user = await util.getUserById(request.body.userId);
+
+  addEventToUserCalendar(event.dataValues, user.dataValues, request.session.accessToken);
 
   event
     .addRsvp(user, {

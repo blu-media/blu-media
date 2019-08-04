@@ -4,10 +4,6 @@
   background-color: teal;
 }
 
-.rowHeight {
-  min-height: 40px;
-}
-
 .timeline {
   position: absolute;
   left: 75px;
@@ -36,12 +32,4 @@
   min-width: 225px;
   max-width: 225px;
   min-height: 100px;
-}
-
-.rowBody {
-  border-bottom: 1px solid #e7e7e7;
-}
-
-.rowBody:last-child {
-  border-bottom: 1px solid #828282;
 }

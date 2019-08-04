@@ -1,0 +1,24 @@
+.flyer {
+  width: 50%;
+  height: 50%;
+  border-radius: 3px;
+  box-shadow: 0 0 3px 0 rgb(61, 61, 61);
+}
+
+.rsvpButtonGreen {
+  border: 1px #1e5c1e solid;
+  padding: 3px 8px;
+}
+
+.rsvpButtonMustard {
+  border: 1px #c2a238 solid;
+  padding: 3px 8px;
+}
+
+.colorRSVPGreen {
+  color: rgb(30, 92, 30);
+}
+
+.colorRSVPMustard {
+  color: #c2a238;
+}
