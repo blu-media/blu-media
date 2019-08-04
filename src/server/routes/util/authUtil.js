@@ -29,13 +29,10 @@ const { db } = require('../../db/connection');
 // }
 
 const findOrCreateUser = (profile) => {
-  console.log(profile);
   return new Promise((resolve, reject) => {
     db.users.findOne({ where: { email: profile.email } })
       .then((user) => {
         if (user) {
-          console.log("USER HAS BEEN FOUND")
-          console.log(user);
           resolve(user);
         }
         else {

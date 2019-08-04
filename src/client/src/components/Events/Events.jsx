@@ -96,7 +96,7 @@ class Events extends React.Component {
                 <div className="flexSpaceBetween fontSize14px
                     horizontalPadding15px">
                     <div className="flexCenter">
-                        <div ref={this.currentMonth} className="horizontalMargin2px">June</div>
+                        <div ref={this.currentMonth} className="horizontalMargin2px">August</div>
                         <div ref={this.currentYear} className="horizontalMargin2px">2019</div>
                     </div>
 

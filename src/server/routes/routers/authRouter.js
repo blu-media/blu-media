@@ -29,6 +29,8 @@ router.use(cors(corsOption));
 // passport.authenticate('google-token')
 router.route('/google')
   .post(async (request, response, next) => {
+    request.session.accessToken = request.body.access_token;
+
     let user = await findOrCreateUser(request.body.profile);
 
     request.user = user.dataValues;

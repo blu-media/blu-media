@@ -7,8 +7,26 @@ import RSVPButton from '../RSVPButton/RSVPButton';
 const flyer = require('../../../assets/flyer.png');
 
 class IndividualEvent extends React.Component {
+    constructor(props) {
+        super(props);
+
+        this.fetchEvent = this.fetchEvent.bind(this);
+    }
+
+    fetchEvent(eventId) {
+        const searchURL = `http://127.0.0.1:8080/events/${eventId}`;
+
+        fetch(searchURL)
+            .then(response => response.json())
+            .then(jsonResponse => {
+                console.log(jsonResponse);
+            })
+    }
+
     render() {
         let eventId = this.props.match.params.eventId;
+        this.fetchEvent(eventId);
+
 
         return (
             <div className="displayFlex flexColumn flexAlignCenter fontSize12px">
