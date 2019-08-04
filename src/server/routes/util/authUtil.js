@@ -29,10 +29,15 @@ const { db } = require('../../db/connection');
 // }
 
 const findOrCreateUser = (profile) => {
+  console.log(profile);
   return new Promise((resolve, reject) => {
     db.users.findOne({ where: { email: profile.email } })
-      .then((error, user) => {
-        if (user) resolve(user);
+      .then((user) => {
+        if (user) {
+          console.log("USER HAS BEEN FOUND")
+          console.log(user);
+          resolve(user);
+        }
         else {
           let userProfile = {
             email: profile.email,
@@ -48,12 +53,11 @@ const findOrCreateUser = (profile) => {
             });
         }
       });
-  })
+  });
 }
 
 const generateToken = (request, response, next) => {
-  let user = request.user;
-  const token = jwt.sign({ user }, 'my-secret');
+  const token = jwt.sign(request.user, 'my-secret');
   request.token = token;
 
   return next();

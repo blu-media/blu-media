@@ -1,6 +1,10 @@
+@font-face {
+    font-family: Novecento;
+    src: url(../../fonts/Novecentowide-DemiBold.otf);
+}
+
 :root {
-    --header-desktop-height: 100px;
-    
+    --header-height: 85px;
 }
 
 #header-logo-wrapper {
@@ -29,10 +33,22 @@
 } 
 
 header {
-    top: 0;
-    height: var(--header-desktop-height);
+    height: var(--header-height);
     box-shadow: 0 0 0px 1px rgba(0, 0, 0, 0.1), 0 0 6px rgba(0, 0, 0, 0.2);
     margin-bottom: 20px;
-    position: relative;
 }
 
+#menuIcon {
+    width: 35px;
+    height: 35px;
+}
+
+.googleLoginButton {
+    box-shadow: none !important;
+    border-radius: 5px !important;
+    color: white !important;
+    border: 1px solid #ffa600 !important;
+    background-color: #ffa600 !important;
+    font-family: Novecento !important;
+    font-size: 10px;
+}

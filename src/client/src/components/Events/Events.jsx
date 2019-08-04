@@ -2,7 +2,9 @@ import React from 'react';
 import axios from 'axios'
 import { Container, Row, Col } from 'react-bootstrap';
 import moment from 'moment';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+
+import Calendar from '../Events/Calendar/Calendar.jsx';
 
 import withAuth from '../Auth/withAuth';
 import '../../styles/main.css';
@@ -86,8 +88,6 @@ class Events extends React.Component {
             events = <div className="widthMaxContent fontSize12px marginAuto
                 marginTop25px">There are no events posted for today.</div>
         }
-
-        console.log(this.state);
         
         return (
             <div className="fontFamilyNovecento colorLightGrey">
@@ -107,75 +107,7 @@ class Events extends React.Component {
                     </div>
                 </div>
 
-                <Container>
-                    <Row className="borderTopGrey1px borderBottomGrey1px
-                    horizontalPadding15px verticalPadding5px rowHeight
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter">S</Col>
-                        <Col className="textAlignCenter">M</Col>
-                        <Col className="textAlignCenter">T</Col>
-                        <Col className="textAlignCenter">W</Col>
-                        <Col className="textAlignCenter">T</Col>
-                        <Col className="textAlignCenter">F</Col>
-                        <Col className="textAlignCenter">S</Col>
-                    </Row>
-
-
-                    <Row className="horizontalPadding15px rowHeight rowBody
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter" onClick={this.displayEventsOnDay}>1</Col>
-                        <Col className="textAlignCenter" onClick={this.displayEventsOnDay}>2</Col>
-                        <Col className="textAlignCenter">3</Col>
-                        <Col className="textAlignCenter">4</Col>
-                        <Col className="textAlignCenter">5</Col>
-                        <Col className="textAlignCenter">6</Col>
-                        <Col className="textAlignCenter">7</Col>                    
-                    </Row>
-
-                    <Row className="horizontalPadding15px rowHeight rowBody
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter">1</Col>
-                        <Col className="textAlignCenter">2</Col>
-                        <Col className="textAlignCenter">3</Col>
-                        <Col className="textAlignCenter">4</Col>
-                        <Col className="textAlignCenter">5</Col>
-                        <Col className="textAlignCenter">6</Col>
-                        <Col className="textAlignCenter">7</Col>                    
-                    </Row>
-
-                    <Row className="horizontalPadding15px rowHeight rowBody
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter">1</Col>
-                        <Col className="textAlignCenter">2</Col>
-                        <Col className="textAlignCenter">3</Col>
-                        <Col className="textAlignCenter">4</Col>
-                        <Col className="textAlignCenter">5</Col>
-                        <Col className="textAlignCenter">6</Col>
-                        <Col className="textAlignCenter">7</Col>                    
-                    </Row>
-
-                    <Row className="horizontalPadding15px rowHeight rowBody
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter">1</Col>
-                        <Col className="textAlignCenter">2</Col>
-                        <Col className="textAlignCenter">3</Col>
-                        <Col className="textAlignCenter">4</Col>
-                        <Col className="textAlignCenter">5</Col>
-                        <Col className="textAlignCenter">6</Col>
-                        <Col className="textAlignCenter">7</Col>                    
-                    </Row>
-
-                    <Row id="lastCalendarRow" className="horizontalPadding15px rowHeight rowBody
-                    displayFlex flexAlignCenter">
-                        <Col className="textAlignCenter">1</Col>
-                        <Col className="textAlignCenter">2</Col>
-                        <Col className="textAlignCenter">3</Col>
-                        <Col className="textAlignCenter">4</Col>
-                        <Col className="textAlignCenter">5</Col>
-                        <Col className="textAlignCenter">6</Col>
-                        <Col className="textAlignCenter">7</Col>                    
-                    </Row>
-                </Container>
+                <Calendar displayEvents={this.displayEventsOnDay} />
 
                 <div ref={this.timeline} className={`${this.state.events.length > 0 ? "timeline":""}
                 verticalPadding15px`} style={{height: this.state.timelineHeight}}>

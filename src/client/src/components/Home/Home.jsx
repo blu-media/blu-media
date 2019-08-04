@@ -16,26 +16,9 @@ class Home extends React.Component {
         this.Auth.logout();
     }
 
-    successGoogle = (response) => {
-        let authResponse = this.Auth
-            .signIn(response.accessToken, response.profileObj);
-
-        let profile = this.Auth.getProfile();
-
-        console.log(profile);
-    };
     render() {
         return (
             <div>
-                <GoogleLogin
-                    clientId=''
-                    buttonText="LOGIN WITH GOOGLE"
-                    onSuccess={this.successGoogle}
-                    scope='https://www.googleapis.com/auth/calendar.readonly 
-                    https://www.googleapis.com/auth/calendar'
-                />
-
-                <div onClick={this.logout}>Log Out</div>
 
             </div>
         )

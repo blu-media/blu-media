@@ -12,11 +12,13 @@ class RSVPButton extends React.Component {
   }
 
   handleRSVP () {
-    let userId = this.Auth.getProfile().user.userId;
-    console.log(userId);
+    let userId = this.Auth.getProfile().id;
 
     let eventId = this.props.eventId;
     let apiURL = `http://localhost:8080/events/${eventId}/rsvps`;
+
+    console.log(apiURL);
+    console.log(userId);
     const options = {
       method: 'PUT',
       body: JSON.stringify({

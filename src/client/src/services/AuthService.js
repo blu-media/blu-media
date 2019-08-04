@@ -1,4 +1,5 @@
 import decode from 'jwt-decode';
+import { reject } from 'q';
 
 export default class AuthService {
   constructor(endpoint) {
@@ -10,15 +11,12 @@ export default class AuthService {
   }
 
   fetch(url, options) {
-    console.log(url);
-    console.log(options);
     return fetch(url, options)
       .then(this.checkStatus)
       .then(response => response.json());
   }
 
   checkStatus(response) {
-    console.log(response);
     if (response.status >= 200 && response.status < 300) {
       // Success Case
       return response;
@@ -52,31 +50,34 @@ export default class AuthService {
   // }
 
   signIn(token, profile) {
-    console.log(profile);
-    const profileAndToken = JSON.stringify({
-      access_token: token,
-      profile: profile
+    return new Promise((resolve, reject) => {
+      const profileAndToken = JSON.stringify({
+        access_token: token,
+        profile: profile
+      });
+
+      const options = {
+        method: 'POST',
+        body: profileAndToken,
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        mode: 'cors',
+        cache: 'default'
+      };
+
+      fetch('http://localhost:8080/auth/google', options)
+        .then(response => {
+          const token = response.headers.get('x-auth-token');
+          if (token) {
+            this.setToken(token);
+            resolve(true);
+          } else {
+            reject(false);
+          }
+        })
     });
-
-    const options = {
-      method: 'POST',
-      body: profileAndToken,
-      headers: {
-        'Content-Type': 'application/json'
-      },
-      mode: 'cors',
-      cache: 'default'
-    };
-
-    fetch('http://localhost:8080/auth/google', options)
-      .then(response => {
-        const token = response.headers.get('x-auth-token');
-        if (token) this.setToken(token);
-      })
-
   }
-
-
 
   loggedIn() {
     const token = this.getToken();
@@ -106,6 +107,10 @@ export default class AuthService {
   }
 
   getProfile() {
-    return decode(this.getToken());
+    try {
+      return decode(this.getToken());
+    } catch (error) {
+      return null;
+    }
   }
 }
