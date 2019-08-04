@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios'
 import { Container, Row, Col } from 'react-bootstrap';
 
 import '../../../styles/main.css';

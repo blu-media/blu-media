@@ -13,8 +13,6 @@ class NavBar extends React.Component {
         super(props);
 
         this.Auth = new AuthService();
-
-        // this.state
     }
 
     successGoogle = async (response) => {
@@ -37,19 +35,20 @@ class NavBar extends React.Component {
             profilePicture = null;
 
             var googleSignIn = <GoogleLogin
-            clientId=''
-            buttonText="Sign In"
-            className="googleLoginButton"
-            icon={false}
-            onSuccess={this.successGoogle}
-            scope='https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar'
-        />
+                clientId=''
+                buttonText="Sign In"
+                className="googleLoginButton"
+                icon={false}
+                onSuccess={this.successGoogle}
+                scope='https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar'
+            />
         }
 
         return (
             <header className="displayFlex flexAlignCenter flexSpaceBetween
             horizontalPadding15px">
-                <img src={menuIcon} onClick={this.props.openSidebar} id="menuIcon" alt="Menu Icon"/>
+                <img src={menuIcon} onClick={this.props.openSidebar}
+                    id="menuIcon" alt="Menu Icon"/>
                 <Link to='/'>
                     <img src={bluLogo} id="bluIcon" alt="BLU Icon"/>
                 </Link>

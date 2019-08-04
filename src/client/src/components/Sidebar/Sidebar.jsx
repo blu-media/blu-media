@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router-dom'; // To set path and route to component.
-import { Container, Row, Col } from 'react-bootstrap';
 
 import '../../styles/main.css';
 import './Sidebar.css';
@@ -19,6 +18,7 @@ class Sidebar extends React.Component {
         bgGreyTransparent" onClick={(e) => this.props.closeSidebar(e, false)}>
           <div id="sidebar" className="width75P fullHeight bgWhite displayFlex
           flexColumn flexSpaceBetween">
+            
             <div className="displayFlex flexColumn">
               <Link to='/' className="colorBlack noDecoration
               verticalPadding15px sidebarLink textAlignCenter"
