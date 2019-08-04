@@ -21,29 +21,29 @@ const addAttendee = async (request, response) => {
 
 const addEventToUserCalendar = (event, user, accessToken) => {
   let googleCalendar = new gCal.GoogleCalendar(accessToken);
-  console.log(googleCalendar);
+  // console.log(googleCalendar);
 
-  console.log(event);
+  // console.log(event);
 
-  googleCalendar.events.insert('primary', {
-    'summary': event.name,
-    'location': event.location,
-    'start': {
-      'dateTime': event.startTime,
-      'timeZone': 'America/Los_Angeles',
-    },
-    'end': {
-      'dateTime': event.endTime,
-      'timeZone': 'America/Los_Angeles',
-    },
-    'sendUpdates': true
-  }, (error, result) => {
-    if (!error) {
-      console.log(`Event created: ${result.htmlLink}`);
-    } else {
-      console.log(error);
-    }
-  });
+  // googleCalendar.events.insert('primary', {
+  //   'summary': event.name,
+  //   'location': event.location,
+  //   'start': {
+  //     'dateTime': event.startTime,
+  //     'timeZone': 'America/Los_Angeles',
+  //   },
+  //   'end': {
+  //     'dateTime': event.endTime,
+  //     'timeZone': 'America/Los_Angeles',
+  //   },
+  //   'sendUpdates': true
+  // }, (error, result) => {
+  //   if (!error) {
+  //     console.log(`Event created: ${result.htmlLink}`);
+  //   } else {
+  //     console.log(error);
+  //   }
+  // });
 };
 
 const addOrganizationToEvent = async (request, response) => {
@@ -59,7 +59,8 @@ const addRSVP = async (request, response) => {
   let event = await util.getEventById(request.params.eventId);
   let user = await util.getUserById(request.body.userId);
 
-  addEventToUserCalendar(event.dataValues, user.dataValues, request.session.accessToken);
+  addEventToUserCalendar(event.dataValues, user.dataValues,
+    request.session.accessToken);
 
   event
     .addRsvp(user, {

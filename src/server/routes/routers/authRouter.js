@@ -4,7 +4,6 @@ const passport = require('passport');
 var GoogleTokenStrategy = require('passport-google-token').Strategy;
 var gCal = require('google-calendar');
 const path = require("path");
-const cors = require("cors");
 
 /* Environment Configuration */
 const config = require('../../../../config').getConfig(process.env.NODE_ENV);
@@ -13,15 +12,6 @@ const config = require('../../../../config').getConfig(process.env.NODE_ENV);
 const { generateToken, sendToken, findOrCreateUser } = require('../util/authUtil');
 
 const router = express.Router();
-
-var corsOption = {
-  credentials: true,
-  exposedHeaders: ['x-auth-token'],
-  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
-  origin: true
-};
-
-router.use(cors(corsOption));
 
 /********** GOOGLE AUTHENTICATION **********/
 

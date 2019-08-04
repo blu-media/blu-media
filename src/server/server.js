@@ -1,8 +1,9 @@
 /* NPM Installation Dependencies */
 const express = require('express');
 const bodyParser = require('body-parser');
-const uuid = require('uuid/v4')
-const session = require('express-session')
+const uuid = require('uuid/v4');
+const session = require('express-session');
+const cors = require("cors");
 
 /* Server Initialization */
 const app = express();
@@ -20,7 +21,16 @@ app.use(session({
   secret: `${config.session.SESSION_SECRET}`,
   resave: false,
   saveUninitialized: true
-}))
+}));
+
+let corsOption = {
+  credentials: true,
+  exposedHeaders: ['x-auth-token'],
+  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
+  origin: true
+};
+
+app.use(cors(corsOption));
 
 /* Router Configuration */
 const mainRouter = require('./routes/routers/router');
