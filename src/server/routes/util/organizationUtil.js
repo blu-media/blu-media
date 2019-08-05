@@ -80,7 +80,7 @@ const getOrganizationEventsInTimeFrame = (request, response) => {
       {
         model: db.events,
         where: {
-          date: {
+          startTime: {
             [Op.gte]: request.query.startTime || null,
             [Op.lte]: request.query.endTime || null
           }

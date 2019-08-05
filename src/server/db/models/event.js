@@ -5,10 +5,6 @@ module.exports = (sequelize, type) => {
       type: type.TEXT,
       allowNull: false
     },
-    date: {
-      type: type.DATE,
-      allowNull: false
-    },
     endTime: {
       type: type.DATE,
       allowNull: false

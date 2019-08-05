@@ -9,13 +9,11 @@ const EventRSVPModel = require("./models/eventRSVP");
 const EventAttendeeModel = require("./models/eventAttendee");
 const OrganizationMemberModel = require("./models/organizationMember");
 
-/* DB Credentials */
-const { localDBUsername, localDBPassword } = require("./config");
+/* Environment Configuration */
+const config = require('../../../config').getConfig(process.env.NODE_ENV);
 
 /* Establish the DB Connection */
-const devDBConnectionURL =
-  `postgres://${localDBUsername}:${localDBPassword}@localhost:5432/cubal-media`;
-const sequelize = new Sequelize(devDBConnectionURL);
+const sequelize = new Sequelize(config.database.DB_URL);
 
 /* Connect all the models/tables in the database to a db object, 
    so everything is accessible via one object. */

@@ -1,7 +1,0 @@
-{
-  "name": "cubal-media",
-  "version": "1.0.0",
-  "scripts": {
-    "start": "nodemon server.js"
-  }
-}
