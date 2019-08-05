@@ -4,11 +4,15 @@
   background-color: teal;
 }
 
+.timeAndCircleWidth {
+  width: 100% !important;
+}
+
 .timeline {
   position: absolute;
-  left: 75px;
+  left: 80px;
   width: 1px;
-  border: 1px #828282 solid;
+  background-color: #828282;
 }
 
 .timelineCircle {
@@ -16,12 +20,12 @@
   max-width: 10px;
   min-height: 10px;
   max-height: 10px;
-  margin-left: 13px;
+  margin-left: 9px;
   background-color: #828282;
 }
 
 .negativeTimelineMarginLeft {
-  margin-left: -65px;
+  margin-left: -73px;
 }
 
 .timelineMarginRight {
@@ -32,4 +36,8 @@
   min-width: 225px;
   max-width: 225px;
   min-height: 100px;
+}
+
+.dateTextWidth {
+  width: 60px !important;
 }

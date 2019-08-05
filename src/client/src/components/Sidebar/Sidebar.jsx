@@ -15,7 +15,8 @@ class Sidebar extends React.Component {
   render() {
     return (
       <div className="positionAbsolute topLeft fullWidthAndHeight
-        bgGreyTransparent" onClick={(e) => this.props.closeSidebar(e, false)}>
+        bgGreyTransparent zIndex1000"
+        onClick={(e) => this.props.closeSidebar(e, false)}>
           <div id="sidebar" className="width75P fullHeight bgWhite displayFlex
           flexColumn flexSpaceBetween">
             

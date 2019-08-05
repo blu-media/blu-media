@@ -41,7 +41,7 @@ class NavBar extends React.Component {
                 className="googleLoginButton"
                 icon={false}
                 onSuccess={this.successGoogle}
-                scope='https://www.googleapis.com/auth/calendar.readonly https://www.googleapis.com/auth/calendar'
+                scope='https://www.googleapis.com/auth/calendar'
             />
         }
 

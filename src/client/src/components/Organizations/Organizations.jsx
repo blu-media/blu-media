@@ -1,12 +1,10 @@
 import React from 'react';
 
-class Organizations extends React.Component{
-    render(){
-        return(
-            <div>
-                <h1>
-                    Orgnaizations Page!
-                </h1>
+class Organizations extends React.Component {
+    render() {
+        return (
+            <div className="textAlignCenter verticalMargin15px">
+                Organizations
             </div>
         )
     };

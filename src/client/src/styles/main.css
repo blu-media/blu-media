@@ -1,3 +1,8 @@
+:root {
+    --blu-dark-orange: #ff6600;
+    --blu-med-orange: #ffa600;
+}
+
 @font-face {
     font-family: Novecento;
     src: url(../fonts/Novecentowide-DemiBold.otf);
@@ -21,6 +26,14 @@
     color: #828282;
 }
 
+.colorBluDarkOrange {
+    color: var(--blu-dark-orange);
+}
+
+.colorBluMedOrange {
+    color: var(--blu-med-orange);
+}
+
 .bgGrey1 {
     background-color: #eeeeee;
 }
@@ -35,6 +48,14 @@
 
 .bgWhite {
     background-color: white;
+}
+
+.bgDarkOrange {
+    background-color: var(--blu-dark-orange)
+}
+
+.bgMedOrange {
+    background-color: var(--blu-med-orange);
 }
 
 /* TEXT AND FONTS */
@@ -53,6 +74,10 @@
 
 .textAlignCenter {
     text-align: center;
+}
+
+.textAlignRight {
+    text-align: right;
 }
 
 .noDecoration {
@@ -89,6 +114,10 @@
 
 .positionAbsolute {
     position: absolute;
+}
+
+.zIndex1000 {
+    z-index: 1000;
 }
 
 .topLeft {
@@ -210,6 +239,14 @@
 
 .borderGrey1px {
     border: 1px solid #808080;
+}
+
+.borderDarkOrange1px {
+    border: 1px solid var(--blu-dark-orange);
+}
+
+.borderMedOrange1px {
+    border: 1px solid var(--blu-med-orange);
 }
 
 .borderTopGrey1px {

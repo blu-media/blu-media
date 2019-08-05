@@ -4,6 +4,7 @@ import moment from 'moment';
 import { Link } from 'react-router-dom';
 
 import Calendar from '../Events/Calendar/Calendar.jsx';
+import DateService from '../../services/DateService';
 
 import withAuth from '../Auth/withAuth';
 import '../../styles/main.css';
@@ -16,6 +17,8 @@ class Events extends React.Component {
           events: [],
           timelineHeight: 0
         };
+
+        this.dateService = new DateService();
 
         this.currentMonth = React.createRef();
         this.currentYear = React.createRef();
@@ -63,11 +66,15 @@ class Events extends React.Component {
         if (this.state.events.length > 0) {
             events = this.state.events.map((event) => {
                 let linkURL = `/events/${event.id}`;
+                let startTime = this.dateService.getTime(event.startTime);
+                let endTime = this.dateService.getTime(event.endTime);
                 return (
-                    <Link to={linkURL} params={{eventId: event.id}} key={event.id} className="displayFlex fontSize12px
+                    <Link to={linkURL} params={{eventId: event.id}} key={event.id}
+                    className="displayFlex fontSize12px noDecoration
                         negativeTimelineMarginLeft verticalMargin15px">
                         <div className="displayFlex flexAlignCenter">
-                            <div className="widthMaxContent colorDarkGrey">4:30 PM</div>
+                            <div className="widthMaxContent colorDarkGrey
+                            textAlignRight dateTextWidth">{startTime}</div>
                             <div className="timelineCircle circle"></div>
                         </div>
                         
@@ -77,7 +84,8 @@ class Events extends React.Component {
                             <div className="displayFlex flexColumn flexAlignCenter">
                                 <div className="widthMaxContent">{event.name}</div>
                                 <div className="widthMaxContent">{event.location}</div>
-                                <div className="widthMaxContent">4:30 PM - 7:30 PM</div>
+                                <div className="widthMaxContent">
+                                    {startTime} - {endTime}</div>
                             </div>
                         </div>
                     </Link>
@@ -108,7 +116,8 @@ class Events extends React.Component {
 
                 <Calendar displayEvents={this.displayEventsOnDay} />
 
-                <div ref={this.timeline} className={`${this.state.events.length > 0 ? "timeline":""}
+                <div ref={this.timeline}
+                className={`${this.state.events.length > 0 ? "timeline" : ""}
                 verticalPadding15px`} style={{height: this.state.timelineHeight}}>
                     {events}
                 </div>

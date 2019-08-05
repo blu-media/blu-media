@@ -186,7 +186,7 @@ const getEventById = (request, response) => {
 const getEventsInTimeFrame = (request, response) => {
   db.events.findAll({
     where: {
-      date: {
+      startTime: {
         [Op.gte]: request.query.startTime || null,
         [Op.lte]: request.query.endTime || null
       }
@@ -200,7 +200,7 @@ const getRSVP = (request, response) => {
   db.eventRSVPs.findAll({
     where: {
       eventId: request.params.eventId,
-      userId: request.body.userId
+      userId: request.params.userId
     }
   }).then(rsvp => {
     response.send(rsvp);
