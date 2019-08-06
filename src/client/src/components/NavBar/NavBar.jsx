@@ -36,7 +36,7 @@ class NavBar extends React.Component {
             profilePicture = null;
 
             var googleSignIn = <GoogleLogin
-                clientId=''
+                clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                 buttonText="Sign In"
                 className="googleLoginButton"
                 icon={false}

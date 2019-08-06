@@ -13,6 +13,17 @@ const config = {
     },
     session: {
       SESSION_SECRET: process.env.SESSION_SECRET
+    },
+    production: {
+      database: {
+        DB_URL: process.env.STAGE_DB_URL
+      },
+      googleAuth: {
+        GOOGLE_CLIENT_ID: process.env.GOOGLE_CLIENT_ID
+      },
+      session: {
+        SESSION_SECRET: process.env.SESSION_SECRET
+      }
     }
   }
 }

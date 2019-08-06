@@ -39,11 +39,11 @@ const organizationRouter = require('./routes/routers/organizationRouter');
 const eventRouter = require('./routes/routers/eventRouter');
 const authRouter = require('./routes/routers/authRouter');
 
-app.use('/', mainRouter);
-app.use('/events', eventRouter);
-app.use('/organizations', organizationRouter);
-app.use('/users', userRouter);
-app.use('/auth', authRouter)
+app.use('/api', mainRouter);
+app.use('/api/events', eventRouter);
+app.use('/api/organizations', organizationRouter);
+app.use('/api/users', userRouter);
+app.use('/api/auth', authRouter);
 
 const port = process.env.PORT || 8080;
 

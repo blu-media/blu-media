@@ -19,7 +19,7 @@ class RSVPButton extends React.Component {
     let userId = this.Auth.getProfile().id;
 
     let eventId = this.props.eventId;
-    let apiURL = `http://localhost:8080/events/${eventId}/rsvps`;
+    let apiURL = `https://blu-media.herokuapp.com/api/events/${eventId}/rsvps`;
 
     const options = {
       method: 'PUT',

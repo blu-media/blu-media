@@ -39,7 +39,7 @@ class Events extends React.Component {
         let endTime = moment(startTimeUTC).add(1, 'day').subtract(1, 'second');
         let endTimeUTC = endTime.utc().format();
 
-        const searchQuery = `http://127.0.0.1:8080/events/search?` + 
+        const searchQuery = `https://blu-media.herokuapp.com/api/events/search?` + 
             `startTime=${startTimeUTC}&endTime=${endTimeUTC}`
 
         axios

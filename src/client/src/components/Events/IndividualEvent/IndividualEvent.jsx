@@ -34,7 +34,7 @@ class IndividualEvent extends React.Component {
     }
 
     fetchEvent(eventId) {
-        const searchURL = `http://127.0.0.1:8080/events/${eventId}`;
+        const searchURL = `https://blu-media.herokuapp.com/api/events/${eventId}`;
         axios
             .get(searchURL)
             .then((response) => {
@@ -45,7 +45,7 @@ class IndividualEvent extends React.Component {
                 });
 
                 let userId = this.state.user.id;
-                const searchURL = `http://127.0.0.1:8080/events/${eventId}/rsvps/${userId}`;
+                const searchURL = `https://blu-media.herokuapp.com/api/events/${eventId}/rsvps/${userId}`;
                 axios
                     .get(searchURL)
                     .then((response) => {

@@ -1,10 +1,9 @@
 import decode from 'jwt-decode';
-import { reject } from 'q';
 
 export default class AuthService {
   constructor(endpoint) {
     // API Service Endpoint
-    this.apiEndpoint = endpoint || 'http://localhost:8080';
+    this.apiEndpoint = endpoint || 'https://blu-media.herokuapp.com';
     this.fetch = this.fetch.bind(this);
     this.signIn = this.signIn.bind(this);
     this.getProfile = this.getProfile.bind(this);
@@ -66,7 +65,7 @@ export default class AuthService {
         cache: 'default'
       };
 
-      fetch('http://localhost:8080/auth/google', options)
+      fetch(`${this.apiEndpoint}/api/auth/google`, options)
         .then(response => {
           const token = response.headers.get('x-auth-token');
           if (token) {
