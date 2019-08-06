@@ -5,6 +5,7 @@ const uuid = require('uuid/v4');
 const session = require('express-session');
 const cors = require("cors");
 const path = require("path");
+const helmet = require("helmet");
 
 /* Server Initialization */
 const app = express();
@@ -14,7 +15,8 @@ const config = require('../../config').getConfig(process.env.NODE_ENV);
 
 /* Middleware Functionality */
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json())
+app.use(bodyParser.json());
+
 app.use(session({
   genid: (request) => {
     return uuid() // use UUIDs for session IDs
@@ -22,6 +24,12 @@ app.use(session({
   secret: `${config.session.SESSION_SECRET}`,
   resave: false,
   saveUninitialized: true
+}));
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"]
+  }
 }));
 
 app.use(express.static(path.join(__dirname, '../client/build')));
