@@ -62,7 +62,7 @@ app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
 
 app.get('*', (request, response) => {
-  response.sendFile(path.join(__dirname + '../client/build/index.html'));
+  response.sendFile(path.join(__dirname, '../client/build/index.html'));
 });
 
 const port = process.env.PORT || 8080;
