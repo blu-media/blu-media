@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const uuid = require('uuid/v4');
 const session = require('express-session');
 const cors = require("cors");
+const path = require("path");
 
 /* Server Initialization */
 const app = express();
@@ -23,14 +24,16 @@ app.use(session({
   saveUninitialized: true
 }));
 
-let corsOption = {
-  credentials: true,
-  exposedHeaders: ['x-auth-token'],
-  methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
-  origin: true
-};
+app.use(express.static(path.join(__dirname, '../client/build')));
 
-app.use(cors(corsOption));
+// let corsOption = {
+//   credentials: true,
+//   exposedHeaders: ['x-auth-token'],
+//   methods: 'GET, HEAD, PUT, PATCH, POST, DELETE',
+//   origin: true
+// };
+
+// app.use(cors(corsOption));
 
 /* Router Configuration */
 const mainRouter = require('./routes/routers/router');
@@ -44,6 +47,10 @@ app.use('/api/events', eventRouter);
 app.use('/api/organizations', organizationRouter);
 app.use('/api/users', userRouter);
 app.use('/api/auth', authRouter);
+
+app.get('*', (request, response) => {
+  response.sendFile(path.join(__dirname + '../client/build/index.html'));
+});
 
 const port = process.env.PORT || 8080;
 
