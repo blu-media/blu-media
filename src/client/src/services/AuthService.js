@@ -65,7 +65,7 @@ export default class AuthService {
         cache: 'default'
       };
 
-      fetch(`${this.apiEndpoint}/api/auth/google`, options)
+      fetch('/api/auth/google', options)
         .then(response => {
           const token = response.headers.get('x-auth-token');
           if (token) {
