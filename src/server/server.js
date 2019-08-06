@@ -28,7 +28,8 @@ app.use(session({
 
 app.use(helmet.contentSecurityPolicy({
   directives: {
-    defaultSrc: ["'self'"]
+    defaultSrc: ["'self'"],
+    fontSrc: ['data:']
   }
 }));
 
