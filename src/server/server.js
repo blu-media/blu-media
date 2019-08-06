@@ -6,6 +6,7 @@ const session = require('express-session');
 const cors = require("cors");
 const path = require("path");
 const helmet = require("helmet");
+const csp = require('helmet-csp')
 
 /* Server Initialization */
 const app = express();
@@ -26,12 +27,15 @@ app.use(session({
   saveUninitialized: true
 }));
 
-app.use(helmet.contentSecurityPolicy({
+app.use(helmet());
+app.use(csp({
   directives: {
     defaultSrc: ["'self'"],
-    fontSrc: ['data:']
+    fontSrc: ["'self'", 'data:']
   }
-}));
+}))
+
+
 
 app.use(express.static(path.join(__dirname, '../client/build')));
 
