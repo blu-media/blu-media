@@ -35,8 +35,6 @@ app.use(csp({
   }
 }))
 
-
-
 app.use(express.static(path.join(__dirname, '../client/build')));
 
 // let corsOption = {
